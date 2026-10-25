@@ -1,0 +1,8 @@
+
+SQLAlchemy
+alembic
+psycopg[binary]
+redis
+requests
+python-dotenv
+PyJWT[crypto]
