@@ -6,3 +6,5 @@ redis
 requests
 python-dotenv
 PyJWT[crypto]
+kafka-python
+python-dotenv

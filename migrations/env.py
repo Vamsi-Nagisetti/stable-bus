@@ -7,6 +7,9 @@ from alembic import context
 from core.database import Base, engine
 from models.User import User
 from models.UserSession import UserSession
+from models.Payment import Payment
+from models.Booking import Booking
+from models.Refund import Refund
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
