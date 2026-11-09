@@ -31,6 +31,21 @@ class RedisCacheAdaptee:
     def get_ttl(self, key: str) -> int:
         return self.client.ttl(key)
 
+    
+    def execute_atomic(
+        self,
+        script: str,
+        keys: list[str],
+        args: list
+    ):
+        redis_script = self.client.register_script(script)
+
+        return redis_script(
+            keys=keys,
+            args=args,
+            client=self.client
+        )
+
 
     def close(self) -> None:
         self.client.close()

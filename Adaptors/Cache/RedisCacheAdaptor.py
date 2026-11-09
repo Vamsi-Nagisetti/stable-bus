@@ -21,3 +21,15 @@ class RedisCacheAdaptor(CacheBaseAdaptor):
 
     def ttl(self, key: str) -> int:
         return self.adaptee.get_ttl(key)
+    
+    def execute_atomic(
+        self,
+        script: str,
+        keys: list[str],
+        args: list
+    ):
+        return self.adaptee.execute_atomic(
+            script=script,
+            keys=keys,
+            args=args
+        )

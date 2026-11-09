@@ -9,11 +9,98 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+class OTPDeliveryError(Exception):
+    """Raised when the OTP delivery provider fails."""
+    pass
+
 class OTPManagement:
 
     def __init__(self, otp_service: object, cache: object):
         self.otp_service = otp_service
         self.cache = cache
+        self.VERIFY_OTP_SCRIPT = """
+            local key = KEYS[1]
+            local submitted_hash = ARGV[1]
+            local max_attempts = tonumber(ARGV[2])
+
+            -- Read OTP data
+            local stored_value = redis.call('GET', key)
+
+            if not stored_value then
+                return {-1, 0}
+            end
+
+            -- Decode stored JSON
+            local ok, otp_data = pcall(cjson.decode, stored_value)
+
+            if not ok or not otp_data.otp_hash or otp_data.failed_attempts == nil then
+                redis.call('DEL', key)
+                return {-2, 0}
+            end
+
+            local stored_hash = otp_data.otp_hash
+            local failed_attempts = tonumber(otp_data.failed_attempts)
+
+            if not failed_attempts then
+                redis.call('DEL', key)
+                return {-2, 0}
+            end
+
+            -- Check maximum attempts
+            if failed_attempts >= max_attempts then
+                redis.call('DEL', key)
+                return {0, failed_attempts}
+            end
+
+            -- Constant-time hash comparison
+            local function constant_time_equals(a, b)
+                local diff = (#a == #b) and 0 or 1
+                local max_length = math.max(#a, #b)
+
+                for i = 1, max_length do
+                    local x = string.byte(a, i) or 0
+                    local y = string.byte(b, i) or 0
+                    diff = diff + (x ~= y and 1 or 0)
+                end
+
+                return diff == 0
+            end
+
+            -- Correct OTP
+            if constant_time_equals(stored_hash, submitted_hash) then
+                redis.call('DEL', key)
+                return {1, failed_attempts}
+            end
+
+            -- Incorrect OTP: increment attempts
+            failed_attempts = failed_attempts + 1
+
+            -- Fifth failure: invalidate OTP
+            if failed_attempts >= max_attempts then
+                redis.call('DEL', key)
+                return {0, failed_attempts}
+            end
+
+            -- Preserve original expiry
+            local remaining_ttl = redis.call('PTTL', key)
+
+            if remaining_ttl <= 0 then
+                redis.call('DEL', key)
+                return {-1, failed_attempts}
+            end
+
+            otp_data.failed_attempts = failed_attempts
+
+            redis.call(
+                'SET',
+                key,
+                cjson.encode(otp_data),
+                'PX',
+                remaining_ttl
+            )
+
+            return {0, failed_attempts}
+            """
 
     def _generate_otp(self) -> str:
         return f"{secrets.randbelow(900000) + 100000}"
@@ -47,7 +134,7 @@ class OTPManagement:
         self.cache.set(
             key,
             json.dumps(otp_data),
-            ttl=300,
+            ttl=60,
         )
     
     def send_otp(self, mobile_number: str) -> bool:
@@ -61,72 +148,46 @@ class OTPManagement:
 
         try:
             self.otp_service.send_otp(mobile_number, otp)
-        except Exception:
-            self.cache.delete(self._get_otp_key(mobile_number))
-            raise RuntimeError("Unable to send OTP. Please try again.")
 
+        except Exception as exc:
+            self.cache.delete(self._get_otp_key(mobile_number))
+
+            raise OTPDeliveryError(
+                "Unable to send OTP. Please try again."
+            ) from exc
         return True
 
     
     def verify_otp(self, mobile_number: str, otp: str) -> bool:
-        # 1. Validate input format
+
         if not re.fullmatch(r"[6-9]\d{9}", mobile_number):
             raise ValueError("Invalid Indian mobile number")
 
         if not re.fullmatch(r"\d{6}", otp):
             raise ValueError("OTP must contain exactly six digits")
 
-        # 2. Retrieve OTP data from cache
         key = self._get_otp_key(mobile_number)
-        stored_value = self.cache.get(key)
 
-        if stored_value is None:
-            return False  # OTP missing or expired
-
-        try:
-            otp_data = json.loads(stored_value)
-            stored_hash = otp_data["otp_hash"]
-            failed_attempts = int(otp_data["failed_attempts"])
-        except (json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
-            self.cache.delete(key)
-            raise RuntimeError("Invalid OTP data in cache") from exc
-
-        # 3. Enforce maximum failed attempts
-        max_attempts = 5
-
-        if failed_attempts >= max_attempts:
-            self.cache.delete(key)
-            return False
-
-        # 4. Hash the submitted OTP
         submitted_hash = self._hash_otp(mobile_number, otp)
 
-        # 5. Compare hashes safely
-        if not hmac.compare_digest(stored_hash, submitted_hash):
-            failed_attempts += 1
+        result = self.cache.execute_atomic(
+            script=self.VERIFY_OTP_SCRIPT,
+            keys=[key],
+            args=[submitted_hash, 5],
+        )
 
-            # Preserve the OTP's original expiry time
-            remaining_ttl = self.cache.ttl(key)
+        status_code = int(result[0])
 
-            if remaining_ttl <= 0:
-                self.cache.delete(key)
-                return False
+        if status_code == 1:
+            return True
 
-            otp_data["failed_attempts"] = failed_attempts
-
-            self.cache.set(
-                key,
-                json.dumps(otp_data),
-                ttl=remaining_ttl,
-            )
-
-            # Invalidate immediately after the fifth failure
-            if failed_attempts >= max_attempts:
-                self.cache.delete(key)
-
+        if status_code == 0:
             return False
 
-        # 6. Correct OTP: consume it so it cannot be reused
-        self.cache.delete(key)
-        return True
+        if status_code == -1:
+            return False
 
+        if status_code == -2:
+            raise RuntimeError("Invalid OTP data in cache")
+
+        raise RuntimeError("Unexpected OTP verification response")

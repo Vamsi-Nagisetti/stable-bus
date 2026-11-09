@@ -33,6 +33,10 @@ class PaymentService(PaymentServiceInterface):
     def database(self):
         return self.payment_repository.database
 
+    # =====================================================
+    # INITIATE PAYMENT
+    # =====================================================
+
     def initiate_payment(
         self,
         booking_id: str,
@@ -149,6 +153,10 @@ class PaymentService(PaymentServiceInterface):
 
         return self._payment_response(payment)
 
+    # =====================================================
+    # VERIFY PAYMENT
+    # =====================================================
+
     def verify_payment(
         self,
         payment_id: str,
@@ -199,10 +207,36 @@ class PaymentService(PaymentServiceInterface):
         if result.get("currency") != payment.currency:
             raise ValueError("Payment currency mismatch")
 
-        if result.get("status") != "captured":
+        gateway_status = str(result.get("status", "")).lower()
+
+        # A verified gateway failure is a final payment outcome.
+        # Store StableBus statuses in uppercase, regardless of gateway casing.
+        if gateway_status in ("failed", "failure"):
+            try:
+                self.payment_repository.update_status(
+                    payment.id,
+                    "FAILED",
+                    gateway_payment_id,
+                )
+                self.database.commit()
+                self._invalidate_payment_cache(payment.id)
+
+            except Exception:
+                self.database.rollback()
+                raise
+
             return {
                 "payment_id": payment.id,
-                "status": result.get("status"),
+                "gateway_payment_id": gateway_payment_id,
+                "status": "FAILED",
+                "message": "Payment failed",
+            }
+
+        # A payment that is authorized/created/pending is not successful yet.
+        if gateway_status != "captured":
+            return {
+                "payment_id": payment.id,
+                "status": gateway_status.upper() or "UNKNOWN",
                 "message": "Payment is not captured yet",
             }
 
@@ -226,6 +260,10 @@ class PaymentService(PaymentServiceInterface):
             "status": "SUCCESS",
             "message": "Payment verified successfully",
         }
+
+    # =====================================================
+    # GET PAYMENT STATUS
+    # =====================================================
 
     def get_payment_status(
         self,
@@ -274,6 +312,10 @@ class PaymentService(PaymentServiceInterface):
         payment_data["cache_hit"] = False
 
         return payment_data
+
+    # =====================================================
+    # REFUND PAYMENT
+    # =====================================================
 
     def refund_payment(
         self,
@@ -459,6 +501,113 @@ class PaymentService(PaymentServiceInterface):
 
         return self._refund_response(refund)
 
+    # =====================================================
+    # RECONCILE REFUND
+    # =====================================================
+
+    def reconcile_refund(
+        self,
+        refund_id: str,
+    ) -> dict[str, Any]:
+
+        # 1. Find the StableBus refund.
+        refund = self.refund_repository.get_by_id(refund_id)
+
+        if not refund:
+            raise ValueError("Refund record not found")
+
+        # 2. Only UNKNOWN and PROCESSING refunds need reconciliation.
+        if refund.status not in ("UNKNOWN", "PROCESSING"):
+            return self._refund_response(refund)
+
+        # 3. Find the original payment.
+        payment = self.payment_repository.get_by_id(
+            refund.payment_id
+        )
+
+        if not payment:
+            raise ValueError("Payment record not found")
+
+        if not payment.gateway_payment_id:
+            raise ValueError("Gateway payment ID is missing")
+
+        # 4. Ask the gateway for the actual refund status.
+        gateway_response = self.payment_provider.get_refund_status(
+            refund_id
+        )
+
+        if not isinstance(gateway_response, dict):
+            raise ValueError("Invalid gateway refund response")
+
+        # 5. Extract and validate gateway response.
+        gateway_refund_id = gateway_response.get("id")
+        gateway_payment_id = gateway_response.get("payment_id")
+        gateway_stablebus_refund_id = gateway_response.get("refund_id")
+        gateway_amount = gateway_response.get("amount")
+        gateway_currency = gateway_response.get("currency")
+        gateway_status = gateway_response.get("status")
+
+        if not all([
+            gateway_refund_id,
+            gateway_payment_id,
+            gateway_stablebus_refund_id,
+            gateway_amount is not None,
+            gateway_currency,
+            gateway_status,
+        ]):
+            raise ValueError(
+                "Gateway returned incomplete refund details"
+            )
+
+        if gateway_payment_id != payment.gateway_payment_id:
+            raise ValueError("Gateway payment ID mismatch")
+
+        if gateway_stablebus_refund_id != refund.id:
+            raise ValueError("Gateway refund ID mismatch")
+
+        expected_amount = int(refund.amount * 100)
+
+        if int(gateway_amount) != expected_amount:
+            raise ValueError("Refund amount mismatch")
+
+        if gateway_currency != refund.currency:
+            raise ValueError("Refund currency mismatch")
+
+        # 6. Map gateway status to StableBus status.
+        status_mapping = {
+            "processed": "SUCCESS",
+            "pending": "PROCESSING",
+            "failed": "FAILED",
+        }
+
+        new_status = status_mapping.get(
+            str(gateway_status).lower(),
+            "UNKNOWN",
+        )
+
+        # 7. Persist the reconciled status.
+        try:
+            self.refund_repository.update_status(
+                refund.id,
+                new_status,
+                gateway_refund_id,
+            )
+
+            self.database.commit()
+
+        except Exception:
+            self.database.rollback()
+            raise
+
+        # 8. Return updated refund.
+        refund = self.refund_repository.get_by_id(refund.id)
+
+        return self._refund_response(refund)
+
+    # =====================================================
+    # CACHE INVALIDATION
+    # =====================================================
+
     def _invalidate_payment_cache(self, payment_id: str) -> None:
 
         try:
@@ -468,6 +617,10 @@ class PaymentService(PaymentServiceInterface):
 
         except Exception:
             pass
+
+    # =====================================================
+    # PAYMENT RESPONSE
+    # =====================================================
 
     @staticmethod
     def _payment_response(
@@ -490,6 +643,10 @@ class PaymentService(PaymentServiceInterface):
             "status": payment.status,
             "existing_attempt": existing_attempt,
         }
+
+    # =====================================================
+    # REFUND RESPONSE
+    # =====================================================
 
     @staticmethod
     def _refund_response(

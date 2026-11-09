@@ -1,5 +1,7 @@
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker, Session
+from collections.abc import Generator
 
 from core.config import DATABASE_URL
 
@@ -15,3 +17,15 @@ SessionLocal = sessionmaker(
 )
 
 Base = declarative_base()
+
+
+def get_db() -> Generator[Session, None, None]:
+    db = SessionLocal()
+
+    try:
+        yield db
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()

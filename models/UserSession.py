@@ -40,7 +40,7 @@ class UserSession(Base):
         nullable=False,
     )
 
-    # Sliding inactivity expiry: updated after successful refresh.
+    # Sliding inactivity expiry.
     expires_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
@@ -50,12 +50,13 @@ class UserSession(Base):
     revoked: Mapped[bool] = mapped_column(
         Boolean,
         default=False,
+        server_default="false",
         nullable=False,
     )
 
-    # Records whether an older refresh token was already used.
-    # We'll use this when implementing rotation/reuse detection.
+    # Used for refresh-token reuse detection.
     previous_refresh_token_hash: Mapped[str | None] = mapped_column(
         String(64),
         nullable=True,
+        index=True,
     )

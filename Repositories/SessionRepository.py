@@ -67,7 +67,7 @@ class SessionRepository:
         session_id: int,
         old_token_hash: str,
         new_token_hash: str,
-        inactivity_days: int = 30,
+        inactivity_days: int = 90,
     ) -> bool:
         now = datetime.now(timezone.utc)
         new_expiry = now + timedelta(days=inactivity_days)
@@ -124,55 +124,6 @@ class SessionRepository:
                 "Unable to revoke session after refresh-token reuse"
             ) from exc
 
-
-    def refresh_session(self, refresh_token: str, session_repository) -> dict:
-        if not refresh_token:
-            raise ValueError("Refresh token is required")
-
-        old_hash = self.hash_refresh_token(refresh_token)
-
-        # Find the session associated with this token.
-        session = session_repository.get_by_refresh_token_hash(old_hash)
-
-        if session is None:
-            # The token may have been used already.
-            session_repository.revoke_if_previous_token_matches(old_hash)
-            raise ValueError("Invalid refresh token")
-
-        now = datetime.now(timezone.utc)
-
-        # Protect against expired or revoked sessions.
-        if session.revoked:
-            raise ValueError("Refresh session has been revoked")
-
-        if session.expires_at <= now:
-            raise ValueError("Refresh session has expired")
-
-        # Generate the replacement refresh token.
-        new_refresh_token = self.generate_refresh_token()
-        new_hash = self.hash_refresh_token(new_refresh_token)
-
-        # Atomically replace the old token.
-        rotated = session_repository.rotate_refresh_token(
-            session_id=session.id,
-            old_token_hash=old_hash,
-            new_token_hash=new_hash,
-            inactivity_days=30,
-        )
-
-        if not rotated:
-            # Another request may have rotated this token first.
-            session_repository.revoke_if_previous_token_matches(old_hash)
-            raise ValueError("Refresh token is no longer valid")
-
-        # Issue a new access token for the same user.
-        new_access_token = self.create_access_token(session.user_id)
-
-        return {
-            "access_token": new_access_token,
-            "refresh_token": new_refresh_token,
-            "token_type": "Bearer",
-        }
 
 
     def revoke_all_for_user(self, user_id: int) -> int:
