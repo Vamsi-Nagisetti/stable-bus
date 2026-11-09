@@ -1,16 +1,26 @@
-
 import logging
+import os
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+
 from api.routes.auth import router as auth_router
 from api.routes.users import router as users_router
-from fastapi import FastAPI
+from api.routes.buses import router as buses_router
+
 from Management.SessionManagement import SessionManagement
 from core.logging_config import LoggingConfig
 from api.middleware.request_logging import RequestLoggingMiddleware
 
 from Adaptors.Cache.RedisCacheAdaptee import RedisCacheAdaptee
 from Adaptors.Cache.RedisCacheAdaptor import RedisCacheAdaptor
+
+from Adaptors.AOPayBusAPI.AOPayAdaptee import AOPayAdaptee
+from Adaptors.AOPayBusAPI.AOPayAdapter import AOPayAdapter
+
 from Services.OTP.FAST2SMS_OTP_Service import Fast2SMSOTPService
+from Services.Bus.bus_service import BusService
+
 from Factories.AuthDependencyFactory import AuthDependencyFactory
 
 
@@ -42,13 +52,30 @@ async def lifespan(app: FastAPI):
             cache=cache,
             otp_service=otp_service
         )
+
         app.state.auth_orchestrator = auth_factory.get_auth_orchestrator()
 
-        # Initialize JWT session management once
+        # 5. Initialize JWT session management
         session_management = SessionManagement()
         app.state.session_management = session_management
 
+        # 6. Initialize AO Pay bus provider
+        aopay_adaptee = AOPayAdaptee(
+            base_url=os.environ["AOPAY_BASE_URL"],
+            timeout=30,
+        )
 
+        aopay_adapter = AOPayAdapter(
+            adaptee=aopay_adaptee,
+            registration_id=os.environ["AOPAY_REGISTRATION_ID"],
+            ip_address=os.environ["AOPAY_IP_ADDRESS"],
+            imei_number=os.environ["AOPAY_IMEI_NUMBER"],
+        )
+
+        # 7. Initialize Bus Service
+        app.state.bus_service = BusService(aopay_adapter)
+
+        # 8. Store Redis reference
         app.state.redis_adaptee = redis_adaptee
 
         logger.info("StableBus dependencies initialized successfully")
@@ -74,8 +101,11 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+# Register API routers
 app.include_router(auth_router)
 app.include_router(users_router)
+app.include_router(buses_router)
 
 logger.info("StableBus application initialized")
 
