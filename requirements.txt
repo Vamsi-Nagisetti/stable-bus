@@ -10,3 +10,4 @@ kafka-python
 python-dotenv
 fastapi 
 uvicorn
+uuid7

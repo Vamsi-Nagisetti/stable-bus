@@ -650,3 +650,378 @@ RuntimeError: StableBus test exception
 2026-11-09T11:38:59 | INFO | stablebus.middleware.request | request_id=01a1beec-9a53-70d7-b562-871a26c46564 | Request completed | method=GET | path=/api/v1/users/me | status=200 | duration_ms=5.12
 2026-11-09T12:10:23 | INFO | stablebus.main | request_id=- | Redis connection closed
 2026-11-09T12:10:23 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T07:05:10 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:05:10 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T07:05:10 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/main.py", line 59, in lifespan
+    session_management = SessionManagement()
+                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/SessionManagement.py", line 28, in __init__
+    self.private_key = private_key_path.read_text(encoding="utf-8")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'secrets/jwt_private.pem'
+2026-11-09T07:05:10 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T07:05:10 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T07:05:20 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:05:44 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:06:21 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:06:21 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T07:06:21 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/main.py", line 59, in lifespan
+    session_management = SessionManagement()
+                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/SessionManagement.py", line 28, in __init__
+    self.private_key = private_key_path.read_text(encoding="utf-8")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'secrets/jwt_private.pem'
+2026-11-09T07:06:21 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T07:06:21 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T07:07:30 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:07:30 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T07:07:30 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T07:07:49 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T07:07:49 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T07:08:59 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:08:59 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T07:08:59 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T07:11:15 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T07:11:15 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T07:13:22 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:13:22 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T07:13:22 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T07:13:26 | ERROR | stablebus.middleware.request | request_id=01a1bf27-9b3d-77f4-8c4e-daa9221bf823 | Request failed | method=POST | path=/api/v1/auth/refresh | status=500 | duration_ms=21.45
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Repositories/SessionRepository.py", line 35, in get_by_refresh_token_hash
+    result = self.database.execute(statement)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2555, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 136, in refresh_token
+    tokens = user_management.refresh_user_session(
+        refresh_token=payload.refresh_token,
+    )
+  File "/home/ubuntu/prd/stable-bus/Management/UserManagement.py", line 151, in refresh_user_session
+    return self.session_management.refresh_session(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        refresh_token=refresh_token,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        session_repository=self.session_repository,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Management/SessionManagement.py", line 151, in refresh_session
+    session = session_repository.get_by_refresh_token_hash(
+        old_hash
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/SessionRepository.py", line 40, in get_by_refresh_token_hash
+    raise RuntimeError(
+        "Unable to retrieve user session"
+    ) from exc
+RuntimeError: Unable to retrieve user session
+2026-11-09T07:14:02 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T07:14:02 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T07:14:05 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:14:05 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T07:14:05 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T07:14:15 | INFO | stablebus.middleware.request | request_id=01a1bf28-5cef-777f-93ff-f216c4dc8b77 | Request completed | method=GET | path=/docs | status=200 | duration_ms=0.82
+2026-11-09T07:14:16 | INFO | stablebus.middleware.request | request_id=01a1bf28-5d5d-721f-88cb-593de31cf391 | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=20.98
+2026-11-09T07:14:46 | INFO | stablebus.middleware.request | request_id=01a1bf28-d64a-745b-b1bd-08cc41dfedb6 | Request completed | method=GET | path=/api/v1/buses/Cities | status=404 | duration_ms=0.68
+2026-11-09T07:14:58 | INFO | stablebus.middleware.request | request_id=01a1bf28-ef47-75ba-8d2f-0aa020b152fe | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=5276.12
+2026-11-09T07:15:17 | INFO | stablebus.middleware.request | request_id=01a1bf29-448d-7693-b01b-2865f70a6170 | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=1994.36
+2026-11-09T07:15:47 | INFO | stablebus.middleware.request | request_id=01a1bf29-ba54-75ef-94ac-1ff64141395e | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=1664.48
+2026-11-09T07:16:26 | INFO | stablebus.middleware.request | request_id=01a1bf2a-53a0-7312-8e7a-15c3f397922f | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=1879.30
+2026-11-09T07:22:53 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T07:22:53 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T07:26:55 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:26:55 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T07:26:55 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T07:27:01 | INFO | stablebus.services.bus | request_id=01a1bf34-0965-73c0-a428-09b04a4c492d | Bus cities cache MISS
+2026-11-09T07:27:06 | INFO | stablebus.services.bus | request_id=01a1bf34-0965-73c0-a428-09b04a4c492d | Bus cities cached successfully. Total cities: 18782
+2026-11-09T07:27:07 | INFO | stablebus.middleware.request | request_id=01a1bf34-0965-73c0-a428-09b04a4c492d | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=6044.26
+2026-11-09T07:27:32 | INFO | stablebus.services.bus | request_id=01a1bf34-8325-735b-8c99-e11566ea3cbe | Bus cities cache HIT
+2026-11-09T07:27:32 | INFO | stablebus.middleware.request | request_id=01a1bf34-8325-735b-8c99-e11566ea3cbe | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=38.07
+2026-11-09T07:27:46 | INFO | stablebus.services.bus | request_id=01a1bf34-b9e4-775a-9df9-9614798f00ac | Bus cities cache HIT
+2026-11-09T07:27:46 | INFO | stablebus.middleware.request | request_id=01a1bf34-b9e4-775a-9df9-9614798f00ac | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=33.11
+2026-11-09T07:27:48 | INFO | stablebus.services.bus | request_id=01a1bf34-c36c-7615-b676-d420ffa453b2 | Bus cities cache HIT
+2026-11-09T07:27:48 | INFO | stablebus.middleware.request | request_id=01a1bf34-c36c-7615-b676-d420ffa453b2 | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=32.24
+2026-11-09T07:33:26 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T07:33:26 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T07:33:28 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:33:28 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T07:33:28 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T07:35:00 | INFO | stablebus.services.bus | request_id=01a1bf3b-5c5e-71a1-95b3-68aeaf6d5d33 | Bus search started: from_city=3 to_city=5 travel_date=11/15/2026
+2026-11-09T07:35:14 | INFO | stablebus.services.bus | request_id=01a1bf3b-5c5e-71a1-95b3-68aeaf6d5d33 | Bus search completed successfully. Total buses: 300
+2026-11-09T07:35:14 | INFO | stablebus.middleware.request | request_id=01a1bf3b-5c5e-71a1-95b3-68aeaf6d5d33 | Request completed | method=POST | path=/api/v1/buses/search | status=200 | duration_ms=13305.85
+2026-11-09T07:42:03 | INFO | stablebus.services.bus | request_id=01a1bf41-d04d-757f-88bd-c21c77bd98cb | Bus search started: from_city=3 to_city=5 travel_date=11/15/2026
+2026-11-09T07:42:16 | INFO | stablebus.services.bus | request_id=01a1bf41-d04d-757f-88bd-c21c77bd98cb | Bus search completed successfully. Total buses: 300
+2026-11-09T07:42:16 | INFO | stablebus.middleware.request | request_id=01a1bf41-d04d-757f-88bd-c21c77bd98cb | Request completed | method=POST | path=/api/v1/buses/search | status=200 | duration_ms=12826.77
+2026-11-09T07:42:23 | INFO | stablebus.services.bus | request_id=01a1bf42-1ce6-748d-aba8-7b56dc5665ea | Bus search started: from_city=3 to_city=5 travel_date=11/15/2026
+2026-11-09T07:42:38 | INFO | stablebus.services.bus | request_id=01a1bf42-1ce6-748d-aba8-7b56dc5665ea | Bus search completed successfully. Total buses: 300
+2026-11-09T07:42:38 | INFO | stablebus.middleware.request | request_id=01a1bf42-1ce6-748d-aba8-7b56dc5665ea | Request completed | method=POST | path=/api/v1/buses/search | status=200 | duration_ms=14802.53
+2026-11-09T07:42:40 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T07:42:40 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T07:42:43 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T07:42:43 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T07:42:43 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T07:42:47 | INFO | stablebus.services.bus | request_id=01a1bf42-78f4-71ba-abe4-c08059c0ebe6 | Bus search cache MISS: bus:search:v1:3:5:11-15-2026
+2026-11-09T07:42:53 | INFO | stablebus.services.bus | request_id=01a1bf42-78f4-71ba-abe4-c08059c0ebe6 | Bus search cached successfully. Buses: 300, TTL: 300 seconds
+2026-11-09T07:42:53 | INFO | stablebus.services.bus | request_id=01a1bf42-78f4-71ba-abe4-c08059c0ebe6 | Bus search completed. Total buses: 300
+2026-11-09T07:42:53 | INFO | stablebus.middleware.request | request_id=01a1bf42-78f4-71ba-abe4-c08059c0ebe6 | Request completed | method=POST | path=/api/v1/buses/search | status=200 | duration_ms=6874.47
+2026-11-09T07:42:57 | INFO | stablebus.services.bus | request_id=01a1bf42-a0d8-732c-bfcd-56a4aad0c724 | Bus search cache HIT: bus:search:v1:3:5:11-15-2026
+2026-11-09T07:42:57 | INFO | stablebus.middleware.request | request_id=01a1bf42-a0d8-732c-bfcd-56a4aad0c724 | Request completed | method=POST | path=/api/v1/buses/search | status=200 | duration_ms=343.51
+2026-11-09T07:57:08 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T07:57:08 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T08:01:34 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T08:01:34 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T08:01:34 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T08:02:04 | INFO | stablebus.services.bus | request_id=01a1bf54-2368-7765-ace2-6d69183fe206 | Bus search cache MISS: bus:search:v1:3:5:11-15-2026
+2026-11-09T08:02:18 | INFO | stablebus.services.bus | request_id=01a1bf54-2368-7765-ace2-6d69183fe206 | Bus search cached. Active entries: 1, TTL: 300 seconds
+2026-11-09T08:02:18 | INFO | stablebus.services.bus | request_id=01a1bf54-2368-7765-ace2-6d69183fe206 | Bus search completed. Total buses: 300
+2026-11-09T08:02:18 | INFO | stablebus.middleware.request | request_id=01a1bf54-2368-7765-ace2-6d69183fe206 | Request completed | method=POST | path=/api/v1/buses/search | status=200 | duration_ms=13929.19
+2026-11-09T08:02:22 | INFO | stablebus.services.bus | request_id=01a1bf54-69dc-71dc-8029-6f3078ecc84d | Bus search cache HIT: bus:search:v1:3:5:11-15-2026
+2026-11-09T08:02:22 | INFO | stablebus.services.bus | request_id=01a1bf54-69dc-71dc-8029-6f3078ecc84d | Bus search cache frequency updated: bus:search:v1:3:5:11-15-2026 -> 2
+2026-11-09T08:02:23 | INFO | stablebus.middleware.request | request_id=01a1bf54-69dc-71dc-8029-6f3078ecc84d | Request completed | method=POST | path=/api/v1/buses/search | status=200 | duration_ms=343.53
+2026-11-09T08:02:28 | INFO | stablebus.services.bus | request_id=01a1bf54-7e34-7756-9c7c-fbc436836cc8 | Bus cities cache MISS
+2026-11-09T08:02:29 | INFO | stablebus.services.bus | request_id=01a1bf54-7e34-7756-9c7c-fbc436836cc8 | Bus cities cached successfully. Total cities: 18782
+2026-11-09T08:02:29 | INFO | stablebus.middleware.request | request_id=01a1bf54-7e34-7756-9c7c-fbc436836cc8 | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=1940.16
+2026-11-09T08:02:31 | INFO | stablebus.services.bus | request_id=01a1bf54-8bfc-70a9-b39c-22ce4c93e43d | Bus cities cache HIT
+2026-11-09T08:02:31 | INFO | stablebus.middleware.request | request_id=01a1bf54-8bfc-70a9-b39c-22ce4c93e43d | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=32.57
+2026-11-09T08:02:33 | INFO | stablebus.services.bus | request_id=01a1bf54-91e0-72a8-a257-853101f985fe | Bus cities cache HIT
+2026-11-09T08:02:33 | INFO | stablebus.middleware.request | request_id=01a1bf54-91e0-72a8-a257-853101f985fe | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=30.59
+2026-11-09T08:07:43 | INFO | stablebus.services.bus | request_id=01a1bf59-4e5e-7273-a3e5-043b676ae9b4 | Bus search cache MISS: bus:search:v1:3:5:11-15-2026
+2026-11-09T08:07:57 | INFO | stablebus.services.bus | request_id=01a1bf59-4e5e-7273-a3e5-043b676ae9b4 | Bus search cached. Active entries: 1, TTL: 300 seconds
+2026-11-09T08:07:57 | INFO | stablebus.services.bus | request_id=01a1bf59-4e5e-7273-a3e5-043b676ae9b4 | Bus search completed. Total buses: 300
+2026-11-09T08:07:57 | INFO | stablebus.middleware.request | request_id=01a1bf59-4e5e-7273-a3e5-043b676ae9b4 | Request completed | method=POST | path=/api/v1/buses/search | status=200 | duration_ms=14421.58
+2026-11-09T08:08:01 | INFO | stablebus.services.bus | request_id=01a1bf59-940c-716c-9a92-625f645168b4 | Bus search cache HIT: bus:search:v1:3:5:11-15-2026
+2026-11-09T08:08:01 | INFO | stablebus.services.bus | request_id=01a1bf59-940c-716c-9a92-625f645168b4 | Bus search cache frequency updated: bus:search:v1:3:5:11-15-2026 -> 2
+2026-11-09T08:08:01 | INFO | stablebus.middleware.request | request_id=01a1bf59-940c-716c-9a92-625f645168b4 | Request completed | method=POST | path=/api/v1/buses/search | status=200 | duration_ms=266.76
+2026-11-09T08:10:50 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T08:10:50 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T08:26:02 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T08:26:02 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T08:26:02 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T08:26:06 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T08:26:06 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T08:26:41 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T08:26:41 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T08:26:41 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T08:26:43 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T08:26:43 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T08:26:59 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T08:26:59 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T08:26:59 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T08:27:08 | INFO | stablebus.services.bus | request_id=01a1bf6b-1458-7623-b490-c5a20763a20b | Fetching seat map for bus: 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
+2026-11-09T08:27:12 | INFO | stablebus.services.bus | request_id=01a1bf6b-1458-7623-b490-c5a20763a20b | Seat map fetched successfully for bus: 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
+2026-11-09T08:27:12 | INFO | stablebus.middleware.request | request_id=01a1bf6b-1458-7623-b490-c5a20763a20b | Request completed | method=POST | path=/api/v1/buses/seat-map | status=200 | duration_ms=3947.76

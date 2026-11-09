@@ -12,11 +12,22 @@ class BusAPIBaseAdaptor(ABC):
         pass
 
     @abstractmethod
-    def BusSeatMap(self, trip_id: str):
+    def BusSeatMap(
+        self,
+        bus_key: str,
+        search_key: str,
+        boarding_id: str,
+        dropping_id: str,
+    ):
         pass
 
     @abstractmethod
-    def BusTempBooking(self, trip_id: str, seat_ids: list[str], passengers: list[dict]):
+    def BusTempBooking(
+        self,
+        trip_id: str,
+        seat_ids: list[str],
+        passengers: list[dict],
+    ):
         pass
 
     @abstractmethod

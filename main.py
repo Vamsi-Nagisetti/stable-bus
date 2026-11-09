@@ -73,7 +73,10 @@ async def lifespan(app: FastAPI):
         )
 
         # 7. Initialize Bus Service
-        app.state.bus_service = BusService(aopay_adapter)
+        app.state.bus_service = BusService(
+            bus_provider=aopay_adapter,
+            cache=cache,
+        )
 
         # 8. Store Redis reference
         app.state.redis_adaptee = redis_adaptee
