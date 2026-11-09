@@ -1,0 +1,652 @@
+2026-11-07T12:09:45 | INFO | stablebus.test | StableBus logging initialized
+2026-11-07T12:09:45 | WARNING | stablebus.test | Sample warning
+2026-11-07T12:09:45 | ERROR | stablebus.test | Sample error
+2026-11-07T12:19:20 | INFO | stablebus.main | StableBus application initialized
+2026-11-07T12:21:45 | INFO | stablebus.main | StableBus application initialized
+2026-11-07T12:22:25 | INFO | stablebus.main | Health check requested
+2026-11-07T12:28:40 | INFO | stablebus.main | StableBus application initialized
+2026-11-07T12:32:11 | INFO | stablebus.main | StableBus application initialized
+2026-11-07T12:32:23 | INFO | stablebus.main | StableBus application initialized
+2026-11-07T12:32:37 | INFO | stablebus.main | StableBus application initialized
+2026-11-07T12:49:47 | INFO | stablebus.main | StableBus application initialized
+2026-11-07T12:49:54 | INFO | stablebus.main | StableBus application initialized
+2026-11-07T12:49:58 | INFO | stablebus.main | Health check requested
+2026-11-07T12:49:58 | INFO | stablebus.middleware.request | Request completed | request_id=01a1b4e0-dfcc-774f-b3d5-5b5b506c9643 | method=GET | path=/health | status=200 | duration_ms=32.98
+2026-11-07T12:53:07 | INFO | stablebus.main | Health check requested
+2026-11-07T12:53:07 | INFO | stablebus.middleware.request | Request completed | request_id=01a1b4e3-bffc-7383-95c6-9e9945f19ba2 | method=GET | path=/health | status=200 | duration_ms=3.78
+2026-11-07T12:53:08 | INFO | stablebus.main | Health check requested
+2026-11-07T12:53:08 | INFO | stablebus.middleware.request | Request completed | request_id=01a1b4e3-c41e-7425-b42a-37c52e7116cf | method=GET | path=/health | status=200 | duration_ms=2.39
+2026-11-07T12:53:12 | INFO | stablebus.main | Health check requested
+2026-11-07T12:53:12 | INFO | stablebus.middleware.request | Request completed | request_id=01a1b4e3-d42a-759c-bcc9-75a513283ff8 | method=GET | path=/health | status=200 | duration_ms=2.36
+2026-11-07T12:53:30 | INFO | stablebus.middleware.request | Request completed | request_id=01a1b4e4-1d0c-77cc-8a4e-a9ee49eb1739 | method=GET | path=/abc | status=404 | duration_ms=1.78
+2026-11-07T13:24:56 | INFO | stablebus.main | StableBus application initialized
+2026-11-07T13:25:48 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:26:10 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:26:46 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:26:54 | INFO | stablebus.middleware.request | request_id=01a1b502-b0f7-7239-8736-ad96ecdbb442 | Request completed | method=GET | path=/abc | status=404 | duration_ms=1.70
+2026-11-07T13:27:06 | INFO | stablebus.main | request_id=01a1b502-dd95-7427-9a95-53b095189654 | Health check requested
+2026-11-07T13:27:06 | INFO | stablebus.middleware.request | request_id=01a1b502-dd95-7427-9a95-53b095189654 | Request completed | method=GET | path=/health | status=200 | duration_ms=78.10
+2026-11-07T13:27:12 | INFO | stablebus.main | request_id=01a1b502-f439-728c-bf90-25b642929541 | Health check requested
+2026-11-07T13:27:12 | INFO | stablebus.middleware.request | request_id=01a1b502-f439-728c-bf90-25b642929541 | Request completed | method=GET | path=/health | status=200 | duration_ms=2.19
+2026-11-07T13:27:21 | INFO | stablebus.main | request_id=01a1b503-1707-72c4-b5b9-c680e5b22814 | Health check requested
+2026-11-07T13:27:21 | INFO | stablebus.middleware.request | request_id=01a1b503-1707-72c4-b5b9-c680e5b22814 | Request completed | method=GET | path=/health | status=200 | duration_ms=3.20
+2026-11-07T13:31:26 | INFO | stablebus.main | request_id=01a1b506-d67d-76e3-bc01-9e43a2677dcf | Health check requested
+2026-11-07T13:31:26 | INFO | stablebus.middleware.request | request_id=01a1b506-d67d-76e3-bc01-9e43a2677dcf | Request completed | method=GET | path=/health | status=200 | duration_ms=2.74
+2026-11-07T13:33:13 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:33:20 | INFO | stablebus.main | request_id=01a1b508-94cc-7382-8a53-cf64f1e9d9e4 | Testing exception logging
+2026-11-07T13:33:20 | ERROR | stablebus.middleware.request | request_id=01a1b508-94cc-7382-8a53-cf64f1e9d9e4 | Request failed | method=GET | path=/test-error | status=None | duration_ms=58.16
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\middleware\request_logging.py", line 82, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 1330, in handle
+    await super().handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 289, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 42, in test_error
+    raise RuntimeError("StableBus test exception")
+RuntimeError: StableBus test exception
+2026-11-07T13:35:20 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:35:22 | INFO | stablebus.main | request_id=01a1b50a-7184-74f9-ba47-b47b290d5ad7 | Testing exception logging
+2026-11-07T13:35:23 | ERROR | stablebus.middleware.request | request_id=01a1b50a-7184-74f9-ba47-b47b290d5ad7 | Request failed | method=GET | path=/test-error | status=None | duration_ms=52.50
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\middleware\request_logging.py", line 82, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 1330, in handle
+    await super().handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 289, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 42, in test_error
+    raise RuntimeError("StableBus test exception")
+RuntimeError: StableBus test exception
+2026-11-07T13:37:51 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:38:02 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:38:03 | INFO | stablebus.main | request_id=01a1b50c-e5d7-74e7-854b-db83a75c0301 | Testing exception logging
+2026-11-07T13:38:03 | ERROR | stablebus.middleware.request | request_id=01a1b50c-e5d7-74e7-854b-db83a75c0301 | Request failed | method=GET | path=/test-error | status=None | duration_ms=42.19
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\middleware\request_logging.py", line 82, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 1330, in handle
+    await super().handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 289, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 41, in test_error
+    raise RuntimeError("StableBus test exception")
+RuntimeError: StableBus test exception
+2026-11-07T13:39:09 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:39:19 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:39:21 | INFO | stablebus.main | request_id=01a1b50e-151b-7784-b927-9e78a164ef48 | Testing exception logging
+2026-11-07T13:39:21 | ERROR | stablebus.middleware.request | request_id=01a1b50e-151b-7784-b927-9e78a164ef48 | Request failed | method=GET | path=/test-error | status=None | duration_ms=29.89
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\middleware\request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 1330, in handle
+    await super().handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 289, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 41, in test_error
+    raise RuntimeError("StableBus test exception")
+RuntimeError: StableBus test exception
+2026-11-07T13:42:22 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:42:28 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-07T13:42:30 | INFO | stablebus.main | request_id=01a1b510-f5a9-7278-8d9b-693ce6326784 | Testing exception logging
+2026-11-07T13:42:30 | ERROR | stablebus.middleware.request | request_id=01a1b510-f5a9-7278-8d9b-693ce6326784 | Request failed | method=GET | path=/test-error | status=500 | duration_ms=48.45
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\middleware\request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 1330, in handle
+    await super().handle(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\routing.py", line 289, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 41, in test_error
+    raise RuntimeError("StableBus test exception")
+RuntimeError: StableBus test exception
+2026-11-08T09:58:03 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T09:59:23 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T10:00:31 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T10:01:52 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T10:50:00 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T10:50:00 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T10:50:00 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T10:50:00 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T10:50:00 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T10:50:13 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T10:50:13 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T10:50:13 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T10:51:39 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T10:51:39 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T10:58:52 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T10:58:52 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T10:58:52 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T10:58:57 | INFO | stablebus.middleware.request | request_id=01a1b9a1-95f1-7103-a91c-158fd604c518 | Request completed | method=GET | path=/docs | status=200 | duration_ms=1.37
+2026-11-08T10:58:57 | INFO | stablebus.middleware.request | request_id=01a1b9a1-9712-775c-8be9-e9ce490d3675 | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=13.66
+2026-11-08T11:00:27 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T11:00:27 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T11:00:28 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T11:00:28 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T11:00:28 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T11:00:28 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T11:00:28 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T12:41:13 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T12:41:13 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T12:41:13 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T12:41:50 | INFO | stablebus.middleware.request | request_id=01a1b9ff-c98d-7780-8d83-40c81f826958 | Request completed | method=POST | path=/v1/auth/send-otp | status=404 | duration_ms=2.55
+2026-11-08T12:42:44 | INFO | stablebus.management.rate_limit | request_id=01a1ba00-95cb-707b-b8cf-8183569355e3 | OTP request permitted
+2026-11-08T12:42:45 | INFO | stablebus.management.auth | request_id=01a1ba00-95cb-707b-b8cf-8183569355e3 | OTP delivery completed successfully
+2026-11-08T12:42:45 | INFO | stablebus.middleware.request | request_id=01a1ba00-95cb-707b-b8cf-8183569355e3 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=200 | duration_ms=2307.87
+2026-11-08T12:43:37 | INFO | stablebus.middleware.request | request_id=01a1ba01-6963-72b0-8e8e-4575876f29d9 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=422 | duration_ms=1.45
+2026-11-08T12:46:41 | INFO | stablebus.middleware.request | request_id=01a1ba04-37c4-71df-b149-a37f5d14b63b | Request completed | method=POST | path=/api/v1/auth/send-otp | status=422 | duration_ms=2.04
+2026-11-08T12:46:52 | INFO | stablebus.middleware.request | request_id=01a1ba04-64d3-7240-b732-a52624b36c63 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=422 | duration_ms=1.36
+2026-11-08T12:47:02 | INFO | stablebus.middleware.request | request_id=01a1ba04-8bd0-7261-aedd-004946ca06a3 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=422 | duration_ms=1.62
+2026-11-08T12:49:59 | INFO | stablebus.management.rate_limit | request_id=01a1ba07-3fd8-77e8-8606-13656a51d034 | OTP request permitted
+2026-11-08T12:50:01 | INFO | stablebus.management.auth | request_id=01a1ba07-3fd8-77e8-8606-13656a51d034 | OTP delivery completed successfully
+2026-11-08T12:50:01 | INFO | stablebus.middleware.request | request_id=01a1ba07-3fd8-77e8-8606-13656a51d034 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=200 | duration_ms=1742.02
+2026-11-08T12:50:09 | WARNING | stablebus.management.rate_limit | request_id=01a1ba07-65c2-7009-ac0b-4e0ae38cec22 | OTP request rejected | reason=-2 | retry_after=20
+2026-11-08T12:50:09 | WARNING | stablebus.api.auth | request_id=01a1ba07-65c2-7009-ac0b-4e0ae38cec22 | OTP request rate limited | retry_after=20
+2026-11-08T12:50:09 | INFO | stablebus.middleware.request | request_id=01a1ba07-65c2-7009-ac0b-4e0ae38cec22 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=429 | duration_ms=23.79
+2026-11-08T12:50:12 | WARNING | stablebus.management.rate_limit | request_id=01a1ba07-71d6-765e-b188-ef9f89dbb225 | OTP request rejected | reason=-2 | retry_after=17
+2026-11-08T12:50:12 | WARNING | stablebus.api.auth | request_id=01a1ba07-71d6-765e-b188-ef9f89dbb225 | OTP request rate limited | retry_after=17
+2026-11-08T12:50:12 | INFO | stablebus.middleware.request | request_id=01a1ba07-71d6-765e-b188-ef9f89dbb225 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=429 | duration_ms=23.61
+2026-11-08T12:50:15 | WARNING | stablebus.management.rate_limit | request_id=01a1ba07-7c84-73d5-bd16-672e3e0dddaa | OTP request rejected | reason=-2 | retry_after=14
+2026-11-08T12:50:15 | WARNING | stablebus.api.auth | request_id=01a1ba07-7c84-73d5-bd16-672e3e0dddaa | OTP request rate limited | retry_after=14
+2026-11-08T12:50:15 | INFO | stablebus.middleware.request | request_id=01a1ba07-7c84-73d5-bd16-672e3e0dddaa | Request completed | method=POST | path=/api/v1/auth/send-otp | status=429 | duration_ms=25.73
+2026-11-08T12:50:17 | WARNING | stablebus.management.rate_limit | request_id=01a1ba07-8698-75fb-9f32-1e748a41ec23 | OTP request rejected | reason=-2 | retry_after=12
+2026-11-08T12:50:17 | WARNING | stablebus.api.auth | request_id=01a1ba07-8698-75fb-9f32-1e748a41ec23 | OTP request rate limited | retry_after=12
+2026-11-08T12:50:17 | INFO | stablebus.middleware.request | request_id=01a1ba07-8698-75fb-9f32-1e748a41ec23 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=429 | duration_ms=22.65
+2026-11-08T12:50:45 | INFO | stablebus.management.rate_limit | request_id=01a1ba07-f1d7-7371-b471-b55239ace437 | OTP request permitted
+2026-11-08T12:50:46 | INFO | stablebus.management.auth | request_id=01a1ba07-f1d7-7371-b471-b55239ace437 | OTP delivery completed successfully
+2026-11-08T12:50:46 | INFO | stablebus.middleware.request | request_id=01a1ba07-f1d7-7371-b471-b55239ace437 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=200 | duration_ms=986.49
+2026-11-08T12:51:52 | WARNING | stablebus.management.rate_limit | request_id=01a1ba08-f7c7-706b-8cd7-0a13544e044b | OTP request rejected | reason=0 | retry_after=52
+2026-11-08T12:51:52 | WARNING | stablebus.api.auth | request_id=01a1ba08-f7c7-706b-8cd7-0a13544e044b | OTP request rate limited | retry_after=52
+2026-11-08T12:51:52 | INFO | stablebus.middleware.request | request_id=01a1ba08-f7c7-706b-8cd7-0a13544e044b | Request completed | method=POST | path=/api/v1/auth/send-otp | status=429 | duration_ms=28.45
+2026-11-08T12:52:01 | WARNING | stablebus.management.rate_limit | request_id=01a1ba09-1c29-73f9-82d5-ba42bd5a3410 | OTP request rejected | reason=0 | retry_after=43
+2026-11-08T12:52:01 | WARNING | stablebus.api.auth | request_id=01a1ba09-1c29-73f9-82d5-ba42bd5a3410 | OTP request rate limited | retry_after=43
+2026-11-08T12:52:01 | INFO | stablebus.middleware.request | request_id=01a1ba09-1c29-73f9-82d5-ba42bd5a3410 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=429 | duration_ms=31.64
+2026-11-08T12:52:11 | WARNING | stablebus.management.rate_limit | request_id=01a1ba09-438b-726a-b8a5-c52d0f658241 | OTP request rejected | reason=0 | retry_after=32
+2026-11-08T12:52:11 | WARNING | stablebus.api.auth | request_id=01a1ba09-438b-726a-b8a5-c52d0f658241 | OTP request rate limited | retry_after=32
+2026-11-08T12:52:11 | INFO | stablebus.middleware.request | request_id=01a1ba09-438b-726a-b8a5-c52d0f658241 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=429 | duration_ms=44.42
+2026-11-08T12:52:21 | WARNING | stablebus.management.rate_limit | request_id=01a1ba09-6b74-77b1-8418-2a80794e2c64 | OTP request rejected | reason=0 | retry_after=22
+2026-11-08T12:52:21 | WARNING | stablebus.api.auth | request_id=01a1ba09-6b74-77b1-8418-2a80794e2c64 | OTP request rate limited | retry_after=22
+2026-11-08T12:52:21 | INFO | stablebus.middleware.request | request_id=01a1ba09-6b74-77b1-8418-2a80794e2c64 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=429 | duration_ms=26.15
+2026-11-08T16:00:29 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:00:29 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:00:31 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:00:31 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:00:31 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T16:04:48 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:04:48 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:04:49 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:04:49 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:04:49 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T16:05:26 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:05:26 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:05:27 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:05:27 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:05:27 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T16:07:07 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:07:07 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:07:08 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:07:08 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:07:08 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T16:07:15 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:07:15 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:50:49 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:50:49 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:50:50 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T16:52:43 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:52:43 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:52:45 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:52:45 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:52:45 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T16:54:58 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:54:58 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:55:00 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:55:00 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:55:00 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T16:55:05 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:55:05 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:55:06 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:55:06 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:55:06 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T16:58:27 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:58:27 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:58:29 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:58:29 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:58:29 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T16:58:32 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T16:58:32 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T16:58:33 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T16:58:33 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T16:58:33 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:00:20 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:00:20 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:00:21 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:00:21 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:00:21 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:01:39 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:01:39 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:01:42 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:01:42 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:01:42 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:01:45 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:01:45 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:10:10 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:10:10 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:10:10 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:11:36 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:11:36 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:11:37 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:11:37 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:11:37 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:16:46 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:16:46 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:16:48 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:16:48 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:16:48 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:19:49 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:19:49 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:19:51 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:19:51 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:19:51 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:24:28 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:24:28 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:24:30 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:24:30 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:24:30 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:27:50 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:27:50 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:27:54 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:27:54 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:27:54 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:30:43 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:30:43 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:30:45 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:30:45 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:30:45 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:33:28 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:33:28 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:33:30 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:33:30 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:33:30 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:34:30 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:34:30 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:34:32 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:34:32 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:34:32 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:35:57 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:35:57 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:35:59 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:35:59 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:35:59 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:36:53 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:36:53 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:36:55 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:36:55 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:36:55 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:37:40 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:37:40 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:37:41 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:37:41 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:37:41 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:44:35 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:44:35 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:44:37 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:44:37 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:44:37 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T17:45:00 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T17:45:00 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T17:45:02 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T17:45:02 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T17:45:02 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T22:48:37 | INFO | stablebus.middleware.request | request_id=01a1bc2b-4f6d-7114-bfca-3848a3adbf27 | Request completed | method=POST | path=/api/v1/auth/veirfy-otp | status=404 | duration_ms=8.17
+2026-11-08T22:49:48 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T22:49:48 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T22:49:53 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T22:49:53 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T22:49:53 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T22:50:07 | INFO | stablebus.middleware.request | request_id=01a1bc2c-ad8c-7519-9da3-e371da079c27 | Request completed | method=POST | path=//api/v1/auth/verify-otp | status=404 | duration_ms=5.26
+2026-11-08T22:51:02 | WARNING | stablebus.api.auth | request_id=01a1bc2d-80a6-7663-8f97-dcfce80336e8 | OTP verification or account validation failed | reason=Invalid or expired OTP
+2026-11-08T22:51:02 | INFO | stablebus.middleware.request | request_id=01a1bc2d-80a6-7663-8f97-dcfce80336e8 | Request completed | method=POST | path=/api/v1/auth/verify-otp | status=401 | duration_ms=1273.26
+2026-11-08T22:57:30 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T22:57:30 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T22:57:32 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T22:57:32 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T22:57:32 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T22:57:40 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T22:57:40 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T22:57:43 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T22:57:43 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T22:57:43 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-08T22:58:04 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-08T22:58:04 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-08T22:58:06 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-08T22:58:06 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-08T22:58:06 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T10:49:00 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T10:49:00 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T10:49:05 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T10:49:05 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T10:49:05 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T10:49:06 | WARNING | stablebus.api.auth | request_id=01a1bebe-ee18-70fd-9b14-3ddc8f305770 | OTP verification or account validation failed | reason=Invalid or expired OTP
+2026-11-09T10:49:06 | INFO | stablebus.middleware.request | request_id=01a1bebe-ee18-70fd-9b14-3ddc8f305770 | Request completed | method=POST | path=/api/v1/auth/verify-otp | status=401 | duration_ms=253.98
+2026-11-09T10:49:11 | INFO | stablebus.management.rate_limit | request_id=01a1bebf-025b-777c-8bd4-664b01d9c2ce | OTP request permitted
+2026-11-09T10:49:11 | INFO | stablebus.management.auth | request_id=01a1bebf-025b-777c-8bd4-664b01d9c2ce | OTP delivery completed successfully
+2026-11-09T10:49:11 | INFO | stablebus.middleware.request | request_id=01a1bebf-025b-777c-8bd4-664b01d9c2ce | Request completed | method=POST | path=/api/v1/auth/send-otp | status=200 | duration_ms=399.25
+2026-11-09T10:49:40 | INFO | stablebus.management.session | request_id=01a1bebf-7165-76e1-ad7b-8bdffa1b1500 | Refresh session created successfully | user_id=3
+2026-11-09T10:49:40 | INFO | stablebus.middleware.request | request_id=01a1bebf-7165-76e1-ad7b-8bdffa1b1500 | Request completed | method=POST | path=/api/v1/auth/verify-otp | status=200 | duration_ms=172.63
+2026-11-09T10:51:08 | INFO | stablebus.middleware.request | request_id=01a1bec0-cb49-7287-9387-0a2eef64b138 | Request completed | method=GET | path=/api/v1/auth/refresh | status=405 | duration_ms=0.74
+2026-11-09T10:51:16 | WARNING | stablebus.management.session | request_id=01a1bec0-e913-728c-abf5-09d12bcb94b2 | Refresh attempted with an invalid or previously rotated token
+2026-11-09T10:51:16 | WARNING | stablebus.api.auth | request_id=01a1bec0-e913-728c-abf5-09d12bcb94b2 | Refresh token request rejected | reason=Invalid refresh token
+2026-11-09T10:51:16 | INFO | stablebus.middleware.request | request_id=01a1bec0-e913-728c-abf5-09d12bcb94b2 | Request completed | method=POST | path=/api/v1/auth/refresh | status=401 | duration_ms=9.02
+2026-11-09T10:51:36 | INFO | stablebus.management.session | request_id=01a1bec1-366b-77ab-ae14-fddfa4585c5b | Refresh token rotated successfully | user_id=3 | session_id=20
+2026-11-09T10:51:36 | INFO | stablebus.api.auth | request_id=01a1bec1-366b-77ab-ae14-fddfa4585c5b | Refresh token API completed successfully
+2026-11-09T10:51:36 | INFO | stablebus.middleware.request | request_id=01a1bec1-366b-77ab-ae14-fddfa4585c5b | Request completed | method=POST | path=/api/v1/auth/refresh | status=200 | duration_ms=428.41
+2026-11-09T10:51:49 | WARNING | stablebus.management.session | request_id=01a1bec1-6a1b-7124-821f-043acbd27a72 | Refresh attempted with an invalid or previously rotated token
+2026-11-09T10:51:49 | WARNING | stablebus.api.auth | request_id=01a1bec1-6a1b-7124-821f-043acbd27a72 | Refresh token request rejected | reason=Invalid refresh token
+2026-11-09T10:51:49 | INFO | stablebus.middleware.request | request_id=01a1bec1-6a1b-7124-821f-043acbd27a72 | Request completed | method=POST | path=/api/v1/auth/refresh | status=401 | duration_ms=8.68
+2026-11-09T10:51:56 | WARNING | stablebus.management.session | request_id=01a1bec1-876c-7671-8e99-0ad8bd8eb3f5 | Refresh attempted with an invalid or previously rotated token
+2026-11-09T10:51:56 | WARNING | stablebus.api.auth | request_id=01a1bec1-876c-7671-8e99-0ad8bd8eb3f5 | Refresh token request rejected | reason=Invalid refresh token
+2026-11-09T10:51:56 | INFO | stablebus.middleware.request | request_id=01a1bec1-876c-7671-8e99-0ad8bd8eb3f5 | Request completed | method=POST | path=/api/v1/auth/refresh | status=401 | duration_ms=6.26
+2026-11-09T10:56:56 | WARNING | stablebus.management.session | request_id=01a1bec6-1cc0-7625-83e9-e5770c3da6ca | Refresh attempted with an invalid or previously rotated token
+2026-11-09T10:56:56 | WARNING | stablebus.api.auth | request_id=01a1bec6-1cc0-7625-83e9-e5770c3da6ca | Refresh token request rejected | reason=Invalid refresh token
+2026-11-09T10:56:56 | INFO | stablebus.middleware.request | request_id=01a1bec6-1cc0-7625-83e9-e5770c3da6ca | Request completed | method=POST | path=/api/v1/auth/refresh | status=401 | duration_ms=4.53
+2026-11-09T10:57:12 | WARNING | stablebus.management.session | request_id=01a1bec6-5a18-72d3-ba88-fe8d1f959db4 | Refresh attempted with an invalid or previously rotated token
+2026-11-09T10:57:12 | WARNING | stablebus.api.auth | request_id=01a1bec6-5a18-72d3-ba88-fe8d1f959db4 | Refresh token request rejected | reason=Invalid refresh token
+2026-11-09T10:57:12 | INFO | stablebus.middleware.request | request_id=01a1bec6-5a18-72d3-ba88-fe8d1f959db4 | Request completed | method=POST | path=/api/v1/auth/refresh | status=401 | duration_ms=5.20
+2026-11-09T11:05:21 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T11:05:21 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T11:05:22 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T11:05:22 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T11:05:22 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T11:06:27 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T11:06:27 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T11:06:28 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T11:06:28 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T11:06:28 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T11:06:43 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T11:06:43 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T11:06:44 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T11:06:44 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T11:06:44 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T11:06:51 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T11:06:51 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T11:35:40 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T11:35:40 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T11:35:40 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T11:36:48 | INFO | stablebus.middleware.request | request_id=01a1beea-9a85-71fd-b247-594b799d9372 | Request completed | method=GET | path=/docs | status=200 | duration_ms=0.59
+2026-11-09T11:36:48 | INFO | stablebus.middleware.request | request_id=01a1beea-9af9-705d-a0b8-1b9de42f1e99 | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=19.89
+2026-11-09T11:37:01 | INFO | stablebus.middleware.request | request_id=01a1beea-cb77-71a8-85d0-96d1030a1489 | Request completed | method=GET | path=/api/v1/users/me | status=401 | duration_ms=46.35
+2026-11-09T11:37:13 | INFO | stablebus.middleware.request | request_id=01a1beea-fb00-7658-9eea-096814311018 | Request completed | method=GET | path=/api/v1/users/me | status=401 | duration_ms=1.96
+2026-11-09T11:37:15 | INFO | stablebus.middleware.request | request_id=01a1beeb-02e8-75f3-82ac-521840e50e5d | Request completed | method=GET | path=/api/v1/users/me | status=401 | duration_ms=2.17
+2026-11-09T11:38:24 | INFO | stablebus.management.rate_limit | request_id=01a1beec-10cd-72d1-94c0-572dea7cc234 | OTP request permitted
+2026-11-09T11:38:24 | INFO | stablebus.management.auth | request_id=01a1beec-10cd-72d1-94c0-572dea7cc234 | OTP delivery completed successfully
+2026-11-09T11:38:24 | INFO | stablebus.middleware.request | request_id=01a1beec-10cd-72d1-94c0-572dea7cc234 | Request completed | method=POST | path=/api/v1/auth/send-otp | status=200 | duration_ms=692.81
+2026-11-09T11:38:50 | INFO | stablebus.management.session | request_id=01a1beec-74b3-76a9-a5b9-fcef85616a74 | Refresh session created successfully | user_id=3
+2026-11-09T11:38:50 | INFO | stablebus.middleware.request | request_id=01a1beec-74b3-76a9-a5b9-fcef85616a74 | Request completed | method=POST | path=/api/v1/auth/verify-otp | status=200 | duration_ms=168.57
+2026-11-09T11:38:59 | INFO | stablebus.middleware.request | request_id=01a1beec-9a53-70d7-b562-871a26c46564 | Request completed | method=GET | path=/api/v1/users/me | status=200 | duration_ms=5.12
+2026-11-09T12:10:23 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T12:10:23 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
