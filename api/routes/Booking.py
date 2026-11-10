@@ -103,6 +103,9 @@ def require_booking_access(
     return booking
 
 
+class SimulateMockPaymentRequest(BaseModel):
+    payment_id: str
+
 class InitiatePaymentRequest(BaseModel):
     idempotency_key: str = Field(
         ...,
@@ -241,7 +244,79 @@ def initiate_payment(
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
+@router.post("/{booking_id}/payments/mock-success")
+def simulate_mock_payment(
+    booking_id: str,
+    payment_request: SimulateMockPaymentRequest,
+    request: Request,
+    current_user=Depends(get_optional_current_user),
+    guest_access_token: str | None = Header(
+        default=None,
+        alias="X-Guest-Access-Token",
+    ),
+    db: Session = Depends(get_db),
+):
+    # Never allow mock payment simulation in production.
+    if (
+        os.getenv("APP_ENV", "development").lower() == "production"
+        or getattr(request.app.state, "payment_gateway_name", "") != "MOCK"
+    ):
+        raise HTTPException(
+            status_code=404,
+            detail="Mock payment simulation is unavailable",
+        )
 
+    # Validate booking ownership / guest access.
+    booking = require_booking_access(
+        booking_id,
+        db,
+        current_user,
+        guest_access_token,
+    )
+
+    # Validate that the payment belongs to this booking.
+    payment = PaymentRepository(db).get_by_id(payment_request.payment_id)
+
+    if payment is None or str(payment.booking_id) != str(booking.id):
+        raise HTTPException(
+            status_code=404,
+            detail="Payment not found",
+        )
+
+    if payment.status != "PENDING":
+        raise HTTPException(
+            status_code=409,
+            detail=f"Payment cannot be simulated in status: {payment.status}",
+        )
+
+    if not payment.gateway_order_id:
+        raise HTTPException(
+            status_code=400,
+            detail="Gateway order ID is missing",
+        )
+
+    # Use the SAME adapter instance used by PaymentService.
+    payment_provider = request.app.state.payment_provider
+
+    try:
+        gateway_payment_id = (
+            payment_provider.simulate_successful_payment(
+                payment.gateway_order_id
+            )
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc),
+        )
+
+    return {
+        "payment_id": payment.id,
+        "gateway_payment_id": gateway_payment_id,
+        "status": "CAPTURED",
+        "message": "Mock payment simulated successfully",
+    }
+    
 @router.post("/{booking_id}/payments/verify")
 def verify_payment(
     booking_id: str,

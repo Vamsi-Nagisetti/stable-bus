@@ -2,7 +2,8 @@
 import logging
 import os
 from contextlib import asynccontextmanager
-
+from Adaptors.Notifications.ResendEmailAdapter import ResendEmailAdapter
+from Services.Notifications.NotificationService import NotificationService
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -51,6 +52,7 @@ async def lifespan(app: FastAPI):
     redis_adaptee = None
     dynamodb_adaptee = None
     payment_provider = None
+    notification_service = None
 
     try:
         # 1. Initialize Redis
@@ -159,7 +161,15 @@ async def lifespan(app: FastAPI):
         app.state.payment_provider = payment_provider
         app.state.payment_gateway_name = payment_gateway
 
-        # 12. Store Redis reference
+        # 12. Initialize email notification service
+        notification_provider = ResendEmailAdapter()
+        notification_service = NotificationService(notification_provider)
+
+        app.state.notification_service = notification_service
+
+        logger.info("Resend email notification service initialized")
+
+        # 13. Store Redis reference
         app.state.redis_adaptee = redis_adaptee
 
         logger.info(
@@ -184,6 +194,9 @@ async def lifespan(app: FastAPI):
 
         if dynamodb_adaptee is not None:
             dynamodb_adaptee.close()
+        
+        if notification_service is not None:
+            notification_service.close()
 
         logger.info(
             "StableBus application shutdown completed"

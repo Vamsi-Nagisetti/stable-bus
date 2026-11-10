@@ -5,7 +5,7 @@ import logging
 import secrets
 
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
-
+from Repositories.OutboxRepository import OutboxRepository
 from sqlalchemy.exc import IntegrityError
 
 from models.Booking import Booking

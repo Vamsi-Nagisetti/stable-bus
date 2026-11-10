@@ -13,6 +13,7 @@ from sqlalchemy import (
     JSON,
     text,
 )
+from sqlalchemy import Text
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 from core.database import Base
@@ -106,10 +107,7 @@ class Booking(Base):
         nullable=False,
     )
 
-    bus_id: Mapped[str] = mapped_column(
-        String(100),
-        nullable=False,
-    )
+    bus_id: Mapped[str] = mapped_column(Text, nullable=False)
 
     seat_numbers: Mapped[list[str]] = mapped_column(
         JSON,

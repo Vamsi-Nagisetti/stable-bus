@@ -1660,3 +1660,1043 @@ RuntimeError: Unable to fetch the seat map detail from host. Check inner excepti
 2026-11-10T17:38:45 | INFO | stablebus.main | request_id=- | Redis connection closed
 2026-11-10T17:38:45 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
 2026-11-10T17:38:45 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T12:12:00 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T12:12:00 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T12:12:00 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/main.py", line 60, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "/home/ubuntu/prd/stable-bus/Adaptors/Databases/DynamoDBAdaptee.py", line 19, in __init__
+    raise ValueError("DYNAMODB_REGION is not configured")
+ValueError: DYNAMODB_REGION is not configured
+2026-11-10T12:12:00 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T12:12:00 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T12:13:02 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T12:13:02 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T12:13:02 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T12:13:03 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T12:13:03 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T12:13:03 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T12:13:03 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T12:13:13 | ERROR | stablebus.api.bookings | request_id=01a1c560-5fe0-73ad-8177-d2c5a750397a | Failed to create booking
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/Booking.py", line 145, in create_booking
+    booking, guest_token = BookingOrchestrator.start_booking(
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        db=db,
+        ^^^^^^
+    ...<10 lines>...
+        passenger_email=booking_request.passenger_email,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/booking_orchestrator.py", line 438, in start_booking
+    existing_booking = repository.get_by_idempotency_key(
+        user_id=user_id,
+        idempotency_key=idempotency_key,
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/BookingRepository.py", line 72, in get_by_idempotency_key
+    return self.database.scalar(stmt)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2616, in scalar
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        **kw,
+        ^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+2026-11-10T12:13:13 | INFO | stablebus.middleware.request | request_id=01a1c560-5fe0-73ad-8177-d2c5a750397a | Request completed | method=POST | path=/api/v1/bookings | status=502 | duration_ms=3438.19
+2026-11-10T12:14:16 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T12:14:16 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T12:14:16 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T12:21:51 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T12:21:51 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T12:21:51 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T12:21:52 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T12:21:52 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T12:21:52 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T12:21:52 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T12:22:22 | INFO | stablebus.management.session | request_id=01a1c568-c81e-720f-85ae-cc4c106c0951 | Refresh token rotated successfully | user_id=3 | session_id=23
+2026-11-10T12:22:22 | INFO | stablebus.api.auth | request_id=01a1c568-c81e-720f-85ae-cc4c106c0951 | Refresh token API completed successfully
+2026-11-10T12:22:22 | INFO | stablebus.middleware.request | request_id=01a1c568-c81e-720f-85ae-cc4c106c0951 | Request completed | method=POST | path=/api/v1/auth/refresh | status=200 | duration_ms=1703.92
+2026-11-10T12:22:41 | ERROR | stablebus.api.bookings | request_id=01a1c568-f9fe-7210-becb-4e2bbb78c4f5 | Failed to create booking
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1977, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 1192, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.StringDataRightTruncation: value too long for type character varying(100)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/Booking.py", line 145, in create_booking
+    booking, guest_token = BookingOrchestrator.start_booking(
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        db=db,
+        ^^^^^^
+    ...<10 lines>...
+        passenger_email=booking_request.passenger_email,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/booking_orchestrator.py", line 500, in start_booking
+    booking = BookingOrchestrator.create_booking_records(
+        db=db,
+    ...<6 lines>...
+        passenger_email=passenger_email,
+    )
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/booking_orchestrator.py", line 267, in create_booking_records
+    repository.save(booking)
+    ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Repositories/BookingRepository.py", line 15, in save
+    self.database.flush()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 4626, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "<sqlalchemy generated warned() wrapper for sqlalchemy.orm.session.Session._flush>", line 2, in _flush
+    return target(fn, self, objects=objects)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/deprecations.py", line 281, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 4769, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 4730, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py", line 467, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py", line 643, in execute
+    util.preloaded.orm_persistence._save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py", line 92, in _save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py", line 1250, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1494, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py", line 534, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1714, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<9 lines>...
+        param_dict=param_dict,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1868, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1996, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1977, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 1192, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.DataError: (psycopg.errors.StringDataRightTruncation) value too long for type character varying(100)
+[SQL: INSERT INTO bookings (id, idempotency_key, temp_booking_ref, supplier_refno, transport_pnr, user_id, guest_access_token_hash, customer_mobile, passenger_email, operator_booking_ref, source_city_id, destination_city_id, journey_date, bus_id, seat_numbers, total_amount, currency, status, created_at, updated_at) VALUES (%(id)s::VARCHAR, %(idempotency_key)s::VARCHAR, %(temp_booking_ref)s::VARCHAR, %(supplier_refno)s::VARCHAR, %(transport_pnr)s::VARCHAR, %(user_id)s::VARCHAR, %(guest_access_token_hash)s::VARCHAR, %(customer_mobile)s::VARCHAR, %(passenger_email)s::VARCHAR, %(operator_booking_ref)s::VARCHAR, %(source_city_id)s::VARCHAR, %(destination_city_id)s::VARCHAR, %(journey_date)s::DATE, %(bus_id)s::VARCHAR, %(seat_numbers)s::JSON, %(total_amount)s, %(currency)s::VARCHAR, %(status)s::VARCHAR, %(created_at)s::TIMESTAMP WITH TIME ZONE, %(updated_at)s::TIMESTAMP WITH TIME ZONE)]
+[parameters: {'id': '60401d8f-74a2-4360-b43d-b8cb5c614bf3', 'idempotency_key': 'stablebus-guest-e2e-002', 'temp_booking_ref': None, 'supplier_refno': None, 'transport_pnr': None, 'user_id': None, 'guest_access_token_hash': 'bf5b29d3b35be15bde0223c6512b35a58dade13c593c872a9d1385cf73e78e20', 'customer_mobile': '9876543210', 'passenger_email': 'test@example.com', 'operator_booking_ref': None, 'source_city_id': '3', 'destination_city_id': '5', 'journey_date': datetime.date(2026, 11, 15), 'bus_id': 'EH7a37fQKa6a9q+rRxdsLZtkdyONMAC4o/LcjaaYDPlacn0wy0N3KWY4pJwo5zU2Zzt0DA4rJuI49zlPb8Be/pV9YET5u9/Mm37B1pGhNtnBDSN0k3kzOjDtAx4dS3zP4/E2HGzQoOONq90nYDQOs ... (1838 characters truncated) ... U9Nv0YgLBQLlRkEF+vqDu5kqqxQ5Cv4KZL/SCxWWl8MPzvumMGQZcia4Im4mxqv2Zphj2b26LFeOoRQu5j5l0JJ3arw3ASIRNn7wl9WBmNeMNKK6IERCpO1NnOcQiUoddYt+ZvzHkWlRLe/0c9A==', 'seat_numbers': Json(['L2']), 'total_amount': Decimal('838.96'), 'currency': 'INR', 'status': 'INITIATED', 'created_at': datetime.datetime(2026, 11, 10, 12, 22, 40, 912400, tzinfo=datetime.timezone.utc), 'updated_at': datetime.datetime(2026, 11, 10, 12, 22, 40, 912404, tzinfo=datetime.timezone.utc)}]
+(Background on this error at: https://sqlalche.me/e/21/9h9h)
+2026-11-10T12:22:41 | INFO | stablebus.middleware.request | request_id=01a1c568-f9fe-7210-becb-4e2bbb78c4f5 | Request completed | method=POST | path=/api/v1/bookings | status=502 | duration_ms=7390.00
+2026-11-10T12:24:23 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T12:24:23 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T12:24:23 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T12:29:54 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T12:29:54 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T12:29:54 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T12:29:54 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T12:29:54 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T12:29:54 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T12:29:54 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T12:30:04 | ERROR | stablebus.api.bookings | request_id=01a1c56f-bf5c-714c-8502-9d45c099f24a | Failed to create booking
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1977, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 1192, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.StringDataRightTruncation: value too long for type character varying(100)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/Booking.py", line 145, in create_booking
+    booking, guest_token = BookingOrchestrator.start_booking(
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        db=db,
+        ^^^^^^
+    ...<10 lines>...
+        passenger_email=booking_request.passenger_email,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/booking_orchestrator.py", line 500, in start_booking
+    booking = BookingOrchestrator.create_booking_records(
+        db=db,
+    ...<6 lines>...
+        passenger_email=passenger_email,
+    )
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/booking_orchestrator.py", line 267, in create_booking_records
+    repository.save(booking)
+    ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Repositories/BookingRepository.py", line 15, in save
+    self.database.flush()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 4626, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "<sqlalchemy generated warned() wrapper for sqlalchemy.orm.session.Session._flush>", line 2, in _flush
+    return target(fn, self, objects=objects)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/deprecations.py", line 281, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 4769, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 4730, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py", line 467, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py", line 643, in execute
+    util.preloaded.orm_persistence._save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py", line 92, in _save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py", line 1250, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1494, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py", line 534, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1714, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<9 lines>...
+        param_dict=param_dict,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1868, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1996, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 1977, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 1192, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.DataError: (psycopg.errors.StringDataRightTruncation) value too long for type character varying(100)
+[SQL: INSERT INTO bookings (id, idempotency_key, temp_booking_ref, supplier_refno, transport_pnr, user_id, guest_access_token_hash, customer_mobile, passenger_email, operator_booking_ref, source_city_id, destination_city_id, journey_date, bus_id, seat_numbers, total_amount, currency, status, created_at, updated_at) VALUES (%(id)s::VARCHAR, %(idempotency_key)s::VARCHAR, %(temp_booking_ref)s::VARCHAR, %(supplier_refno)s::VARCHAR, %(transport_pnr)s::VARCHAR, %(user_id)s::VARCHAR, %(guest_access_token_hash)s::VARCHAR, %(customer_mobile)s::VARCHAR, %(passenger_email)s::VARCHAR, %(operator_booking_ref)s::VARCHAR, %(source_city_id)s::VARCHAR, %(destination_city_id)s::VARCHAR, %(journey_date)s::DATE, %(bus_id)s::VARCHAR, %(seat_numbers)s::JSON, %(total_amount)s, %(currency)s::VARCHAR, %(status)s::VARCHAR, %(created_at)s::TIMESTAMP WITH TIME ZONE, %(updated_at)s::TIMESTAMP WITH TIME ZONE)]
+[parameters: {'id': '656e357d-911e-418f-ac9b-91af91b13a6c', 'idempotency_key': 'stablebus-guest-e2e-002', 'temp_booking_ref': None, 'supplier_refno': None, 'transport_pnr': None, 'user_id': None, 'guest_access_token_hash': '0501bbaf8b605acdcc15ae557b9d770a4672291440bb9a8aa4687808f2d44f96', 'customer_mobile': '9876543210', 'passenger_email': 'test@example.com', 'operator_booking_ref': None, 'source_city_id': '3', 'destination_city_id': '5', 'journey_date': datetime.date(2026, 11, 15), 'bus_id': 'EH7a37fQKa6a9q+rRxdsLZtkdyONMAC4o/LcjaaYDPlacn0wy0N3KWY4pJwo5zU2Zzt0DA4rJuI49zlPb8Be/pV9YET5u9/Mm37B1pGhNtnBDSN0k3kzOjDtAx4dS3zP4/E2HGzQoOONq90nYDQOs ... (1838 characters truncated) ... U9Nv0YgLBQLlRkEF+vqDu5kqqxQ5Cv4KZL/SCxWWl8MPzvumMGQZcia4Im4mxqv2Zphj2b26LFeOoRQu5j5l0JJ3arw3ASIRNn7wl9WBmNeMNKK6IERCpO1NnOcQiUoddYt+ZvzHkWlRLe/0c9A==', 'seat_numbers': Json(['L2']), 'total_amount': Decimal('838.96'), 'currency': 'INR', 'status': 'INITIATED', 'created_at': datetime.datetime(2026, 11, 10, 12, 30, 4, 441197, tzinfo=datetime.timezone.utc), 'updated_at': datetime.datetime(2026, 11, 10, 12, 30, 4, 441202, tzinfo=datetime.timezone.utc)}]
+(Background on this error at: https://sqlalche.me/e/21/9h9h)
+2026-11-10T12:30:04 | INFO | stablebus.middleware.request | request_id=01a1c56f-bf5c-714c-8502-9d45c099f24a | Request completed | method=POST | path=/api/v1/bookings | status=502 | duration_ms=7130.31
+2026-11-10T12:32:37 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T12:32:37 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T12:32:37 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T12:40:34 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T12:40:34 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T12:40:34 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T12:40:34 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T12:40:34 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T12:40:34 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T12:40:34 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T12:40:44 | INFO | stablebus.booking | request_id=01a1c579-8319-7776-ba08-a484a39a4d2a | Booking status transition: INITIATED -> TEMP_BOOKING_PENDING
+2026-11-10T12:40:44 | INFO | stablebus.mock_aopay | request_id=01a1c579-8319-7776-ba08-a484a39a4d2a | Mock temporary booking created: MOCK1DFEADCC
+2026-11-10T12:40:44 | INFO | stablebus.booking | request_id=01a1c579-8319-7776-ba08-a484a39a4d2a | Booking status transition: TEMP_BOOKING_PENDING -> TEMP_BOOKED
+2026-11-10T12:40:44 | INFO | stablebus.booking | request_id=01a1c579-8319-7776-ba08-a484a39a4d2a | Temporary booking created successfully: 8b187e3b-e0f8-43d7-94db-53ae489d28dd
+2026-11-10T12:40:45 | INFO | stablebus.middleware.request | request_id=01a1c579-8319-7776-ba08-a484a39a4d2a | Request completed | method=POST | path=/api/v1/bookings | status=201 | duration_ms=7601.10
+2026-11-10T12:40:58 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T12:40:58 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T12:40:58 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T12:57:51 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T12:57:51 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T12:57:51 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T12:57:52 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T12:57:52 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T12:57:52 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T12:57:52 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T12:58:58 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T12:58:58 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T12:58:58 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T12:59:17 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T12:59:17 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T12:59:17 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T12:59:18 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T12:59:18 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T12:59:18 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T12:59:18 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T13:00:00 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T13:00:00 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T13:00:00 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T13:01:13 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T13:01:13 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T13:01:13 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T13:01:13 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T13:01:13 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T13:01:13 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T13:01:13 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T13:01:13 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T13:01:13 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T13:01:13 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T13:01:25 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T13:01:25 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T13:01:25 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T13:01:26 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T13:01:26 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T13:01:26 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T13:01:26 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T13:01:26 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T13:01:26 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T13:01:26 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T13:02:34 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T13:02:34 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T13:02:34 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T13:02:34 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T13:02:34 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T13:02:34 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T13:02:34 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T13:02:34 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T13:02:34 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T13:02:34 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T13:05:34 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T13:05:34 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T13:05:34 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T13:05:34 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T13:05:34 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T13:05:34 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T13:05:34 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T13:07:11 | INFO | stablebus.middleware.request | request_id=01a1c591-d5ab-72c2-897c-e2213c7e9ee3 | Request completed | method=GET | path=/docs | status=200 | duration_ms=0.62
+2026-11-10T13:07:11 | INFO | stablebus.middleware.request | request_id=01a1c591-d62f-74b2-9f2a-33f700028ef3 | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=55.62
+2026-11-10T13:08:48 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T13:08:48 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T13:08:48 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T13:08:51 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T13:08:51 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T13:08:51 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T13:08:52 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T13:08:52 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T13:08:52 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T13:08:52 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T13:09:19 | INFO | stablebus.middleware.request | request_id=01a1c593-ca74-746c-ae31-7a1aea11d798 | Request completed | method=GET | path=/docs | status=200 | duration_ms=0.61
+2026-11-10T13:09:19 | INFO | stablebus.middleware.request | request_id=01a1c593-cac0-7091-8875-d9a8ed6183e6 | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=51.40
+2026-11-10T13:09:45 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T13:09:45 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T13:09:45 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T13:09:50 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T13:09:50 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T13:09:50 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T13:09:50 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T13:09:50 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T13:09:50 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T13:09:50 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T13:10:23 | INFO | stablebus.services.bus | request_id=01a1c594-c298-76aa-b7e9-7967b106fa6a | Bus cities cache MISS
+2026-11-10T13:10:30 | INFO | stablebus.services.bus | request_id=01a1c594-c298-76aa-b7e9-7967b106fa6a | Bus cities cached successfully. Total cities: 18782
+2026-11-10T13:10:30 | INFO | stablebus.middleware.request | request_id=01a1c594-c298-76aa-b7e9-7967b106fa6a | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=6917.38
+2026-11-10T13:12:22 | INFO | stablebus.middleware.request | request_id=01a1c596-9566-70a3-8204-68c50ecaf146 | Request completed | method=GET | path=/docs | status=200 | duration_ms=0.74
+2026-11-10T13:12:34 | INFO | stablebus.services.bus | request_id=01a1c596-c526-7175-83da-dbbeb5bcbdf8 | Bus cities cache HIT
+2026-11-10T13:12:34 | INFO | stablebus.middleware.request | request_id=01a1c596-c526-7175-83da-dbbeb5bcbdf8 | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=34.36
+2026-11-10T13:12:35 | INFO | stablebus.middleware.request | request_id=01a1c596-c6d3-7589-8a29-03bb83b955ca | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=43.80
+2026-11-10T13:12:42 | INFO | stablebus.services.bus | request_id=01a1c596-e43c-73ab-906a-9c8d0c065c95 | Bus cities cache HIT
+2026-11-10T13:12:42 | INFO | stablebus.middleware.request | request_id=01a1c596-e43c-73ab-906a-9c8d0c065c95 | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=38.28
+2026-11-10T13:14:19 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T13:14:19 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T13:14:19 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T13:14:23 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T13:14:23 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T13:14:23 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T13:14:23 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T13:14:23 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T13:14:23 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T13:14:23 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T13:14:25 | INFO | stablebus.services.bus | request_id=01a1c598-75e0-75b6-b1d1-20681df9eb3c | Bus cities cache HIT
+2026-11-10T13:14:25 | INFO | stablebus.middleware.request | request_id=01a1c598-75e0-75b6-b1d1-20681df9eb3c | Request completed | method=GET | path=/api/v1/buses/cities | status=200 | duration_ms=114.60
+2026-11-10T13:14:40 | ERROR | stablebus.api.bookings | request_id=01a1c598-9f15-71f9-9ad4-67528255151c | Failed to create booking
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/Booking.py", line 145, in create_booking
+    booking, guest_token = BookingOrchestrator.start_booking(
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        db=db,
+        ^^^^^^
+    ...<10 lines>...
+        passenger_email=booking_request.passenger_email,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/booking_orchestrator.py", line 438, in start_booking
+    existing_booking = repository.get_by_idempotency_key(
+        user_id=user_id,
+        idempotency_key=idempotency_key,
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/BookingRepository.py", line 72, in get_by_idempotency_key
+    return self.database.scalar(stmt)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2616, in scalar
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        **kw,
+        ^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+2026-11-10T13:14:40 | INFO | stablebus.middleware.request | request_id=01a1c598-9f15-71f9-9ad4-67528255151c | Request completed | method=POST | path=/api/v1/bookings | status=502 | duration_ms=4338.40
+2026-11-10T13:14:52 | INFO | stablebus.middleware.request | request_id=01a1c598-dcea-72f5-88c5-89be77f64c71 | Request completed | method=GET | path=/api/v1/bookings/8b187e3b-e0f8-43d7-94db-53ae489d28dd/payments | status=405 | duration_ms=0.67
+2026-11-10T13:14:57 | INFO | stablebus.middleware.request | request_id=01a1c598-f221-737b-8a0e-2b7ca22016f1 | Request completed | method=POST | path=/api/v1/bookings/8b187e3b-e0f8-43d7-94db-53ae489d28dd/payments | status=422 | duration_ms=3.18
+2026-11-10T13:15:12 | ERROR | stablebus.api.bookings | request_id=01a1c599-14ff-7407-9ad3-38b2cfd2831d | Failed to create booking
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/Booking.py", line 145, in create_booking
+    booking, guest_token = BookingOrchestrator.start_booking(
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        db=db,
+        ^^^^^^
+    ...<10 lines>...
+        passenger_email=booking_request.passenger_email,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/booking_orchestrator.py", line 438, in start_booking
+    existing_booking = repository.get_by_idempotency_key(
+        user_id=user_id,
+        idempotency_key=idempotency_key,
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/BookingRepository.py", line 72, in get_by_idempotency_key
+    return self.database.scalar(stmt)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2616, in scalar
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        **kw,
+        ^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+2026-11-10T13:15:12 | INFO | stablebus.middleware.request | request_id=01a1c599-14ff-7407-9ad3-38b2cfd2831d | Request completed | method=POST | path=/api/v1/bookings | status=502 | duration_ms=5791.26
+2026-11-10T13:16:08 | INFO | stablebus.booking | request_id=01a1c599-fc7f-759b-9359-8ab814047d47 | Booking status transition: INITIATED -> TEMP_BOOKING_PENDING
+2026-11-10T13:16:08 | INFO | stablebus.mock_aopay | request_id=01a1c599-fc7f-759b-9359-8ab814047d47 | Mock temporary booking created: MOCKA2FCB8FE
+2026-11-10T13:16:08 | INFO | stablebus.booking | request_id=01a1c599-fc7f-759b-9359-8ab814047d47 | Booking status transition: TEMP_BOOKING_PENDING -> TEMP_BOOKED
+2026-11-10T13:16:08 | INFO | stablebus.booking | request_id=01a1c599-fc7f-759b-9359-8ab814047d47 | Temporary booking created successfully: c873e437-5e29-46b6-a363-bc99a0f8248e
+2026-11-10T13:16:08 | INFO | stablebus.middleware.request | request_id=01a1c599-fc7f-759b-9359-8ab814047d47 | Request completed | method=POST | path=/api/v1/bookings | status=201 | duration_ms=3365.77
+2026-11-10T13:17:17 | INFO | stablebus.middleware.request | request_id=01a1c59b-1642-7587-8b0c-e39ab166f3a1 | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments | status=422 | duration_ms=1.94
+2026-11-10T13:18:21 | INFO | stablebus.middleware.request | request_id=01a1c59c-10ff-74b7-ab7a-b1cbd804bcbd | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments | status=422 | duration_ms=1.79
+2026-11-10T13:19:42 | INFO | stablebus.middleware.request | request_id=01a1c59d-4c7f-7198-996d-ff99e198c835 | Request completed | method=GET | path=/docs | status=200 | duration_ms=0.53
+2026-11-10T13:19:44 | INFO | stablebus.middleware.request | request_id=01a1c59d-544a-72c5-9fde-5c01c5f0ec77 | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=41.22
+2026-11-10T13:20:43 | INFO | stablebus.booking | request_id=01a1c59e-3849-7364-a244-c978d20a811f | Booking status transition: TEMP_BOOKED -> PAYMENT_PENDING
+2026-11-10T13:20:44 | INFO | stablebus.middleware.request | request_id=01a1c59e-3849-7364-a244-c978d20a811f | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments | status=200 | duration_ms=1379.75
+2026-11-10T13:24:32 | INFO | stablebus.middleware.request | request_id=01a1c5a1-b873-7118-ad5e-caa27f70249b | Request completed | method=GET | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments/verify | status=405 | duration_ms=0.63
+2026-11-10T13:24:38 | INFO | stablebus.middleware.request | request_id=01a1c5a1-cf03-7037-b837-92636784c859 | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments/verify | status=409 | duration_ms=245.27
+2026-11-10T13:25:29 | INFO | stablebus.middleware.request | request_id=01a1c5a2-94d8-76f4-a4d8-5ed08dfa72e0 | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments/verify | status=409 | duration_ms=240.31
+2026-11-10T13:26:16 | INFO | stablebus.middleware.request | request_id=01a1c5a3-4ce8-72a6-8b98-c8f2ecdc997e | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments/verify | status=400 | duration_ms=288.55
+2026-11-10T13:27:32 | INFO | stablebus.middleware.request | request_id=01a1c5a4-77bc-7556-bc6d-9c0ca293b8e8 | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments | status=200 | duration_ms=307.93
+2026-11-10T13:36:37 | INFO | stablebus.middleware.request | request_id=01a1c5ac-c981-70db-868d-cd08731894c9 | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments/mock-success | status=404 | duration_ms=0.71
+2026-11-10T13:36:46 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T13:36:46 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T13:36:46 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T13:36:49 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T13:36:49 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T13:36:49 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T13:36:49 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T13:36:49 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T13:36:49 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T13:36:49 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T13:36:54 | INFO | stablebus.middleware.request | request_id=01a1c5ad-0a9b-72a6-9e83-5ed9999df344 | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments/mock-success | status=422 | duration_ms=30.29
+2026-11-10T13:37:31 | INFO | stablebus.middleware.request | request_id=01a1c5ad-94fb-746f-bbf6-86317f7c3387 | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments/mock-success | status=400 | duration_ms=1249.35
+2026-11-10T13:37:50 | INFO | stablebus.booking | request_id=01a1c5ad-cd3c-769b-85d5-46007e5956f3 | Returning existing booking for idempotency key: c873e437-5e29-46b6-a363-bc99a0f8248e
+2026-11-10T13:37:50 | INFO | stablebus.middleware.request | request_id=01a1c5ad-cd3c-769b-85d5-46007e5956f3 | Request completed | method=POST | path=/api/v1/bookings | status=201 | duration_ms=5834.49
+2026-11-10T13:38:13 | INFO | stablebus.middleware.request | request_id=01a1c5ae-3e8b-7097-9a93-724dea4506d2 | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments | status=404 | duration_ms=228.25
+2026-11-10T13:38:29 | INFO | stablebus.booking | request_id=01a1c5ae-713c-7423-99eb-c4ca9c678ffd | Returning existing booking for idempotency key: c873e437-5e29-46b6-a363-bc99a0f8248e
+2026-11-10T13:38:29 | INFO | stablebus.middleware.request | request_id=01a1c5ae-713c-7423-99eb-c4ca9c678ffd | Request completed | method=POST | path=/api/v1/bookings | status=201 | duration_ms=3364.03
+2026-11-10T13:38:45 | INFO | stablebus.middleware.request | request_id=01a1c5ae-bb61-71c0-9dad-699579276643 | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments | status=200 | duration_ms=307.04
+2026-11-10T13:38:59 | INFO | stablebus.middleware.request | request_id=01a1c5ae-f3a5-70bd-89e3-2b355681237d | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments/mock-success | status=404 | duration_ms=236.39
+2026-11-10T13:39:24 | INFO | stablebus.middleware.request | request_id=01a1c5af-51f4-7485-94ba-0468a87c6dee | Request completed | method=POST | path=/api/v1/bookings/c873e437-5e29-46b6-a363-bc99a0f8248e/payments/mock-success | status=400 | duration_ms=244.48
+2026-11-10T13:41:09 | INFO | stablebus.booking | request_id=01a1c5b0-e275-75d5-ab4e-bf15eb9069a4 | Booking status transition: INITIATED -> TEMP_BOOKING_PENDING
+2026-11-10T13:41:09 | INFO | stablebus.mock_aopay | request_id=01a1c5b0-e275-75d5-ab4e-bf15eb9069a4 | Mock temporary booking created: MOCK030CF27B
+2026-11-10T13:41:09 | INFO | stablebus.booking | request_id=01a1c5b0-e275-75d5-ab4e-bf15eb9069a4 | Booking status transition: TEMP_BOOKING_PENDING -> TEMP_BOOKED
+2026-11-10T13:41:09 | INFO | stablebus.booking | request_id=01a1c5b0-e275-75d5-ab4e-bf15eb9069a4 | Temporary booking created successfully: e1b23006-ef47-41f3-86c0-077cc3a4bf7f
+2026-11-10T13:41:09 | INFO | stablebus.middleware.request | request_id=01a1c5b0-e275-75d5-ab4e-bf15eb9069a4 | Request completed | method=POST | path=/api/v1/bookings | status=201 | duration_ms=3234.97
+2026-11-10T13:42:09 | INFO | stablebus.booking | request_id=01a1c5b1-d747-73d8-b365-ba3391e68f0c | Booking status transition: TEMP_BOOKED -> PAYMENT_PENDING
+2026-11-10T13:42:10 | INFO | stablebus.middleware.request | request_id=01a1c5b1-d747-73d8-b365-ba3391e68f0c | Request completed | method=POST | path=/api/v1/bookings/e1b23006-ef47-41f3-86c0-077cc3a4bf7f/payments | status=200 | duration_ms=1379.11
+2026-11-10T13:43:36 | INFO | stablebus.middleware.request | request_id=01a1c5b3-2bac-7784-a234-652c8a977d2c | Request completed | method=POST | path=/api/v1/bookings/e1b23006-ef47-41f3-86c0-077cc3a4bf7f/payments/mock-success | status=200 | duration_ms=279.92
+2026-11-10T13:45:46 | INFO | stablebus.middleware.request | request_id=01a1c5b5-2753-7430-9eb8-d444f821b448 | Request completed | method=POST | path=/api/v1/bookings/payments/verify | status=404 | duration_ms=0.63
+2026-11-10T13:46:10 | INFO | stablebus.middleware.request | request_id=01a1c5b5-8541-7019-a051-a6c73bf641cb | Request completed | method=POST | path=/api/v1/bookings/e1b23006-ef47-41f3-86c0-077cc3a4bf7f/payments/verify | status=400 | duration_ms=300.49
+2026-11-10T13:47:27 | INFO | stablebus.middleware.request | request_id=01a1c5b6-b24c-7621-a37f-95f4f1f563e7 | Request completed | method=POST | path=/api/v1/bookings/e1b23006-ef47-41f3-86c0-077cc3a4bf7f/payments/mock-success | status=200 | duration_ms=256.00
+2026-11-10T13:47:59 | INFO | stablebus.middleware.request | request_id=01a1c5b7-2ee7-75b2-9e3d-e3409de670be | Request completed | method=POST | path=/api/v1/bookings/e1b23006-ef47-41f3-86c0-077cc3a4bf7f/payments/verify | status=400 | duration_ms=279.60
+2026-11-10T13:55:24 | INFO | stablebus.booking | request_id=01a1c5bd-f6cc-7369-a063-c3ae410a350b | Booking status transition: PAYMENT_PENDING -> PAYMENT_VERIFIED
+2026-11-10T13:55:24 | INFO | stablebus.middleware.request | request_id=01a1c5bd-f6cc-7369-a063-c3ae410a350b | Request completed | method=POST | path=/api/v1/bookings/e1b23006-ef47-41f3-86c0-077cc3a4bf7f/payments/verify | status=200 | duration_ms=1186.52
+2026-11-10T13:57:01 | INFO | stablebus.middleware.request | request_id=01a1c5bf-7614-707f-b311-93fa64bd7dfb | Request completed | method=GET | path=/api/v1/bookings/e1b23006-ef47-41f3-86c0-077cc3a4bf7f/ticketing | status=405 | duration_ms=0.63
+2026-11-10T13:57:09 | INFO | stablebus.booking | request_id=01a1c5bf-926b-77a3-ad72-107bb5a66b08 | Booking status transition: PAYMENT_VERIFIED -> TICKETING_PENDING
+2026-11-10T13:57:09 | INFO | stablebus.mock_aopay | request_id=01a1c5bf-926b-77a3-ad72-107bb5a66b08 | Mock ticketing completed: MOCK030CF27B
+2026-11-10T13:57:09 | INFO | stablebus.booking | request_id=01a1c5bf-926b-77a3-ad72-107bb5a66b08 | Booking status transition: TICKETING_PENDING -> TICKETING_UNKNOWN
+2026-11-10T13:57:09 | INFO | stablebus.middleware.request | request_id=01a1c5bf-926b-77a3-ad72-107bb5a66b08 | Request completed | method=POST | path=/api/v1/bookings/e1b23006-ef47-41f3-86c0-077cc3a4bf7f/ticketing | status=200 | duration_ms=893.50
+2026-11-10T13:58:36 | INFO | stablebus.booking | request_id=01a1c5c0-e83a-7314-b71a-1771dc76bec4 | Booking status transition: TICKETING_UNKNOWN -> CONFIRMED
+2026-11-10T13:58:37 | INFO | stablebus.middleware.request | request_id=01a1c5c0-e83a-7314-b71a-1771dc76bec4 | Request completed | method=POST | path=/api/v1/bookings/e1b23006-ef47-41f3-86c0-077cc3a4bf7f/requery | status=200 | duration_ms=911.95
+2026-11-10T15:33:18 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T15:33:18 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T15:33:18 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T15:33:19 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T15:33:19 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T15:33:19 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T15:33:19 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-10T15:33:19 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T15:33:19 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:33:19 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:33:19 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:33:34 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:33:34 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:33:34 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:33:38 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T15:33:38 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T15:33:38 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T15:33:39 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T15:33:39 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T15:33:39 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T15:33:39 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-10T15:33:39 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T15:34:46 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:34:46 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:34:46 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:34:54 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T15:34:54 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T15:34:54 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T15:34:54 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T15:34:54 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T15:34:54 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T15:34:54 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-10T15:34:54 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T15:36:45 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:36:45 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:36:45 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:37:03 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T15:37:03 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T15:37:03 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T15:37:04 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T15:37:04 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T15:37:04 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T15:37:04 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-10T15:37:04 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T15:37:16 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:37:16 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:37:16 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:37:21 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T15:37:21 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T15:37:21 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T15:37:21 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T15:37:21 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T15:37:21 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T15:37:21 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-10T15:37:21 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T15:38:02 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:38:02 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:38:02 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:38:10 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T15:38:10 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T15:38:10 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T15:38:11 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T15:38:11 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T15:38:11 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T15:38:11 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-10T15:38:11 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T15:38:51 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:38:51 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:38:51 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:38:54 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T15:38:54 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T15:38:54 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T15:38:54 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T15:38:54 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T15:38:54 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T15:38:54 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-10T15:38:54 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T15:39:21 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:39:21 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:39:21 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:39:26 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T15:39:26 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T15:39:26 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T15:39:26 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T15:39:26 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T15:39:26 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T15:39:26 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-10T15:39:26 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T15:40:12 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:40:12 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:40:12 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:40:22 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T15:40:23 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T15:40:23 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T15:40:23 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T15:40:23 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T15:40:23 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T15:40:23 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-10T15:40:23 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T15:40:29 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T15:40:29 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T15:40:29 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
