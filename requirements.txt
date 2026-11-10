@@ -7,7 +7,8 @@ requests
 python-dotenv
 PyJWT[crypto]
 kafka-python
-python-dotenv
-fastapi 
-uvicorn
-uuid7
+fastapi
+uvicorn[standard]
+pydantic-settings
+httpx2
+boto3

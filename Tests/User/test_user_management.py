@@ -141,7 +141,7 @@ def test_account_restored_within_grace_period(dependencies):
     repo.get_by_id.side_effect = [
     deleted_user,   # First call: account still marked for deletion
     restored_user,  # Second call: account has been restored
-]
+   ]
     sessions.create_access_token.return_value = "access-token"
     sessions.create_refresh_session.return_value = "refresh-token"
 
