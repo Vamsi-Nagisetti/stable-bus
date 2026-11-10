@@ -1530,3 +1530,133 @@ botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when 
 2026-11-10T13:04:45 | INFO | stablebus.main | request_id=- | Redis connection closed
 2026-11-10T13:04:45 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
 2026-11-10T13:04:45 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T15:06:17 | INFO | stablebus.test | request_id=- | StableBus logging initialized
+2026-11-10T15:06:17 | WARNING | stablebus.test | request_id=- | Sample warning
+2026-11-10T15:06:17 | ERROR | stablebus.test | request_id=- | Sample error
+2026-11-10T16:09:15 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T16:15:11 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T16:15:11 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T16:15:11 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T16:15:11 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T16:15:11 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T16:15:11 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T16:15:11 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T16:16:10 | INFO | stablebus.middleware.request | request_id=01a1c510-bcb8-73ab-8538-72a8cf8de3ec | Request completed | method=GET | path=/docs | status=200 | duration_ms=1.09
+2026-11-10T16:16:11 | INFO | stablebus.middleware.request | request_id=01a1c510-bcff-7315-967d-7952a7002f60 | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=65.73
+2026-11-10T16:17:46 | INFO | stablebus.services.bus | request_id=01a1c512-309e-73e6-ae22-5a880745e389 | Fetching seat map for bus: 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
+2026-11-10T16:17:47 | ERROR | stablebus.api.buses | request_id=01a1c512-309e-73e6-ae22-5a880745e389 | Failed to fetch bus seat map
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\buses.py", line 81, in get_bus_seat_map
+    return bus_service.get_seat_map(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        bus_key=seat_map_request.bus_key,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        dropping_id=seat_map_request.dropping_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Services\Bus\bus_service.py", line 468, in get_seat_map
+    raise RuntimeError(
+        header.get("error_Desc") or "Unable to fetch bus seat map"
+    )
+RuntimeError: Unable to fetch the seat map detail from host. Check inner exception. 
+2026-11-10T16:17:47 | INFO | stablebus.middleware.request | request_id=01a1c512-309e-73e6-ae22-5a880745e389 | Request completed | method=POST | path=/api/v1/buses/seat-map | status=502 | duration_ms=1373.94
+2026-11-10T16:18:56 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T16:18:56 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T16:18:56 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T16:21:22 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T16:21:22 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T16:21:22 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T16:21:22 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T16:21:22 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T16:21:22 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T16:21:22 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T16:23:58 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T16:23:58 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T16:23:58 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T16:42:17 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T16:42:17 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T16:42:17 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T16:42:17 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T16:42:17 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T16:42:17 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T16:42:17 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T16:42:17 | INFO | stablebus.middleware.request | request_id=01a1c528-a546-7230-87a3-d8d97333a9c0 | Request completed | method=POST | path=/api/v1/bookings | status=401 | duration_ms=28.16
+2026-11-10T16:42:22 | INFO | stablebus.middleware.request | request_id=01a1c528-b5fa-71b3-967a-9b266ed0f023 | Request completed | method=POST | path=/api/v1/bookings | status=401 | duration_ms=2.51
+2026-11-10T16:49:38 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T16:49:38 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T16:49:38 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T16:49:40 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T16:49:40 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T16:49:40 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T16:49:40 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T16:49:40 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T16:49:40 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T16:49:40 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T16:50:25 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T16:50:25 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T16:50:25 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T16:50:27 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T16:50:27 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T16:50:27 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T16:50:28 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T16:50:28 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T16:50:28 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T16:50:28 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T16:50:34 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T16:50:34 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T16:50:34 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T16:50:36 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T16:50:36 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T16:50:36 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T16:50:36 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T16:50:36 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T16:50:36 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T16:50:36 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T16:51:25 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T16:51:25 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T16:51:25 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T16:51:28 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T16:51:28 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T16:51:28 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T16:51:28 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T16:51:28 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T16:51:28 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T16:51:28 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T16:52:31 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T16:52:31 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T16:52:31 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T16:52:33 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T16:52:33 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T16:52:33 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T16:52:34 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T16:52:34 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T16:52:34 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T16:52:34 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T16:53:29 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T16:53:29 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T16:53:29 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T17:19:34 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T17:19:34 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T17:19:34 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T17:19:34 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T17:19:34 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T17:19:34 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T17:19:34 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T17:21:14 | INFO | stablebus.middleware.request | request_id=01a1c54c-3da9-7367-8ca3-0fd4364c44fe | Request completed | method=POST | path=/api/v1/bookings | status=409 | duration_ms=3512.38
+2026-11-10T17:22:56 | INFO | stablebus.middleware.request | request_id=01a1c54d-d4b8-74c6-bd79-7b080d429621 | Request completed | method=POST | path=/api/v1/bookings | status=409 | duration_ms=1289.62
+2026-11-10T17:23:19 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T17:23:19 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T17:23:19 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-10T17:35:43 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-10T17:35:43 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-10T17:35:43 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-10T17:35:44 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-10T17:35:44 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-10T17:35:44 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-10T17:35:44 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-10T17:35:49 | INFO | stablebus.middleware.request | request_id=01a1c559-9eac-719d-aba7-0b9f978daccc | Request completed | method=POST | path=/api/v1/bookings | status=409 | duration_ms=2555.34
+2026-11-10T17:38:45 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T17:38:45 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T17:38:45 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed

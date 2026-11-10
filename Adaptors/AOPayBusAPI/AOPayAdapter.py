@@ -9,8 +9,10 @@ class AOPayAdapter(BusAPIBaseAdaptor):
         registration_id,
         ip_address,
         imei_number,
+        booking_adaptee=None
     ):
         self.adaptee = adaptee
+        self.booking_adaptee = booking_adaptee or adaptee
         self.registration_id = registration_id
         self.ip_address = ip_address
         self.imei_number = imei_number
@@ -22,6 +24,11 @@ class AOPayAdapter(BusAPIBaseAdaptor):
             "imeI_Number": self.imei_number,
             "registrationID": self.registration_id,
         }
+
+    def _booking_payload(self, payload: dict) -> dict:
+        request_payload = dict(payload)
+        request_payload.update(self._common_payload())
+        return request_payload
 
     def BusSearch(self, from_city, to_city, travel_date):
         payload = self._common_payload()
@@ -59,40 +66,23 @@ class AOPayAdapter(BusAPIBaseAdaptor):
             payload,
         )
 
-    def BusTempBooking(self, trip_id, seat_ids, passengers):
-        payload = self._common_payload()
 
-        payload.update({
-            # Map trip_id, seat_ids and passengers to AO Pay's
-            # documented temporary-booking request fields.
-        })
-
-        return self.adaptee.BusTempBooking(
-            "REPLACE_WITH_DOCUMENTED_TEMP_BOOKING_ENDPOINT",
-            payload,
+    def BusTempBooking(self, payload: dict) -> dict:
+        return self.booking_adaptee.BusTempBooking(
+            "/api/V1/Bus/Travel/BusTempBooking",
+            self._booking_payload(payload),
         )
 
-    def BusTicketing(self, booking_id, payment_reference):
-        payload = self._common_payload()
 
-        payload.update({
-            # Map booking_id and payment_reference to the
-            # actual ticketing fields required by AO Pay.
-        })
-
-        return self.adaptee.BusTicketing(
-            "REPLACE_WITH_DOCUMENTED_TICKETING_ENDPOINT",
-            payload,
+    def BusTicketing(self, payload: dict) -> dict:
+        return self.booking_adaptee.BusTicketing(
+            "/api/V1/Bus/Travel/BusTicketing",
+            self._booking_payload(payload),
         )
 
-    def BusRequery(self, booking_id):
-        payload = self._common_payload()
 
-        payload.update({
-            # Map booking_id to AO Pay's required requery fields.
-        })
-
-        return self.adaptee.BusRequery(
-            "REPLACE_WITH_DOCUMENTED_REQUERY_ENDPOINT",
-            payload,
+    def BusRequery(self, payload: dict) -> dict:
+        return self.booking_adaptee.BusRequery(
+            "/api/V1/Bus/Travel/BusRequery",
+            self._booking_payload(payload),
         )

@@ -30,7 +30,7 @@ class BookingRepository:
     def update_status(
         self,
         booking_id: str,
-        status: str
+        status: str,
     ) -> Booking | None:
 
         booking = self.get_by_id(booking_id)
@@ -53,3 +53,20 @@ class BookingRepository:
         self.database.flush()
 
         return True
+
+    def get_by_idempotency_key(
+        self,
+        user_id: str | None,
+        idempotency_key: str,
+    ) -> Booking | None:
+
+        stmt = select(Booking).where(
+            Booking.idempotency_key == idempotency_key
+        )
+
+        if user_id is None:
+            stmt = stmt.where(Booking.user_id.is_(None))
+        else:
+            stmt = stmt.where(Booking.user_id == user_id)
+
+        return self.database.scalar(stmt)

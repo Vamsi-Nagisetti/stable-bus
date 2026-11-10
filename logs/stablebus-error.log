@@ -988,3 +988,21 @@ Traceback (most recent call last):
   File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
     raise error_class(parsed_response, operation_name)
 botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-10T15:06:17 | ERROR | stablebus.test | request_id=- | Sample error
+2026-11-10T16:17:47 | ERROR | stablebus.api.buses | request_id=01a1c512-309e-73e6-ae22-5a880745e389 | Failed to fetch bus seat map
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\buses.py", line 81, in get_bus_seat_map
+    return bus_service.get_seat_map(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        bus_key=seat_map_request.bus_key,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        dropping_id=seat_map_request.dropping_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Services\Bus\bus_service.py", line 468, in get_seat_map
+    raise RuntimeError(
+        header.get("error_Desc") or "Unable to fetch bus seat map"
+    )
+RuntimeError: Unable to fetch the seat map detail from host. Check inner exception. 

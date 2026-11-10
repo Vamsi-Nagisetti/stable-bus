@@ -37,3 +37,20 @@ class BusAPIBaseAdaptor(ABC):
     @abstractmethod
     def BusRequery(self, booking_id: str):
         pass
+
+    @abstractmethod
+    def BusTempBooking(self, payload: dict) -> dict:
+        """Temporarily reserve the selected seats."""
+        pass
+
+
+    @abstractmethod
+    def BusTicketing(self, payload: dict) -> dict:
+        """Confirm the temporary booking and issue the ticket."""
+        pass
+
+
+    @abstractmethod
+    def BusRequery(self, payload: dict) -> dict:
+        """Check the status of a previously initiated booking."""
+        pass

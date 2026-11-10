@@ -4,26 +4,47 @@ from datetime import datetime, timezone
 from decimal import Decimal
 
 from sqlalchemy import (
+    Column,
     String,
     Numeric,
     Date,
     DateTime,
     Index,
     JSON,
+    text,
 )
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 from core.database import Base
 
 
 class Booking(Base):
-
     __tablename__ = "bookings"
 
     __table_args__ = (
         Index("ix_bookings_user_id", "user_id"),
         Index("ix_bookings_status", "status"),
         Index("ix_bookings_journey_date", "journey_date"),
+        Index(
+            "uq_bookings_user_id_idempotency_key",
+            "user_id",
+            "idempotency_key",
+            unique=True,
+            postgresql_where=text("user_id IS NOT NULL"),
+        ),
+        Index(
+            "uq_bookings_guest_idempotency_key",
+            "idempotency_key",
+            unique=True,
+            postgresql_where=text("user_id IS NULL"),
+        ),
+    )
+
+    passengers = relationship(
+        "BookingPassenger",
+        back_populates="booking",
+        cascade="all, delete-orphan",
+        lazy="selectin",
     )
 
     id: Mapped[str] = mapped_column(
@@ -32,18 +53,44 @@ class Booking(Base):
         default=lambda: str(uuid.uuid4()),
     )
 
-    user_id: Mapped[str] = mapped_column(
-        String(36),
-        nullable=False,
+    idempotency_key: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
     )
 
-    # AO Pay references
+    temp_booking_ref: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+
+    supplier_refno = Column(String(100), nullable=True)
+    transport_pnr = Column(String(100), nullable=True)
+
+    user_id: Mapped[str | None] = mapped_column(
+        String(36),
+        nullable=True,
+    )
+
+    guest_access_token_hash: Mapped[str | None] = mapped_column(
+        String(64),
+        nullable=True,
+    )
+
+    customer_mobile: Mapped[str | None] = mapped_column(
+        String(15),
+        nullable=True,
+    )
+
+    passenger_email: Mapped[str | None] = mapped_column(
+        String(254),
+        nullable=True,
+    )
+
     operator_booking_ref: Mapped[str | None] = mapped_column(
         String(100),
         nullable=True,
     )
 
-    # Journey details
     source_city_id: Mapped[str] = mapped_column(
         String(50),
         nullable=False,
@@ -69,7 +116,6 @@ class Booking(Base):
         nullable=False,
     )
 
-    # Payment amount
     total_amount: Mapped[Decimal] = mapped_column(
         Numeric(12, 2),
         nullable=False,
@@ -81,7 +127,6 @@ class Booking(Base):
         nullable=False,
     )
 
-    # Booking lifecycle
     status: Mapped[str] = mapped_column(
         String(40),
         default="INITIATED",

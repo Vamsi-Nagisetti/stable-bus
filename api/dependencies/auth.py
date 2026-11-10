@@ -84,3 +84,24 @@ def get_current_user(
         )
 
     return user
+
+def get_optional_current_user(
+    request: Request,
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
+    db: Session = Depends(get_db),
+):
+    """
+    Return the authenticated user when a valid Bearer token is supplied.
+    Return None when the request has no Authorization header.
+
+    Invalid or expired tokens must still return 401.
+    """
+
+    if credentials is None:
+        return None
+
+    return get_current_user(
+        request=request,
+        credentials=credentials,
+        db=db,
+    )

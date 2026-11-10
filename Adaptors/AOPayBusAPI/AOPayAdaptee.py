@@ -42,3 +42,5 @@ class AOPayAdaptee:
 
     def BusRequery(self, endpoint, payload):
         return self._post(endpoint, payload)
+
+    
