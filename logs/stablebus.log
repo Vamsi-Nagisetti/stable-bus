@@ -1025,3 +1025,508 @@ RuntimeError: Unable to retrieve user session
 2026-11-09T08:27:08 | INFO | stablebus.services.bus | request_id=01a1bf6b-1458-7623-b490-c5a20763a20b | Fetching seat map for bus: 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
 2026-11-09T08:27:12 | INFO | stablebus.services.bus | request_id=01a1bf6b-1458-7623-b490-c5a20763a20b | Seat map fetched successfully for bus: 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
 2026-11-09T08:27:12 | INFO | stablebus.middleware.request | request_id=01a1bf6b-1458-7623-b490-c5a20763a20b | Request completed | method=POST | path=/api/v1/buses/seat-map | status=200 | duration_ms=3947.76
+2026-11-09T22:46:31 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T22:46:31 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T22:46:34 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1076, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ~~~~~~~~~~~~~~~~~~^
+        operation_model, request_dict, request_context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1100, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 132, in create_request
+    self._event_emitter.emit(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        event_name,
+        ^^^^^^^^^^^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+        operation_name=operation_model.name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 108, in handler
+    return self.sign(operation_name, request)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 200, in sign
+    auth.add_auth(request)
+    ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\auth.py", line 432, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+2026-11-09T22:46:34 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 47, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1076, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ~~~~~~~~~~~~~~~~~~^
+        operation_model, request_dict, request_context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1100, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 132, in create_request
+    self._event_emitter.emit(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        event_name,
+        ^^^^^^^^^^^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+        operation_name=operation_model.name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 108, in handler
+    return self.sign(operation_name, request)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 200, in sign
+    auth.add_auth(request)
+    ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\auth.py", line 432, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+2026-11-09T22:46:34 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T22:46:34 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T22:47:54 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T22:47:54 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T22:47:56 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1076, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ~~~~~~~~~~~~~~~~~~^
+        operation_model, request_dict, request_context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1100, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 132, in create_request
+    self._event_emitter.emit(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        event_name,
+        ^^^^^^^^^^^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+        operation_name=operation_model.name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 108, in handler
+    return self.sign(operation_name, request)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 200, in sign
+    auth.add_auth(request)
+    ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\auth.py", line 432, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+2026-11-09T22:47:56 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 47, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1076, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ~~~~~~~~~~~~~~~~~~^
+        operation_model, request_dict, request_context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1100, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 132, in create_request
+    self._event_emitter.emit(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        event_name,
+        ^^^^^^^^^^^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+        operation_name=operation_model.name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 108, in handler
+    return self.sign(operation_name, request)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 200, in sign
+    auth.add_auth(request)
+    ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\auth.py", line 432, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+2026-11-09T22:47:56 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T22:47:56 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T22:57:18 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T22:57:18 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T22:57:18 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-09T22:57:18 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T22:57:18 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 47, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T22:57:18 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T22:57:18 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T22:58:19 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T22:58:19 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T22:58:19 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-09T22:58:19 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T22:58:19 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 51, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T22:58:19 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T22:58:19 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T23:00:06 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T23:00:06 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T23:00:06 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-09T23:00:07 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:00:07 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 51, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:00:07 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T23:00:07 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T23:01:17 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T23:01:17 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T23:01:17 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-09T23:01:18 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:01:18 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 51, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:01:18 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T23:01:18 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T23:06:01 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T23:06:01 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T23:06:01 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-09T23:06:01 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:06:01 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 51, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:06:01 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T23:06:01 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T23:08:04 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T23:08:04 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T23:08:04 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-09T23:08:04 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-09T23:08:04 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T23:09:04 | INFO | stablebus.middleware.request | request_id=01a1c164-6411-754e-a4ca-eec6ff05344e | Request completed | method=GET | path=/docs | status=200 | duration_ms=0.99
+2026-11-09T23:09:04 | INFO | stablebus.middleware.request | request_id=01a1c164-6453-74fe-b380-dad3004204c6 | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=182.50
+2026-11-09T23:10:27 | INFO | stablebus.management.session | request_id=01a1c165-a7df-75e7-baca-5d102be18b00 | Refresh token rotated successfully | user_id=3 | session_id=23
+2026-11-09T23:10:27 | INFO | stablebus.api.auth | request_id=01a1c165-a7df-75e7-baca-5d102be18b00 | Refresh token API completed successfully
+2026-11-09T23:10:27 | INFO | stablebus.middleware.request | request_id=01a1c165-a7df-75e7-baca-5d102be18b00 | Request completed | method=POST | path=/api/v1/auth/refresh | status=200 | duration_ms=331.13
+2026-11-09T23:11:05 | INFO | stablebus.middleware.request | request_id=01a1c166-3e9d-76e0-b0f1-c02ebba8cc79 | Request completed | method=GET | path=/api/v1/users/passengers | status=404 | duration_ms=1.05
+2026-11-09T23:11:15 | INFO | stablebus.middleware.request | request_id=01a1c166-661f-7777-8929-e055b4b9da44 | Request completed | method=POST | path=/api/v1/users/passengers | status=404 | duration_ms=1.13
+2026-11-09T23:11:31 | INFO | stablebus.passengers | request_id=01a1c166-a265-74d3-9986-2f69f18fea82 | Saved passenger created for user
+2026-11-09T23:11:31 | INFO | stablebus.middleware.request | request_id=01a1c166-a265-74d3-9986-2f69f18fea82 | Request completed | method=POST | path=/users/passengers | status=201 | duration_ms=152.64
+2026-11-09T23:11:47 | INFO | stablebus.passengers | request_id=01a1c166-e1fa-778f-a680-aa2d1d86f40d | Saved passenger created for user
+2026-11-09T23:11:47 | INFO | stablebus.middleware.request | request_id=01a1c166-e1fa-778f-a680-aa2d1d86f40d | Request completed | method=POST | path=/users/passengers | status=201 | duration_ms=33.60
+2026-11-09T23:12:01 | INFO | stablebus.passengers | request_id=01a1c167-17bc-73b8-8697-b31b9b24b52c | Saved passenger created for user
+2026-11-09T23:12:01 | INFO | stablebus.middleware.request | request_id=01a1c167-17bc-73b8-8697-b31b9b24b52c | Request completed | method=POST | path=/users/passengers | status=201 | duration_ms=35.75
+2026-11-09T23:12:39 | INFO | stablebus.passengers | request_id=01a1c167-aab6-7554-a4ca-d3511f38038a | Saved passenger created for user
+2026-11-09T23:12:39 | INFO | stablebus.middleware.request | request_id=01a1c167-aab6-7554-a4ca-d3511f38038a | Request completed | method=POST | path=/users/passengers | status=201 | duration_ms=37.59
+2026-11-09T23:12:42 | INFO | stablebus.passengers | request_id=01a1c167-b95e-71a2-9f85-4a450a0f2461 | Saved passenger created for user
+2026-11-09T23:12:42 | INFO | stablebus.middleware.request | request_id=01a1c167-b95e-71a2-9f85-4a450a0f2461 | Request completed | method=POST | path=/users/passengers | status=201 | duration_ms=35.94
+2026-11-09T23:13:23 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T23:13:23 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-09T23:13:23 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T23:13:40 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T23:13:40 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T23:13:40 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-09T23:13:41 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-09T23:13:41 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T23:13:51 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-09T23:13:51 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-09T23:13:51 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-09T23:16:49 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-09T23:16:49 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-09T23:16:49 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-09T23:16:50 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-09T23:16:50 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-09T23:16:52 | INFO | stablebus.middleware.request | request_id=01a1c16b-8648-7624-bcad-1ca5962a272c | Request completed | method=GET | path=/api/v1/users/passengers | status=200 | duration_ms=182.16
+2026-11-09T23:18:48 | INFO | stablebus.middleware.request | request_id=01a1c16d-4c62-74fb-97a1-2e2c88f784aa | Request completed | method=GET | path=/api/v1/users/passengers/40bc0be2-c522-42c9-b48c-75e77ec7bf6f | status=405 | duration_ms=1.88
+2026-11-09T23:18:57 | INFO | stablebus.passengers | request_id=01a1c16d-703b-7142-a88b-c165c3f39bc7 | Saved passenger updated
+2026-11-09T23:18:57 | INFO | stablebus.middleware.request | request_id=01a1c16d-703b-7142-a88b-c165c3f39bc7 | Request completed | method=PUT | path=/api/v1/users/passengers/40bc0be2-c522-42c9-b48c-75e77ec7bf6f | status=200 | duration_ms=157.73
+2026-11-09T23:20:06 | INFO | stablebus.middleware.request | request_id=01a1c16e-7e19-711e-8124-d1da02600706 | Request completed | method=GET | path=/api/v1/users/passengers | status=200 | duration_ms=32.62
+2026-11-09T23:20:36 | INFO | stablebus.passengers | request_id=01a1c16e-f313-7342-a25a-f74882b00e1b | Saved passenger deleted
+2026-11-09T23:20:36 | INFO | stablebus.middleware.request | request_id=01a1c16e-f313-7342-a25a-f74882b00e1b | Request completed | method=DELETE | path=/api/v1/users/passengers/40bc0be2-c522-42c9-b48c-75e77ec7bf6f | status=200 | duration_ms=32.51
+2026-11-09T23:20:52 | INFO | stablebus.middleware.request | request_id=01a1c16f-3196-715a-a95a-88c92367eb50 | Request completed | method=GET | path=/api/v1/users/passengers | status=200 | duration_ms=32.44
+2026-11-09T23:21:11 | INFO | stablebus.passengers | request_id=01a1c16f-7c0d-73f0-a916-8b81f873eb0c | Saved passenger deleted
+2026-11-09T23:21:11 | INFO | stablebus.middleware.request | request_id=01a1c16f-7c0d-73f0-a916-8b81f873eb0c | Request completed | method=DELETE | path=/api/v1/users/passengers/79ae78bc-d3a8-48ab-b5bd-c8b7540ea6a9 | status=200 | duration_ms=36.90
+2026-11-09T23:21:53 | INFO | stablebus.middleware.request | request_id=01a1c170-2014-77ea-a475-c51c588b9185 | Request completed | method=DELETE | path=/api/v1/users/passengers/7abc7f47e-153b-4e51-b8db-b0dc86b23941 | status=404 | duration_ms=35.26
+2026-11-09T23:22:00 | INFO | stablebus.middleware.request | request_id=01a1c170-3c56-705b-a0dd-b5d0c80dac4e | Request completed | method=GET | path=/api/v1/users/passengers | status=200 | duration_ms=31.67
+2026-11-09T23:22:19 | INFO | stablebus.passengers | request_id=01a1c170-8657-7518-95d5-29f68d0f0d99 | Saved passenger deleted
+2026-11-09T23:22:19 | INFO | stablebus.middleware.request | request_id=01a1c170-8657-7518-95d5-29f68d0f0d99 | Request completed | method=DELETE | path=/api/v1/users/passengers/94153768-7a23-4444-94e6-29792a581d01 | status=200 | duration_ms=32.04
+2026-11-09T23:22:35 | INFO | stablebus.passengers | request_id=01a1c170-c568-7146-af52-4047e1b7141c | Saved passenger deleted
+2026-11-09T23:22:35 | INFO | stablebus.middleware.request | request_id=01a1c170-c568-7146-af52-4047e1b7141c | Request completed | method=DELETE | path=/api/v1/users/passengers/abc7f47e-153b-4e51-b8db-b0dc86b23941 | status=200 | duration_ms=42.77
+2026-11-09T23:22:49 | INFO | stablebus.passengers | request_id=01a1c170-fbe5-7636-a05f-705c041c9ae6 | Saved passenger deleted
+2026-11-09T23:22:49 | INFO | stablebus.middleware.request | request_id=01a1c170-fbe5-7636-a05f-705c041c9ae6 | Request completed | method=DELETE | path=/api/v1/users/passengers/e1d548fc-c25b-4c0e-8cc8-5b6416a79842 | status=200 | duration_ms=32.16
+2026-11-09T23:22:53 | INFO | stablebus.middleware.request | request_id=01a1c171-099a-73eb-b0e9-f7e462f05052 | Request completed | method=GET | path=/api/v1/users/passengers | status=200 | duration_ms=42.65
+2026-11-10T13:04:45 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-10T13:04:45 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-10T13:04:45 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed

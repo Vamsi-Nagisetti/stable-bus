@@ -2,11 +2,16 @@ import logging
 import os
 from contextlib import asynccontextmanager
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from fastapi import FastAPI
 
 from api.routes.auth import router as auth_router
 from api.routes.users import router as users_router
 from api.routes.buses import router as buses_router
+from api.routes.passengers import router as passengers_router
 
 from Management.SessionManagement import SessionManagement
 from core.logging_config import LoggingConfig
@@ -22,7 +27,7 @@ from Services.OTP.FAST2SMS_OTP_Service import Fast2SMSOTPService
 from Services.Bus.bus_service import BusService
 
 from Factories.AuthDependencyFactory import AuthDependencyFactory
-
+from Adaptors.Databases.DynamoDBAdaptee import DynamoDBAdaptee
 
 # Initialize logging before creating application dependencies
 LoggingConfig.setup_logging()
@@ -36,10 +41,15 @@ async def lifespan(app: FastAPI):
     logger.info("Starting StableBus application")
 
     redis_adaptee = None
+    dynamodb_adaptee = None
 
     try:
         # 1. Initialize Redis connection
         redis_adaptee = RedisCacheAdaptee()
+
+        # Initialize DynamoDB
+        dynamodb_adaptee = DynamoDBAdaptee()
+        app.state.dynamodb = dynamodb_adaptee.get_table()
 
         # 2. Create cache adaptor
         cache = RedisCacheAdaptor(redis_adaptee)
@@ -94,6 +104,9 @@ async def lifespan(app: FastAPI):
             redis_adaptee.close()
             logger.info("Redis connection closed")
 
+        if dynamodb_adaptee is not None:
+            dynamodb_adaptee.close()
+
         logger.info("StableBus application shutdown completed")
 
 
@@ -106,9 +119,11 @@ app = FastAPI(
 )
 
 # Register API routers
+
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(buses_router)
+app.include_router(passengers_router)
 
 logger.info("StableBus application initialized")
 

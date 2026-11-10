@@ -576,3 +576,415 @@ Traceback (most recent call last):
         "Unable to retrieve user session"
     ) from exc
 RuntimeError: Unable to retrieve user session
+2026-11-09T22:46:34 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1076, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ~~~~~~~~~~~~~~~~~~^
+        operation_model, request_dict, request_context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1100, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 132, in create_request
+    self._event_emitter.emit(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        event_name,
+        ^^^^^^^^^^^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+        operation_name=operation_model.name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 108, in handler
+    return self.sign(operation_name, request)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 200, in sign
+    auth.add_auth(request)
+    ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\auth.py", line 432, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+2026-11-09T22:46:34 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 47, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1076, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ~~~~~~~~~~~~~~~~~~^
+        operation_model, request_dict, request_context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1100, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 132, in create_request
+    self._event_emitter.emit(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        event_name,
+        ^^^^^^^^^^^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+        operation_name=operation_model.name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 108, in handler
+    return self.sign(operation_name, request)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 200, in sign
+    auth.add_auth(request)
+    ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\auth.py", line 432, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+2026-11-09T22:47:56 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1076, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ~~~~~~~~~~~~~~~~~~^
+        operation_model, request_dict, request_context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1100, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 132, in create_request
+    self._event_emitter.emit(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        event_name,
+        ^^^^^^^^^^^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+        operation_name=operation_model.name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 108, in handler
+    return self.sign(operation_name, request)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 200, in sign
+    auth.add_auth(request)
+    ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\auth.py", line 432, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+2026-11-09T22:47:56 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 47, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1076, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ~~~~~~~~~~~~~~~~~~^
+        operation_model, request_dict, request_context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1100, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\endpoint.py", line 132, in create_request
+    self._event_emitter.emit(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        event_name,
+        ^^^^^^^^^^^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+        operation_name=operation_model.name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 108, in handler
+    return self.sign(operation_name, request)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\signers.py", line 200, in sign
+    auth.add_auth(request)
+    ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\auth.py", line 432, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+2026-11-09T22:57:18 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T22:57:18 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 47, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T22:58:19 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T22:58:19 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 51, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:00:07 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:00:07 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 51, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:01:18 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:01:18 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 51, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:06:01 | ERROR | stablebus.dynamodb | request_id=- | Failed to initialize DynamoDB connection
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
+2026-11-09T23:06:01 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 51, in lifespan
+    dynamodb_adaptee = DynamoDBAdaptee()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Databases\DynamoDBAdaptee.py", line 33, in __init__
+    self.table.load()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 565, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the DescribeTable operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:DescribeTable action
