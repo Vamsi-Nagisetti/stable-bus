@@ -5,12 +5,13 @@ import logging
 import secrets
 
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
-from Repositories.OutboxRepository import OutboxRepository
+
 from sqlalchemy.exc import IntegrityError
 
 from models.Booking import Booking
 from models.BookingPassenger import BookingPassenger
 from Repositories.BookingRepository import BookingRepository
+from Repositories.OutboxRepository import OutboxRepository
 from core.constants.booking_status import BookingStatus
 from Services.Booking.booking_services import BookingStatusService
 
@@ -920,6 +921,40 @@ class BookingOrchestrator:
                 booking,
                 BookingStatus.CONFIRMED,
             )
+
+            passenger_data = [
+                {
+                    "name": passenger.name,
+                    "seat_number": passenger.seat_number,
+                    "ticket_number": passenger.ticket_number,
+                }
+                for passenger in (booking.passengers or [])
+            ]
+
+            OutboxRepository(db).create_event(
+                aggregate_type="BOOKING",
+                aggregate_id=booking.id,
+                event_type="BOOKING_CONFIRMED",
+                payload={
+                    "booking_id": booking.id,
+                    "user_id": booking.user_id,
+                    "customer_email": booking.passenger_email,
+                    "customer_mobile": booking.customer_mobile,
+                    "supplier_refno": booking.supplier_refno,
+                    "transport_pnr": booking.transport_pnr,
+                    "journey_date": (
+                        booking.journey_date.isoformat()
+                        if booking.journey_date else None
+                    ),
+                    "source_city_id": booking.source_city_id,
+                    "destination_city_id": booking.destination_city_id,
+                    "seat_numbers": booking.seat_numbers,
+                    "total_amount": str(booking.total_amount),
+                    "currency": booking.currency,
+                    "passengers": passenger_data,
+                },
+            )
+
             db.commit()
             db.refresh(booking)
 

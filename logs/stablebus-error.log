@@ -1725,3 +1725,149 @@ Traceback (most recent call last):
 sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
 	Is the server running on that host and accepting TCP/IP connections?
 (Background on this error at: https://sqlalche.me/e/21/e3q8)
+2026-11-10T15:43:04 | ERROR | stablebus.api.bookings | request_id=01a1c620-785b-7402-bb8e-48e99438c3a4 | Failed to create booking
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/Booking.py", line 148, in create_booking
+    booking, guest_token = BookingOrchestrator.start_booking(
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        db=db,
+        ^^^^^^
+    ...<10 lines>...
+        passenger_email=booking_request.passenger_email,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/booking_orchestrator.py", line 438, in start_booking
+    existing_booking = repository.get_by_idempotency_key(
+        user_id=user_id,
+        idempotency_key=idempotency_key,
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/BookingRepository.py", line 72, in get_by_idempotency_key
+    return self.database.scalar(stmt)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2616, in scalar
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        **kw,
+        ^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
