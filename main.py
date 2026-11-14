@@ -5,10 +5,11 @@ from contextlib import asynccontextmanager
 from Adaptors.Notifications.ResendEmailAdapter import ResendEmailAdapter
 from Services.Notifications.NotificationService import NotificationService
 from dotenv import load_dotenv
-
+from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 
 from fastapi import FastAPI
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from api.routes.auth import router as auth_router
 from api.routes.users import router as users_router
@@ -209,7 +210,16 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:8081",
+        "http://127.0.0.1:8081",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Register API routers
 app.include_router(auth_router)
 app.include_router(users_router)
@@ -218,6 +228,14 @@ app.include_router(passengers_router)
 app.include_router(bookings_router)
 
 logger.info("StableBus application initialized")
+# Prometheus monitoring
+Instrumentator().instrument(app).expose(
+    app,
+    endpoint="/metrics",
+    include_in_schema=False,
+)
+
+logger.info("Prometheus metrics endpoint initialized")
 
 
 @app.get("/health", tags=["Health"])

@@ -1871,3 +1871,2793 @@ Traceback (most recent call last):
 sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
 	Is the server running on that host and accepting TCP/IP connections?
 (Background on this error at: https://sqlalche.me/e/21/e3q8)
+2026-11-11T19:19:29 | ERROR | stablebus.api.buses | request_id=01a1cc0d-0a6f-7132-81bb-2ec82c91525a | Failed to search buses
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/buses.py", line 59, in search_buses
+    return bus_service.search_buses(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        from_city=search_request.from_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        to_city=search_request.to_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        travel_date=search_request.travel_date,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Services/Bus/bus_service.py", line 411, in search_buses
+    raise RuntimeError(
+        header.get("error_Desc") or "Unable to search buses"
+    )
+RuntimeError: No bus availbale for the given city name. Check inner exception. 
+2026-11-11T19:20:54 | ERROR | stablebus.api.buses | request_id=01a1cc0e-5695-75ff-82e1-6f52b958e4b9 | Failed to fetch bus seat map
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/buses.py", line 81, in get_bus_seat_map
+    return bus_service.get_seat_map(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        bus_key=seat_map_request.bus_key,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        dropping_id=seat_map_request.dropping_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Services/Bus/bus_service.py", line 468, in get_seat_map
+    raise RuntimeError(
+        header.get("error_Desc") or "Unable to fetch bus seat map"
+    )
+RuntimeError: Unable to fetch the seat map detail from host. Check inner exception. 
+2026-11-12T07:02:39 | ERROR | stablebus.middleware.request | request_id=01a1ce90-d0d5-75d3-a6d0-28854142acee | Request failed | method=POST | path=/api/v1/auth/refresh | status=500 | duration_ms=27.16
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Repositories/SessionRepository.py", line 35, in get_by_refresh_token_hash
+    result = self.database.execute(statement)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2555, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 136, in refresh_token
+    tokens = user_management.refresh_user_session(
+        refresh_token=payload.refresh_token,
+    )
+  File "/home/ubuntu/prd/stable-bus/Management/UserManagement.py", line 151, in refresh_user_session
+    return self.session_management.refresh_session(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        refresh_token=refresh_token,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        session_repository=self.session_repository,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Management/SessionManagement.py", line 151, in refresh_session
+    session = session_repository.get_by_refresh_token_hash(
+        old_hash
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/SessionRepository.py", line 40, in get_by_refresh_token_hash
+    raise RuntimeError(
+        "Unable to retrieve user session"
+    ) from exc
+RuntimeError: Unable to retrieve user session
+2026-11-12T07:03:20 | ERROR | stablebus.middleware.request | request_id=01a1ce91-70ab-7771-a513-6e040dee4490 | Request failed | method=POST | path=/api/v1/auth/verify-otp | status=500 | duration_ms=4.14
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 60, in get_by_mobile_number
+    result = self.database.execute(statement)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2555, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 98, in verify_otp
+    result = user_management.verify_otp_and_login(
+        mobile_number=payload.mobile_number,
+        otp=payload.otp,
+    )
+  File "/home/ubuntu/prd/stable-bus/Management/UserManagement.py", line 32, in verify_otp_and_login
+    user = self.user_repository.get_by_mobile_number(
+        mobile_number
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 65, in get_by_mobile_number
+    raise RuntimeError(
+        "Unable to retrieve user due to a database error"
+    ) from exc
+RuntimeError: Unable to retrieve user due to a database error
+2026-11-12T07:08:14 | ERROR | stablebus.middleware.request | request_id=01a1ce95-eec9-76f8-8d11-548e7e15bb8b | Request failed | method=POST | path=/api/v1/auth/verify-otp | status=500 | duration_ms=3.62
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 60, in get_by_mobile_number
+    result = self.database.execute(statement)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2555, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 98, in verify_otp
+    result = user_management.verify_otp_and_login(
+        mobile_number=payload.mobile_number,
+        otp=payload.otp,
+    )
+  File "/home/ubuntu/prd/stable-bus/Management/UserManagement.py", line 32, in verify_otp_and_login
+    user = self.user_repository.get_by_mobile_number(
+        mobile_number
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 65, in get_by_mobile_number
+    raise RuntimeError(
+        "Unable to retrieve user due to a database error"
+    ) from exc
+RuntimeError: Unable to retrieve user due to a database error
+2026-11-12T07:10:04 | ERROR | stablebus.middleware.request | request_id=01a1ce97-99d3-730a-8626-99486cc4fab4 | Request failed | method=POST | path=/api/v1/auth/verify-otp | status=500 | duration_ms=8.33
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 60, in get_by_mobile_number
+    result = self.database.execute(statement)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2555, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 98, in verify_otp
+    result = user_management.verify_otp_and_login(
+        mobile_number=payload.mobile_number,
+        otp=payload.otp,
+    )
+  File "/home/ubuntu/prd/stable-bus/Management/UserManagement.py", line 32, in verify_otp_and_login
+    user = self.user_repository.get_by_mobile_number(
+        mobile_number
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 65, in get_by_mobile_number
+    raise RuntimeError(
+        "Unable to retrieve user due to a database error"
+    ) from exc
+RuntimeError: Unable to retrieve user due to a database error
+2026-11-12T07:14:23 | ERROR | stablebus.management.auth | request_id=01a1ce9b-8e57-778f-b919-f6758fc0892e | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:14:23 | ERROR | stablebus.api.auth | request_id=01a1ce9b-8e57-778f-b919-f6758fc0892e | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:14:50 | ERROR | stablebus.management.auth | request_id=01a1ce9b-f6bb-7384-b3a2-9b391d177ad3 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:14:50 | ERROR | stablebus.api.auth | request_id=01a1ce9b-f6bb-7384-b3a2-9b391d177ad3 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:15:02 | ERROR | stablebus.management.auth | request_id=01a1ce9c-242e-72e5-ab21-052b484f9f84 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:15:02 | ERROR | stablebus.api.auth | request_id=01a1ce9c-242e-72e5-ab21-052b484f9f84 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:24:52 | ERROR | stablebus.management.auth | request_id=01a1cea5-2623-721f-9f41-00b607873c27 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:24:52 | ERROR | stablebus.api.auth | request_id=01a1cea5-2623-721f-9f41-00b607873c27 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:25:35 | ERROR | stablebus.management.auth | request_id=01a1cea5-cfc6-731d-ae39-5c6504436601 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:25:35 | ERROR | stablebus.api.auth | request_id=01a1cea5-cfc6-731d-ae39-5c6504436601 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:27:13 | ERROR | stablebus.management.auth | request_id=01a1cea7-4da1-76ef-8704-839f72713e0c | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:27:13 | ERROR | stablebus.api.auth | request_id=01a1cea7-4da1-76ef-8704-839f72713e0c | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:28:12 | ERROR | stablebus.management.auth | request_id=01a1cea8-34b2-7662-83b4-a8303972118c | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:28:12 | ERROR | stablebus.api.auth | request_id=01a1cea8-34b2-7662-83b4-a8303972118c | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:28:39 | ERROR | stablebus.management.auth | request_id=01a1cea8-9bda-768d-b3d0-15f1f18a545e | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:28:39 | ERROR | stablebus.api.auth | request_id=01a1cea8-9bda-768d-b3d0-15f1f18a545e | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:35:07 | ERROR | stablebus.management.auth | request_id=01a1ceae-896b-7314-9197-2fe9ea374019 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:35:07 | ERROR | stablebus.api.auth | request_id=01a1ceae-896b-7314-9197-2fe9ea374019 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:56:23 | ERROR | stablebus.management.auth | request_id=01a1cec2-0041-7586-8c30-8100c0b70b7e | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T07:56:23 | ERROR | stablebus.api.auth | request_id=01a1cec2-0041-7586-8c30-8100c0b70b7e | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T08:02:42 | ERROR | stablebus.management.auth | request_id=01a1cec7-c82d-7325-9bcc-4c68b37c8f02 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T08:02:42 | ERROR | stablebus.api.auth | request_id=01a1cec7-c82d-7325-9bcc-4c68b37c8f02 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T08:03:29 | ERROR | stablebus.middleware.request | request_id=01a1cec8-82b4-725b-879c-6d1083701a76 | Request failed | method=POST | path=/api/v1/auth/verify-otp | status=500 | duration_ms=4.95
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 60, in get_by_mobile_number
+    result = self.database.execute(statement)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2555, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 98, in verify_otp
+    result = user_management.verify_otp_and_login(
+        mobile_number=payload.mobile_number,
+        otp=payload.otp,
+    )
+  File "/home/ubuntu/prd/stable-bus/Management/UserManagement.py", line 32, in verify_otp_and_login
+    user = self.user_repository.get_by_mobile_number(
+        mobile_number
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 65, in get_by_mobile_number
+    raise RuntimeError(
+        "Unable to retrieve user due to a database error"
+    ) from exc
+RuntimeError: Unable to retrieve user due to a database error
+2026-11-12T08:14:35 | ERROR | stablebus.middleware.request | request_id=01a1ced2-abf2-76bc-9593-8962cf8917e3 | Request failed | method=POST | path=/api/v1/auth/verify-otp | status=500 | duration_ms=4.15
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 60, in get_by_mobile_number
+    result = self.database.execute(statement)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2555, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 98, in verify_otp
+    result = user_management.verify_otp_and_login(
+        mobile_number=payload.mobile_number,
+        otp=payload.otp,
+    )
+  File "/home/ubuntu/prd/stable-bus/Management/UserManagement.py", line 32, in verify_otp_and_login
+    user = self.user_repository.get_by_mobile_number(
+        mobile_number
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 65, in get_by_mobile_number
+    raise RuntimeError(
+        "Unable to retrieve user due to a database error"
+    ) from exc
+RuntimeError: Unable to retrieve user due to a database error
+2026-11-12T08:19:43 | ERROR | stablebus.middleware.request | request_id=01a1ced7-5d7c-7789-8a4d-383bfc930dd4 | Request failed | method=POST | path=/api/v1/auth/verify-otp | status=500 | duration_ms=4.18
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 60, in get_by_mobile_number
+    result = self.database.execute(statement)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2555, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2432, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 2255, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._connection_for_bind>", line 2, in _connection_for_bind
+    return target(fn, self, bind, execution_options)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py", line 1282, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3279, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 156, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 2436, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 154, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py", line 3303, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 1340, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 932, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/pool/base.py", line 928, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 98, in verify_otp
+    result = user_management.verify_otp_and_login(
+        mobile_number=payload.mobile_number,
+        otp=payload.otp,
+    )
+  File "/home/ubuntu/prd/stable-bus/Management/UserManagement.py", line 32, in verify_otp_and_login
+    user = self.user_repository.get_by_mobile_number(
+        mobile_number
+    )
+  File "/home/ubuntu/prd/stable-bus/Repositories/UserRepository.py", line 65, in get_by_mobile_number
+    raise RuntimeError(
+        "Unable to retrieve user due to a database error"
+    ) from exc
+RuntimeError: Unable to retrieve user due to a database error
+2026-11-12T08:24:01 | ERROR | stablebus.management.auth | request_id=01a1cedb-4f6b-7644-86d9-22a71205b1c2 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T08:24:01 | ERROR | stablebus.api.auth | request_id=01a1cedb-4f6b-7644-86d9-22a71205b1c2 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T08:27:13 | ERROR | stablebus.management.auth | request_id=01a1cede-3da5-733f-bcad-d486973bb7e3 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T08:27:13 | ERROR | stablebus.api.auth | request_id=01a1cede-3da5-733f-bcad-d486973bb7e3 | OTP delivery failed
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 48, in send_otp
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://www.fast2sms.com/dev/bulkV2
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 150, in send_otp
+    self.otp_service.send_otp(mobile_number, otp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Services/OTP/FAST2SMS_OTP_Service.py", line 52, in send_otp
+    raise RuntimeError(
+        "Failed to send OTP through Fast2SMS"
+    ) from exc
+RuntimeError: Failed to send OTP through Fast2SMS
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/auth.py", line 46, in send_otp
+    auth_orchestrator.send_otp(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mobile_number=mobile_number,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        client_ip=client_ip
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Orchestrators/AuthOrchestrator.py", line 28, in send_otp
+    self.otp_management.send_otp(mobile_number)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Management/OtpMangement.py", line 155, in send_otp
+    raise OTPDeliveryError(
+        "Unable to send OTP. Please try again."
+    ) from exc
+Management.OtpMangement.OTPDeliveryError: Unable to send OTP. Please try again.
+2026-11-12T13:11:21 | ERROR | stablebus.api.buses | request_id=01a1cfe2-4a1b-7658-b556-38ea62d3cf94 | Failed to fetch bus seat map
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/buses.py", line 81, in get_bus_seat_map
+    return bus_service.get_seat_map(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        bus_key=seat_map_request.bus_key,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        dropping_id=seat_map_request.dropping_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Services/Bus/bus_service.py", line 468, in get_seat_map
+    raise RuntimeError(
+        header.get("error_Desc") or "Unable to fetch bus seat map"
+    )
+RuntimeError: Unable to fetch the seat map detail from host. Check inner exception. 
+2026-11-12T13:57:04 | ERROR | stablebus.middleware.request | request_id=01a1d00b-c1a5-7023-80ad-697da37ecc2a | Request failed | method=POST | path=/api/v1/buses/search | status=500 | duration_ms=30208.24
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 540, in _make_request
+    response = conn.getresponse()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connection.py", line 638, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.14/http/client.py", line 1478, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 343, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 304, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/socket.py", line 729, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.14/ssl.py", line 1315, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/ssl.py", line 1149, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/util/retry.py", line 510, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/util/util.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 542, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 373, in _raise_timeout
+    raise ReadTimeoutError(
+        self, url, f"Read timed out. (read timeout={timeout_value})"
+    ) from err
+urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='travel.bospay.in', port=443): Read timed out. (read timeout=30)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/buses.py", line 59, in search_buses
+    return bus_service.search_buses(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        from_city=search_request.from_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        to_city=search_request.to_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        travel_date=search_request.travel_date,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Services/Bus/bus_service.py", line 396, in search_buses
+    result = self.bus_provider.BusSearch(
+        from_city=from_city,
+        to_city=to_city,
+        travel_date=travel_date,
+    )
+  File "/home/ubuntu/prd/stable-bus/Adaptors/AOPayBusAPI/AOPayAdapter.py", line 42, in BusSearch
+    return self.adaptee.BusSearch(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Adaptors/AOPayBusAPI/AOPayAdaptee.py", line 23, in BusSearch
+    return self._post(
+           ~~~~~~~~~~^
+        "/api/V1/Bus/Travel/BusSearch",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        payload,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Adaptors/AOPayBusAPI/AOPayAdaptee.py", line 12, in _post
+    response = requests.post(
+        f"{self.base_url}/{endpoint.lstrip('/')}",
+    ...<2 lines>...
+        timeout=self.timeout,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/api.py", line 134, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/api.py", line 71, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/adapters.py", line 742, in send
+    raise ReadTimeout(e, request=request)
+requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='travel.bospay.in', port=443): Read timed out. (read timeout=30)
+2026-11-12T15:20:19 | ERROR | stablebus.api.buses | request_id=01a1d058-6482-7439-b8ef-27930c3bb275 | Failed to search buses
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/buses.py", line 59, in search_buses
+    return bus_service.search_buses(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        from_city=search_request.from_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        to_city=search_request.to_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        travel_date=search_request.travel_date,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Services/Bus/bus_service.py", line 411, in search_buses
+    raise RuntimeError(
+        header.get("error_Desc") or "Unable to search buses"
+    )
+RuntimeError: No bus availbale for the given city name. Check inner exception. 
+2026-11-12T15:20:29 | ERROR | stablebus.api.buses | request_id=01a1d058-96e9-71eb-b36f-7dabd475b633 | Failed to search buses
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/buses.py", line 59, in search_buses
+    return bus_service.search_buses(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        from_city=search_request.from_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        to_city=search_request.to_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        travel_date=search_request.travel_date,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Services/Bus/bus_service.py", line 411, in search_buses
+    raise RuntimeError(
+        header.get("error_Desc") or "Unable to search buses"
+    )
+RuntimeError: No bus availbale for the given city name. Check inner exception. 

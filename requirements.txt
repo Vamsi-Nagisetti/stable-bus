@@ -12,3 +12,4 @@ uvicorn[standard]
 pydantic-settings
 httpx2
 boto3
+prometheus-fastapi-instrumentator
