@@ -7388,3 +7388,55 @@ RuntimeError: No bus availbale for the given city name. Check inner exception.
 2026-11-13T18:51:20 | INFO | stablebus.main | request_id=- | Redis connection closed
 2026-11-13T18:51:20 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
 2026-11-13T18:51:20 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-14T14:42:36 | INFO | stablebus.test | request_id=- | StableBus logging initialized
+2026-11-14T14:42:36 | WARNING | stablebus.test | request_id=- | Sample warning
+2026-11-14T14:42:36 | ERROR | stablebus.test | request_id=- | Sample error
+2026-11-14T14:57:10 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-14T14:57:10 | INFO | stablebus.main | request_id=- | Prometheus metrics endpoint initialized
+2026-11-14T14:57:10 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-14T14:57:10 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-14T14:57:10 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-14T14:57:10 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-14T14:57:10 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-14T14:57:10 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 200, in lifespan
+    notification_provider = ResendEmailAdapter()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Notifications\ResendEmailAdapter.py", line 20, in __init__
+    raise RuntimeError("RESEND_API_KEY is missing")
+RuntimeError: RESEND_API_KEY is missing
+2026-11-14T14:57:10 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-14T14:57:10 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-14T14:57:10 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-14T14:58:28 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-14T14:58:28 | INFO | stablebus.main | request_id=- | Prometheus metrics endpoint initialized
+2026-11-14T14:58:28 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-14T14:58:28 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-14T14:58:29 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-14T14:58:29 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-14T14:58:29 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-14T14:58:29 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-14T14:58:29 | INFO | stablebus.main | request_id=- | Payment reconciliation worker initialized
+2026-11-14T14:58:29 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-14T14:58:29 | INFO | stablebus.main | request_id=- | Payment reconciliation background loop started
+2026-11-14T14:58:29 | INFO | stablebus.payment_reconciliation | request_id=- | Reconciliation batch completed: 5 payments, 0 refunds
+2026-11-14T14:58:29 | INFO | stablebus.main | request_id=- | Payment reconciliation background loop stopped
+2026-11-14T14:58:29 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-14T14:58:29 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-14T14:58:29 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | Prometheus metrics endpoint initialized
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-14T15:00:28 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-14T15:00:28 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-14T15:00:28 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-14T15:00:28 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | Payment reconciliation worker initialized
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | Payment reconciliation background loop started
+2026-11-14T15:00:28 | INFO | stablebus.payment_reconciliation | request_id=- | Reconciliation batch completed: 5 payments, 0 refunds
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | Payment reconciliation background loop stopped
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-14T15:00:28 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-14T15:00:28 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed

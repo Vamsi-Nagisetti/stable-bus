@@ -94,7 +94,7 @@ def test_payment_refund():
         verification_response = payment_service.verify_payment(
             payment_id=payment_id,
             gateway_payment_id=gateway_payment_id,
-            signature="mock-test-signature",
+            signature=mock_gateway.EXPECTED_SIGNATURE,
         )
 
         assert verification_response["status"] == "SUCCESS"

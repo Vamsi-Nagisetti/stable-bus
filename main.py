@@ -1,15 +1,18 @@
 
+import asyncio
 import logging
 import os
 from contextlib import asynccontextmanager
-from Adaptors.Notifications.ResendEmailAdapter import ResendEmailAdapter
-from Services.Notifications.NotificationService import NotificationService
+
 from dotenv import load_dotenv
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
+
 load_dotenv()
 
-from fastapi import FastAPI
-from prometheus_fastapi_instrumentator import Instrumentator
+from Adaptors.Notifications.ResendEmailAdapter import ResendEmailAdapter
+from Services.Notifications.NotificationService import NotificationService
 
 from api.routes.auth import router as auth_router
 from api.routes.users import router as users_router
@@ -35,6 +38,9 @@ from Adaptors.Payments.RazorpayAdapter import RazorpayAdapter
 
 from Services.OTP.FAST2SMS_OTP_Service import Fast2SMSOTPService
 from Services.Bus.bus_service import BusService
+from Workers.PaymentReconciliationWorker import (
+    PaymentReconciliationWorker,
+)
 
 from Factories.AuthDependencyFactory import AuthDependencyFactory
 from Adaptors.Databases.DynamoDBAdaptee import DynamoDBAdaptee
@@ -43,6 +49,34 @@ from Adaptors.Databases.DynamoDBAdaptee import DynamoDBAdaptee
 LoggingConfig.setup_logging()
 
 logger = logging.getLogger("stablebus.main")
+
+
+async def run_reconciliation_loop(worker, stop_event):
+    logger.info("Payment reconciliation background loop started")
+
+    while not stop_event.is_set():
+        try:
+            # Run blocking database and gateway operations outside
+            # the FastAPI event loop.
+            await asyncio.to_thread(worker.run_once)
+
+        except Exception:
+            logger.exception(
+                "Payment reconciliation iteration failed"
+            )
+
+        if stop_event.is_set():
+            break
+
+        try:
+            await asyncio.wait_for(
+                stop_event.wait(),
+                timeout=worker.interval_seconds,
+            )
+        except asyncio.TimeoutError:
+            pass
+
+    logger.info("Payment reconciliation background loop stopped")
 
 
 @asynccontextmanager
@@ -54,6 +88,9 @@ async def lifespan(app: FastAPI):
     dynamodb_adaptee = None
     payment_provider = None
     notification_service = None
+
+    reconciliation_task = None
+    reconciliation_stop_event = asyncio.Event()
 
     try:
         # 1. Initialize Redis
@@ -112,13 +149,10 @@ async def lifespan(app: FastAPI):
         if booking_provider_mode == "MOCK":
             booking_adaptee = MockAOPayAdaptee()
             logger.warning("Using MOCK AO Pay booking provider")
-
         else:
             logger.info("Using REAL AO Pay booking provider")
 
-        # 9. Create AO Pay adapter.
-        # Search and seat map always use real AO Pay.
-        # Only booking methods use the selected booking adaptee.
+        # 9. Create AO Pay adapter
         aopay_adapter = AOPayAdapter(
             adaptee=aopay_adaptee,
             registration_id=os.environ["AOPAY_REGISTRATION_ID"],
@@ -129,7 +163,7 @@ async def lifespan(app: FastAPI):
 
         app.state.booking_adapter = aopay_adapter
 
-        # 10. Initialize Bus Service with real AO Pay
+        # 10. Initialize Bus Service
         app.state.bus_service = BusService(
             bus_provider=aopay_adapter,
             cache=cache,
@@ -164,14 +198,45 @@ async def lifespan(app: FastAPI):
 
         # 12. Initialize email notification service
         notification_provider = ResendEmailAdapter()
-        notification_service = NotificationService(notification_provider)
+        notification_service = NotificationService(
+            notification_provider
+        )
 
         app.state.notification_service = notification_service
 
-        logger.info("Resend email notification service initialized")
+        logger.info(
+            "Resend email notification service initialized"
+        )
 
         # 13. Store Redis reference
         app.state.redis_adaptee = redis_adaptee
+
+        # 14. Start payment reconciliation worker
+        reconciliation_worker = PaymentReconciliationWorker(
+            payment_provider=payment_provider,
+            cache=cache,
+            gateway_name=payment_gateway,
+            interval_seconds=30,
+            batch_size=5,
+        )
+
+        app.state.payment_reconciliation_worker = (
+            reconciliation_worker
+        )
+
+        reconciliation_task = asyncio.create_task(
+            run_reconciliation_loop(
+                reconciliation_worker,
+                reconciliation_stop_event,
+            ),
+            name="payment-reconciliation-worker",
+        )
+
+        app.state.payment_reconciliation_task = reconciliation_task
+
+        logger.info(
+            "Payment reconciliation worker initialized"
+        )
 
         logger.info(
             "StableBus dependencies initialized successfully"
@@ -186,6 +251,19 @@ async def lifespan(app: FastAPI):
         raise
 
     finally:
+        # Stop the worker first. If a batch is already running in
+        # a background thread, wait for it to finish before closing
+        # its dependencies.
+        reconciliation_stop_event.set()
+
+        if reconciliation_task is not None:
+            try:
+                await reconciliation_task
+            except Exception:
+                logger.exception(
+                    "Error while shutting down reconciliation worker"
+                )
+
         if payment_provider is not None:
             payment_provider.close()
 
@@ -195,7 +273,7 @@ async def lifespan(app: FastAPI):
 
         if dynamodb_adaptee is not None:
             dynamodb_adaptee.close()
-        
+
         if notification_service is not None:
             notification_service.close()
 
@@ -210,6 +288,7 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -220,6 +299,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # Register API routers
 app.include_router(auth_router)
 app.include_router(users_router)
@@ -228,6 +308,7 @@ app.include_router(passengers_router)
 app.include_router(bookings_router)
 
 logger.info("StableBus application initialized")
+
 # Prometheus monitoring
 Instrumentator().instrument(app).expose(
     app,

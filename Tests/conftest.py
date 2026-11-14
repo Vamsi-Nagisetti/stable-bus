@@ -1,4 +1,5 @@
 import pytest
+from models.BookingPassenger import BookingPassenger
 
 from Adaptors.Cache.RedisCacheAdaptee import RedisCacheAdaptee
 from Adaptors.Cache.RedisCacheAdaptor import RedisCacheAdaptor

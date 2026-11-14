@@ -51,6 +51,21 @@ class PaymentGatewayAdapter(ABC):
             "Refund status lookup is not supported by this provider"
         )
 
+    def get_refunds_for_payment(
+        self,
+        payment_reference: str,
+    ) -> list[dict[str, Any]]:
+        raise NotImplementedError(
+            "Refund listing is not supported by this provider"
+        )
+
+    def get_payments_for_order(
+    self,
+        order_id: str,
+    ) -> list[dict[str, Any]]:
+        raise NotImplementedError(
+            "Payment listing by order is not supported by this provider"
+        )
     @abstractmethod
     def close(self) -> None:
         pass

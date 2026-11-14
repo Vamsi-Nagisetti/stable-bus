@@ -316,5 +316,30 @@ class MockPaymentAdapter(PaymentGatewayAdapter):
 
         return payment_id
 
+    def get_refunds_for_payment(
+        self,
+        payment_reference: str,
+    ) -> list[dict[str, Any]]:
+
+        return [
+            refund
+            for refund in self.refunds.values()
+            if refund.get("payment_id") == payment_reference
+        ]
+
+    def get_payments_for_order(
+            self,
+            order_id: str,
+        ) -> list[dict[str, Any]]:
+
+        if not order_id:
+            raise ValueError("Gateway order ID is required.")
+
+        return [
+            payment
+            for payment in self.payments.values()
+            if payment.get("order_id") == order_id
+        ]
+    
     def close(self) -> None:
         pass

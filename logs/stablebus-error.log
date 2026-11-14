@@ -4661,3 +4661,11 @@ Traceback (most recent call last):
         header.get("error_Desc") or "Unable to search buses"
     )
 RuntimeError: No bus availbale for the given city name. Check inner exception. 
+2026-11-14T14:42:36 | ERROR | stablebus.test | request_id=- | Sample error
+2026-11-14T14:57:10 | ERROR | stablebus.main | request_id=- | StableBus application startup/runtime failure
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\main.py", line 200, in lifespan
+    notification_provider = ResendEmailAdapter()
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Notifications\ResendEmailAdapter.py", line 20, in __init__
+    raise RuntimeError("RESEND_API_KEY is missing")
+RuntimeError: RESEND_API_KEY is missing

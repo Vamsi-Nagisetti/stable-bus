@@ -669,3 +669,225 @@ class PaymentService(PaymentServiceInterface):
             "status": refund.status,
             "existing_attempt": existing_attempt,
         }
+
+    
+    def reconcile_refund(
+        self,
+        refund_id: str,
+    ) -> dict[str, Any]:
+
+        refund = self.refund_repository.get_by_id(refund_id)
+
+        if not refund:
+            raise ValueError("Refund record not found")
+
+        if refund.status not in ("UNKNOWN", "PROCESSING"):
+            return self._refund_response(refund)
+
+        payment = self.payment_repository.get_by_id(
+            refund.payment_id
+        )
+
+        if not payment:
+            raise ValueError("Payment record not found")
+
+        if not payment.gateway_payment_id:
+            raise ValueError("Gateway payment ID is missing")
+
+        # If we already know Razorpay's refund ID, use it directly.
+        if refund.gateway_refund_id:
+            gateway_response = self.payment_provider.get_refund_status(
+                refund.gateway_refund_id
+            )
+
+        else:
+            # The original refund request may have succeeded but its
+            # response may have been lost. Search existing refunds.
+            gateway_refunds = (
+                self.payment_provider.get_refunds_for_payment(
+                    payment.gateway_payment_id
+                )
+            )
+
+            gateway_response = next(
+                (
+                    item
+                    for item in gateway_refunds
+                    if item.get("receipt") == refund.id
+                    or item.get("refund_id") == refund.id
+                ),
+                None,
+            )
+
+            # No matching refund found yet. Do not create another refund.
+            if gateway_response is None:
+                return self._refund_response(refund)
+
+        if not isinstance(gateway_response, dict):
+            raise ValueError("Invalid gateway refund response")
+
+        gateway_refund_id = gateway_response.get("id")
+        gateway_payment_id = gateway_response.get("payment_id")
+        gateway_receipt = (
+            gateway_response.get("receipt")
+            or gateway_response.get("refund_id")
+        )
+        gateway_amount = gateway_response.get("amount")
+        gateway_currency = gateway_response.get("currency")
+        gateway_status = gateway_response.get("status")
+
+        if not all([
+            gateway_refund_id,
+            gateway_payment_id,
+            gateway_receipt,
+            gateway_amount is not None,
+            gateway_currency,
+            gateway_status,
+        ]):
+            raise ValueError(
+                "Gateway returned incomplete refund details"
+            )
+
+        if gateway_payment_id != payment.gateway_payment_id:
+            raise ValueError("Gateway payment ID mismatch")
+
+        if gateway_receipt != refund.id:
+            raise ValueError("Gateway refund receipt mismatch")
+
+        expected_amount = int(refund.amount * 100)
+
+        if int(gateway_amount) != expected_amount:
+            raise ValueError("Refund amount mismatch")
+
+        if gateway_currency != refund.currency:
+            raise ValueError("Refund currency mismatch")
+
+        status_mapping = {
+            "processed": "SUCCESS",
+            "pending": "PROCESSING",
+            "failed": "FAILED",
+        }
+
+        new_status = status_mapping.get(
+            str(gateway_status).lower(),
+            "UNKNOWN",
+        )
+
+        try:
+            self.refund_repository.update_status(
+                refund.id,
+                new_status,
+                gateway_refund_id,
+            )
+
+            self.database.commit()
+
+        except Exception:
+            self.database.rollback()
+            raise
+
+        refund = self.refund_repository.get_by_id(refund.id)
+
+        return self._refund_response(refund)
+
+
+    def reconcile_payment(
+        self,
+        payment_id: str,
+    ) -> dict[str, Any]:
+
+        payment = self.payment_repository.get_by_id(payment_id)
+
+        if not payment:
+            raise ValueError("Payment record not found")
+
+        # Never reconcile a terminal payment again.
+        if payment.status in ("SUCCESS", "FAILED", "MANUAL_REVIEW"):
+            return self._payment_response(payment)
+
+        if not payment.gateway_order_id:
+            raise ValueError("Gateway order ID is missing")
+
+        gateway_payments = (
+            self.payment_provider.get_payments_for_order(
+                payment.gateway_order_id
+            )
+        )
+
+        if not isinstance(gateway_payments, list):
+            raise ValueError("Invalid gateway payment-list response")
+
+        # Look for a captured payment belonging to this order.
+        captured_payments = [
+            item
+            for item in gateway_payments
+            if str(item.get("status", "")).lower() == "captured"
+        ]
+
+        if len(captured_payments) > 1:
+            raise ValueError(
+                "Multiple captured payments found for one payment order; "
+                "requires manual review"
+            )
+
+        if captured_payments:
+            gateway_payment = captured_payments[0]
+
+            gateway_payment_id = gateway_payment.get("id")
+
+            if not gateway_payment_id:
+                raise ValueError("Gateway payment ID is missing")
+
+            if gateway_payment.get("order_id") != payment.gateway_order_id:
+                raise ValueError("Gateway order ID mismatch")
+
+            expected_amount = int(payment.amount * 100)
+
+            if int(gateway_payment.get("amount", -1)) != expected_amount:
+                raise ValueError("Payment amount mismatch")
+
+            if gateway_payment.get("currency") != payment.currency:
+                raise ValueError("Payment currency mismatch")
+
+            try:
+                self.payment_repository.update_status(
+                    payment.id,
+                    "SUCCESS",
+                    gateway_payment_id,
+                )
+
+                self.database.commit()
+                self._invalidate_payment_cache(payment.id)
+
+            except Exception:
+                self.database.rollback()
+                raise
+
+            payment = self.payment_repository.get_by_id(payment.id)
+
+            return self._payment_response(payment)
+
+        # No captured payment. Do not treat a pending/authorized
+        # attempt as a successful payment.
+        statuses = {
+            str(item.get("status", "")).lower()
+            for item in gateway_payments
+        }
+
+        if statuses and statuses.issubset({"failed"}):
+            try:
+                self.payment_repository.update_status(
+                    payment.id,
+                    "FAILED",
+                )
+                self.database.commit()
+                self._invalidate_payment_cache(payment.id)
+
+            except Exception:
+                self.database.rollback()
+                raise
+
+        payment = self.payment_repository.get_by_id(payment.id)
+
+        return self._payment_response(payment)
+
