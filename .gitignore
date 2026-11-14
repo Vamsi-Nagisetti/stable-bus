@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 secrets/
 gen_key.py
+\\

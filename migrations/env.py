@@ -12,6 +12,7 @@ from models.Booking import Booking
 from models.Refund import Refund
 from models.BookingPassenger import BookingPassenger
 from models.OutboxEvent import OutboxEvent
+from models.NotificationDelivery import NotificationDelivery
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
