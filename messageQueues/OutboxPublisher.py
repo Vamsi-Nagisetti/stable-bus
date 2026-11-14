@@ -1,7 +1,8 @@
+
 import logging
 
 from Repositories.OutboxRepository import OutboxRepository
-from messageQueues.KafkaEventProducer import KafkaEventProducer
+from Factories.EventTransportFactory import create_event_transport
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +11,13 @@ class OutboxPublisher:
 
     def __init__(self, session_factory, producer=None):
         self.session_factory = session_factory
-        self.producer = producer or KafkaEventProducer()
+        self.resources = []
+
+        if producer is None:
+            self.producer, self.resources = create_event_transport()
+        else:
+            # Supports dependency injection in tests.
+            self.producer = producer
 
     def publish_batch(self, batch_size: int = 10) -> int:
         published_count = 0
@@ -25,20 +32,21 @@ class OutboxPublisher:
                     break
 
                 try:
+                    event_data = {
+                        "event_id": event.id,
+                        "event_type": event.event_type,
+                        "aggregate_type": event.aggregate_type,
+                        "aggregate_id": event.aggregate_id,
+                        "payload": event.payload,
+                        "created_at": event.created_at.isoformat(),
+                    }
+
                     self.producer.publish(
                         topic=self.producer.topic,
                         key=event.aggregate_id,
-                        event={
-                            "event_id": event.id,
-                            "event_type": event.event_type,
-                            "aggregate_type": event.aggregate_type,
-                            "aggregate_id": event.aggregate_id,
-                            "payload": event.payload,
-                            "created_at": event.created_at.isoformat(),
-                        },
+                        event=event_data,
                     )
 
-                    # Mark published only after Kafka acknowledges.
                     repository.mark_published(event)
                     db.commit()
 
@@ -62,4 +70,15 @@ class OutboxPublisher:
         return published_count
 
     def close(self):
-        self.producer.close()
+        try:
+            self.producer.close()
+        except Exception:
+            logger.exception("Error closing event producer")
+
+        for resource in self.resources:
+            try:
+                resource.close()
+            except Exception:
+                logger.exception(
+                    "Error closing event transport resource"
+                )
