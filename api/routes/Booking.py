@@ -54,6 +54,7 @@ def get_booking_adapter(request: Request):
     return adapter
 
 
+
 def get_passenger_repository(request: Request):
     return UserPassengerRepository(request.app.state.dynamodb)
 
@@ -394,3 +395,87 @@ def requery_booking(
 
     except BookingOrchestrationError as exc:
         raise HTTPException(status_code=409, detail=str(exc))
+
+
+
+from fastapi import Query
+
+
+@router.get("/history")
+def get_booking_history(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+    limit: int = Query(default=20, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
+):
+    try:
+        repository = BookingRepository(db)
+
+        bookings = repository.get_by_user_id(
+            user_id=str(current_user.id),
+            limit=limit + 1,
+            offset=offset,
+        )
+
+        has_more = len(bookings) > limit
+        bookings = bookings[:limit]
+
+        items = []
+
+        for booking in bookings:
+            items.append({
+                "booking_id": booking.id,
+                "booking_status": booking.status,
+                "journey_date": (
+                    booking.journey_date.isoformat()
+                    if booking.journey_date else None
+                ),
+                "source_city_id": booking.source_city_id,
+                "destination_city_id": booking.destination_city_id,
+                "bus_id": booking.bus_id,
+                "seat_numbers": booking.seat_numbers,
+                "total_amount": str(booking.total_amount),
+                "currency": booking.currency,
+                "supplier_refno": booking.supplier_refno,
+                "transport_pnr": booking.transport_pnr,
+                "customer_mobile": booking.customer_mobile,
+                "passenger_email": booking.passenger_email,
+                "created_at": (
+                    booking.created_at.isoformat()
+                    if booking.created_at else None
+                ),
+                "passengers": [
+                    {
+                        "name": passenger.name,
+                        "age": passenger.age,
+                        "gender": passenger.gender,
+                        "title": passenger.title,
+                        "dob": (
+                            passenger.dob.isoformat()
+                            if passenger.dob else None
+                        ),
+                        "seat_number": passenger.seat_number,
+                        "ticket_number": passenger.ticket_number,
+                    }
+                    for passenger in booking.passengers
+                ],
+            })
+
+        return {
+            "items": items,
+            "pagination": {
+                "limit": limit,
+                "offset": offset,
+                "has_more": has_more,
+            },
+        }
+
+    except Exception:
+        logger.exception(
+            "Failed to fetch booking history for user %s",
+            current_user.id,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to fetch booking history",
+        )

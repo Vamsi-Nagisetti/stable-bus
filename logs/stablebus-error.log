@@ -4669,3 +4669,99 @@ Traceback (most recent call last):
   File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Adaptors\Notifications\ResendEmailAdapter.py", line 20, in __init__
     raise RuntimeError("RESEND_API_KEY is missing")
 RuntimeError: RESEND_API_KEY is missing
+2026-11-14T16:00:18 | ERROR | stablebus.users | request_id=01a1d99b-a2d8-75e6-b83c-9c0466d62bb9 | Failed to fetch user contact details
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\users.py", line 79, in get_contact_details
+    result = repository.get_contact_details(
+        user_id=str(current_user.id)
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Repositories\UserPassengerRepository.py", line 118, in get_contact_details
+    response = self.table.get_item(
+        Key={
+    ...<3 lines>...
+        ConsistentRead=True
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 581, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the GetItem operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:GetItem on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:GetItem action
+2026-11-14T16:01:00 | ERROR | stablebus.users | request_id=01a1d99c-47f1-74fb-9d44-caeac9382809 | Failed to fetch user contact details
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\users.py", line 79, in get_contact_details
+    result = repository.get_contact_details(
+        user_id=str(current_user.id)
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Repositories\UserPassengerRepository.py", line 118, in get_contact_details
+    response = self.table.get_item(
+        Key={
+    ...<3 lines>...
+        ConsistentRead=True
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 581, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the GetItem operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:GetItem on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:GetItem action
+2026-11-14T16:01:33 | ERROR | stablebus.users | request_id=01a1d99c-cb06-7011-9340-1e2ee2c063ab | Failed to fetch user contact details
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\users.py", line 79, in get_contact_details
+    result = repository.get_contact_details(
+        user_id=str(current_user.id)
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Repositories\UserPassengerRepository.py", line 118, in get_contact_details
+    response = self.table.get_item(
+        Key={
+    ...<3 lines>...
+        ConsistentRead=True
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 581, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the GetItem operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:GetItem on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:GetItem action
+2026-11-14T16:02:31 | ERROR | stablebus.users | request_id=01a1d99d-aa3c-7555-a9f7-e0f2c650a334 | Failed to fetch user contact details
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\users.py", line 79, in get_contact_details
+    result = repository.get_contact_details(
+        user_id=str(current_user.id)
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Repositories\UserPassengerRepository.py", line 118, in get_contact_details
+    response = self.table.get_item(
+        Key={
+    ...<3 lines>...
+        ConsistentRead=True
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 581, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the GetItem operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:GetItem on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:GetItem action

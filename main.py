@@ -1,7 +1,7 @@
 
-import asyncio
 import logging
 import os
+import threading
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
@@ -10,9 +10,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
 
 load_dotenv()
-
-from Adaptors.Notifications.ResendEmailAdapter import ResendEmailAdapter
-from Services.Notifications.NotificationService import NotificationService
 
 from api.routes.auth import router as auth_router
 from api.routes.users import router as users_router
@@ -36,14 +33,17 @@ from Adaptors.AOPayBusAPI.MockAOPayBookingAdaptee import (
 from Adaptors.Payments.MockPaymentAdapter import MockPaymentAdapter
 from Adaptors.Payments.RazorpayAdapter import RazorpayAdapter
 
+from Adaptors.Notifications.ResendEmailAdapter import ResendEmailAdapter
+from Services.Notifications.NotificationService import NotificationService
+
 from Services.OTP.FAST2SMS_OTP_Service import Fast2SMSOTPService
 from Services.Bus.bus_service import BusService
-from Workers.PaymentReconciliationWorker import (
-    PaymentReconciliationWorker,
-)
 
 from Factories.AuthDependencyFactory import AuthDependencyFactory
 from Adaptors.Databases.DynamoDBAdaptee import DynamoDBAdaptee
+
+from core.database import SessionLocal
+from messageQueues.OutboxPublisher import OutboxPublisher
 
 
 LoggingConfig.setup_logging()
@@ -51,32 +51,25 @@ LoggingConfig.setup_logging()
 logger = logging.getLogger("stablebus.main")
 
 
-async def run_reconciliation_loop(worker, stop_event):
-    logger.info("Payment reconciliation background loop started")
+def run_outbox_publisher(publisher, stop_event):
+    logger.info("Outbox publisher background thread started")
 
     while not stop_event.is_set():
         try:
-            # Run blocking database and gateway operations outside
-            # the FastAPI event loop.
-            await asyncio.to_thread(worker.run_once)
+            published_count = publisher.publish_batch(
+                batch_size=10
+            )
+
+            if published_count == 0:
+                stop_event.wait(2)
 
         except Exception:
             logger.exception(
-                "Payment reconciliation iteration failed"
+                "Outbox publisher iteration failed"
             )
+            stop_event.wait(5)
 
-        if stop_event.is_set():
-            break
-
-        try:
-            await asyncio.wait_for(
-                stop_event.wait(),
-                timeout=worker.interval_seconds,
-            )
-        except asyncio.TimeoutError:
-            pass
-
-    logger.info("Payment reconciliation background loop stopped")
+    logger.info("Outbox publisher background thread stopped")
 
 
 @asynccontextmanager
@@ -89,8 +82,9 @@ async def lifespan(app: FastAPI):
     payment_provider = None
     notification_service = None
 
-    reconciliation_task = None
-    reconciliation_stop_event = asyncio.Event()
+    outbox_publisher = None
+    outbox_thread = None
+    outbox_stop_event = threading.Event()
 
     try:
         # 1. Initialize Redis
@@ -137,7 +131,10 @@ async def lifespan(app: FastAPI):
                 "BUS_BOOKING_PROVIDER must be MOCK or REAL"
             )
 
-        app_env = os.getenv("APP_ENV", "development").lower()
+        app_env = os.getenv(
+            "APP_ENV",
+            "development",
+        ).lower()
 
         if app_env == "production" and booking_provider_mode == "MOCK":
             raise ValueError(
@@ -149,10 +146,13 @@ async def lifespan(app: FastAPI):
         if booking_provider_mode == "MOCK":
             booking_adaptee = MockAOPayAdaptee()
             logger.warning("Using MOCK AO Pay booking provider")
+
         else:
             logger.info("Using REAL AO Pay booking provider")
 
-        # 9. Create AO Pay adapter
+        # 9. Create AO Pay adapter.
+        # Search and seat map always use real AO Pay.
+        # Only booking methods use the selected booking adaptee.
         aopay_adapter = AOPayAdapter(
             adaptee=aopay_adaptee,
             registration_id=os.environ["AOPAY_REGISTRATION_ID"],
@@ -163,7 +163,7 @@ async def lifespan(app: FastAPI):
 
         app.state.booking_adapter = aopay_adapter
 
-        # 10. Initialize Bus Service
+        # 10. Initialize Bus Service with real AO Pay
         app.state.bus_service = BusService(
             bus_provider=aopay_adapter,
             cache=cache,
@@ -211,31 +211,33 @@ async def lifespan(app: FastAPI):
         # 13. Store Redis reference
         app.state.redis_adaptee = redis_adaptee
 
-        # 14. Start payment reconciliation worker
-        reconciliation_worker = PaymentReconciliationWorker(
-            payment_provider=payment_provider,
-            cache=cache,
-            gateway_name=payment_gateway,
-            interval_seconds=30,
-            batch_size=5,
+        # 14. Initialize configured event transport and outbox publisher
+        event_transport = os.getenv(
+            "EVENT_TRANSPORT",
+            "direct",
+        ).strip().lower()
+
+        if event_transport not in {"direct", "kafka"}:
+            raise ValueError(
+                "EVENT_TRANSPORT must be direct or kafka"
+            )
+
+        outbox_publisher = OutboxPublisher(
+            session_factory=SessionLocal
         )
 
-        app.state.payment_reconciliation_worker = (
-            reconciliation_worker
+        outbox_thread = threading.Thread(
+            target=run_outbox_publisher,
+            args=(outbox_publisher, outbox_stop_event),
+            name="stablebus-outbox-publisher",
+            daemon=False,
         )
 
-        reconciliation_task = asyncio.create_task(
-            run_reconciliation_loop(
-                reconciliation_worker,
-                reconciliation_stop_event,
-            ),
-            name="payment-reconciliation-worker",
-        )
-
-        app.state.payment_reconciliation_task = reconciliation_task
+        outbox_thread.start()
 
         logger.info(
-            "Payment reconciliation worker initialized"
+            "Outbox publisher started with transport=%s",
+            event_transport,
         )
 
         logger.info(
@@ -251,18 +253,14 @@ async def lifespan(app: FastAPI):
         raise
 
     finally:
-        # Stop the worker first. If a batch is already running in
-        # a background thread, wait for it to finish before closing
-        # its dependencies.
-        reconciliation_stop_event.set()
+        # Stop the outbox worker before closing its dependencies.
+        if outbox_thread is not None:
+            logger.info("Stopping outbox publisher...")
+            outbox_stop_event.set()
+            outbox_thread.join()
 
-        if reconciliation_task is not None:
-            try:
-                await reconciliation_task
-            except Exception:
-                logger.exception(
-                    "Error while shutting down reconciliation worker"
-                )
+        if outbox_publisher is not None:
+            outbox_publisher.close()
 
         if payment_provider is not None:
             payment_provider.close()

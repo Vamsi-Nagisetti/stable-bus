@@ -7440,3 +7440,221 @@ RuntimeError: No bus availbale for the given city name. Check inner exception.
 2026-11-14T15:20:16 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
 2026-11-14T15:20:16 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter closed
 2026-11-14T15:20:16 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-14T15:50:25 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-14T15:50:25 | INFO | stablebus.main | request_id=- | Prometheus metrics endpoint initialized
+2026-11-14T15:50:25 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-14T15:50:25 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-14T15:50:25 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-14T15:50:25 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-14T15:50:25 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-14T15:50:25 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter initialized successfully. sender=StableBus <notifications@stablebus.com>
+2026-11-14T15:50:25 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-14T15:50:25 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter initialized successfully. sender=StableBus <notifications@stablebus.com>
+2026-11-14T15:50:25 | INFO | messageQueues.DirectEventDispatcher | request_id=- | Registered direct event handler: BOOKING_CONFIRMED
+2026-11-14T15:50:25 | INFO | Factories.EventTransportFactory | request_id=- | Event transport initialized: DIRECT
+2026-11-14T15:50:25 | INFO | stablebus.main | request_id=- | Outbox publisher background thread started
+2026-11-14T15:50:25 | INFO | stablebus.main | request_id=- | Outbox publisher started with transport=direct
+2026-11-14T15:50:25 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-14T15:54:43 | INFO | stablebus.main | request_id=- | Stopping outbox publisher...
+2026-11-14T15:54:43 | INFO | stablebus.main | request_id=- | Outbox publisher background thread stopped
+2026-11-14T15:54:43 | INFO | messageQueues.DirectEventDispatcher | request_id=- | Direct event dispatcher closed
+2026-11-14T15:54:43 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter closed
+2026-11-14T15:54:43 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-14T15:54:43 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-14T15:54:43 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter closed
+2026-11-14T15:54:43 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-14T15:57:17 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-14T15:57:17 | INFO | stablebus.main | request_id=- | Prometheus metrics endpoint initialized
+2026-11-14T15:57:17 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-14T15:57:17 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-14T15:57:17 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-14T15:57:17 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-14T15:57:17 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-14T15:57:17 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter initialized successfully. sender=StableBus <notifications@stablebus.com>
+2026-11-14T15:57:17 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-14T15:57:17 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter initialized successfully. sender=StableBus <notifications@stablebus.com>
+2026-11-14T15:57:17 | INFO | messageQueues.DirectEventDispatcher | request_id=- | Registered direct event handler: BOOKING_CONFIRMED
+2026-11-14T15:57:17 | INFO | Factories.EventTransportFactory | request_id=- | Event transport initialized: DIRECT
+2026-11-14T15:57:17 | INFO | stablebus.main | request_id=- | Outbox publisher background thread started
+2026-11-14T15:57:17 | INFO | stablebus.main | request_id=- | Outbox publisher started with transport=direct
+2026-11-14T15:57:17 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-14T15:57:24 | INFO | stablebus.middleware.request | request_id=01a1d998-fb5b-74fd-b8e8-b5c4146c3eb5 | Request completed | method=GET | path=/ | status=404 | duration_ms=29.72
+2026-11-14T15:57:24 | INFO | stablebus.middleware.request | request_id=01a1d998-fc44-71ec-9916-a9579e294f31 | Request completed | method=GET | path=/ | status=404 | duration_ms=1.89
+2026-11-14T15:57:27 | INFO | stablebus.middleware.request | request_id=01a1d999-0906-734c-b29b-d4207e2fbd4e | Request completed | method=GET | path=/docs | status=200 | duration_ms=1.44
+2026-11-14T15:57:27 | INFO | stablebus.middleware.request | request_id=01a1d999-0989-774d-94f1-358193c4851f | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=68.46
+2026-11-14T15:58:21 | INFO | stablebus.management.session | request_id=01a1d999-dcb3-74ea-a734-8fa331df56bf | Refresh token rotated successfully | user_id=3 | session_id=26
+2026-11-14T15:58:21 | INFO | stablebus.api.auth | request_id=01a1d999-dcb3-74ea-a734-8fa331df56bf | Refresh token API completed successfully
+2026-11-14T15:58:21 | INFO | stablebus.middleware.request | request_id=01a1d999-dcb3-74ea-a734-8fa331df56bf | Request completed | method=POST | path=/api/v1/auth/refresh | status=200 | duration_ms=166.71
+2026-11-14T15:58:35 | INFO | stablebus.management.session | request_id=01a1d99a-12b7-74dc-b2f8-27357e02661e | Refresh token rotated successfully | user_id=3 | session_id=26
+2026-11-14T15:58:35 | INFO | stablebus.api.auth | request_id=01a1d99a-12b7-74dc-b2f8-27357e02661e | Refresh token API completed successfully
+2026-11-14T15:58:35 | INFO | stablebus.middleware.request | request_id=01a1d99a-12b7-74dc-b2f8-27357e02661e | Request completed | method=POST | path=/api/v1/auth/refresh | status=200 | duration_ms=108.45
+2026-11-14T16:00:18 | ERROR | stablebus.users | request_id=01a1d99b-a2d8-75e6-b83c-9c0466d62bb9 | Failed to fetch user contact details
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\users.py", line 79, in get_contact_details
+    result = repository.get_contact_details(
+        user_id=str(current_user.id)
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Repositories\UserPassengerRepository.py", line 118, in get_contact_details
+    response = self.table.get_item(
+        Key={
+    ...<3 lines>...
+        ConsistentRead=True
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 581, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the GetItem operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:GetItem on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:GetItem action
+2026-11-14T16:00:18 | INFO | stablebus.middleware.request | request_id=01a1d99b-a2d8-75e6-b83c-9c0466d62bb9 | Request completed | method=GET | path=/api/v1/users/contact-details | status=500 | duration_ms=241.32
+2026-11-14T16:01:00 | ERROR | stablebus.users | request_id=01a1d99c-47f1-74fb-9d44-caeac9382809 | Failed to fetch user contact details
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\users.py", line 79, in get_contact_details
+    result = repository.get_contact_details(
+        user_id=str(current_user.id)
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Repositories\UserPassengerRepository.py", line 118, in get_contact_details
+    response = self.table.get_item(
+        Key={
+    ...<3 lines>...
+        ConsistentRead=True
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 581, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the GetItem operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:GetItem on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:GetItem action
+2026-11-14T16:01:00 | INFO | stablebus.middleware.request | request_id=01a1d99c-47f1-74fb-9d44-caeac9382809 | Request completed | method=GET | path=/api/v1/users/contact-details | status=500 | duration_ms=35.57
+2026-11-14T16:01:23 | INFO | stablebus.middleware.request | request_id=01a1d99c-a1aa-779c-8d7e-e98e3655f254 | Request completed | method=GET | path=/api/v1/users/me | status=200 | duration_ms=4.20
+2026-11-14T16:01:33 | ERROR | stablebus.users | request_id=01a1d99c-cb06-7011-9340-1e2ee2c063ab | Failed to fetch user contact details
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\users.py", line 79, in get_contact_details
+    result = repository.get_contact_details(
+        user_id=str(current_user.id)
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Repositories\UserPassengerRepository.py", line 118, in get_contact_details
+    response = self.table.get_item(
+        Key={
+    ...<3 lines>...
+        ConsistentRead=True
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 581, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the GetItem operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:GetItem on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:GetItem action
+2026-11-14T16:01:33 | INFO | stablebus.middleware.request | request_id=01a1d99c-cb06-7011-9340-1e2ee2c063ab | Request completed | method=GET | path=/api/v1/users/contact-details | status=500 | duration_ms=33.87
+2026-11-14T16:02:22 | INFO | stablebus.passengers | request_id=01a1d99d-8a4a-7245-9484-72b13a15f82b | User contact details saved or updated
+2026-11-14T16:02:22 | INFO | stablebus.middleware.request | request_id=01a1d99d-8a4a-7245-9484-72b13a15f82b | Request completed | method=PUT | path=/api/v1/users/contact-details | status=200 | duration_ms=37.31
+2026-11-14T16:02:31 | ERROR | stablebus.users | request_id=01a1d99d-aa3c-7555-a9f7-e0f2c650a334 | Failed to fetch user contact details
+Traceback (most recent call last):
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\api\routes\users.py", line 79, in get_contact_details
+    result = repository.get_contact_details(
+        user_id=str(current_user.id)
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\Repositories\UserPassengerRepository.py", line 118, in get_contact_details
+    response = self.table.get_item(
+        Key={
+    ...<3 lines>...
+        ConsistentRead=True
+    )
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\factory.py", line 581, in do_action
+    response = action(self, *args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\boto3\resources\action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\vamsi\OneDrive\Desktop\StableBus\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (AccessDeniedException) when calling the GetItem operation: User: arn:aws:iam::193882561447:user/stable-bus-prd is not authorized to perform: dynamodb:GetItem on resource: arn:aws:dynamodb:ap-south-1:193882561447:table/UserPassengers because no identity-based policy allows the dynamodb:GetItem action
+2026-11-14T16:02:31 | INFO | stablebus.middleware.request | request_id=01a1d99d-aa3c-7555-a9f7-e0f2c650a334 | Request completed | method=GET | path=/api/v1/users/contact-details | status=500 | duration_ms=37.40
+2026-11-14T16:05:03 | INFO | stablebus.middleware.request | request_id=01a1d99f-fc61-7754-a78f-bd9224dab1b4 | Request completed | method=GET | path=/api/v1/users/passengers | status=401 | duration_ms=8.35
+2026-11-14T16:05:11 | INFO | stablebus.middleware.request | request_id=01a1d9a0-1e55-75f3-9d74-2b0cbbc89b1e | Request completed | method=GET | path=/api/v1/users/passengers | status=200 | duration_ms=116.31
+2026-11-14T16:08:03 | INFO | stablebus.middleware.request | request_id=01a1d9a2-be59-744b-b6be-71b9aabc018b | Request completed | method=GET | path=/api/v1/users/contact-details | status=200 | duration_ms=125.27
+2026-11-14T16:10:53 | INFO | stablebus.main | request_id=- | Stopping outbox publisher...
+2026-11-14T16:10:53 | INFO | stablebus.main | request_id=- | Outbox publisher background thread stopped
+2026-11-14T16:10:53 | INFO | messageQueues.DirectEventDispatcher | request_id=- | Direct event dispatcher closed
+2026-11-14T16:10:53 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter closed
+2026-11-14T16:10:53 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-14T16:10:53 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-14T16:10:53 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter closed
+2026-11-14T16:10:53 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-14T16:12:06 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-14T16:12:06 | INFO | stablebus.main | request_id=- | Prometheus metrics endpoint initialized
+2026-11-14T16:12:06 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-14T16:12:06 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-14T16:12:06 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-14T16:12:06 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-14T16:12:06 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-14T16:12:06 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter initialized successfully. sender=StableBus <notifications@stablebus.com>
+2026-11-14T16:12:06 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-14T16:12:06 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter initialized successfully. sender=StableBus <notifications@stablebus.com>
+2026-11-14T16:12:06 | INFO | messageQueues.DirectEventDispatcher | request_id=- | Registered direct event handler: BOOKING_CONFIRMED
+2026-11-14T16:12:06 | INFO | Factories.EventTransportFactory | request_id=- | Event transport initialized: DIRECT
+2026-11-14T16:12:06 | INFO | stablebus.main | request_id=- | Outbox publisher background thread started
+2026-11-14T16:12:06 | INFO | stablebus.main | request_id=- | Outbox publisher started with transport=direct
+2026-11-14T16:12:06 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-14T16:12:40 | INFO | stablebus.passengers | request_id=01a1d9a6-f7b1-7004-8cb3-e345b3d9163c | Saved passenger created for user
+2026-11-14T16:12:40 | INFO | stablebus.middleware.request | request_id=01a1d9a6-f7b1-7004-8cb3-e345b3d9163c | Request completed | method=POST | path=/api/v1/users/passengers | status=201 | duration_ms=153.37
+2026-11-14T16:12:52 | INFO | stablebus.middleware.request | request_id=01a1d9a7-26ec-724e-8131-186997eddc80 | Request completed | method=GET | path=/api/v1/users/passengers | status=200 | duration_ms=41.65
+2026-11-14T16:13:29 | INFO | stablebus.middleware.request | request_id=01a1d9a7-b4d3-7511-b320-c9878dd02350 | Request completed | method=PUT | path=/api/v1/users/passengers/82558537-36a4-47ec-b0c9-321451e0a79f | status=401 | duration_ms=4.69
+2026-11-14T16:13:44 | INFO | stablebus.passengers | request_id=01a1d9a7-f1b7-77a3-a626-bfc0b7731839 | Saved passenger updated
+2026-11-14T16:13:44 | INFO | stablebus.middleware.request | request_id=01a1d9a7-f1b7-77a3-a626-bfc0b7731839 | Request completed | method=PUT | path=/api/v1/users/passengers/82558537-36a4-47ec-b0c9-321451e0a79f | status=200 | duration_ms=40.83
+2026-11-14T16:13:51 | INFO | stablebus.middleware.request | request_id=01a1d9a8-0c74-73ed-b123-414aa99ccb30 | Request completed | method=GET | path=/api/v1/users/passengers | status=200 | duration_ms=35.96
+2026-11-14T16:18:22 | INFO | stablebus.middleware.request | request_id=01a1d9ac-2d23-736d-9a13-9272587362d7 | Request completed | method=GET | path=/api/v1/bookings/history | status=404 | duration_ms=2.25
+2026-11-14T18:35:25 | INFO | stablebus.middleware.request | request_id=01a1da29-a94f-7068-94b6-9a8e82cb8ea6 | Request completed | method=GET | path=/docs | status=200 | duration_ms=1.71
+2026-11-14T18:35:26 | INFO | stablebus.middleware.request | request_id=01a1da29-a9ea-71e0-82c5-99c1d2c76ec3 | Request completed | method=GET | path=/openapi.json | status=200 | duration_ms=76.33
+2026-11-14T18:38:00 | INFO | stablebus.main | request_id=- | Stopping outbox publisher...
+2026-11-14T18:38:00 | INFO | stablebus.main | request_id=- | Outbox publisher background thread stopped
+2026-11-14T18:38:00 | INFO | messageQueues.DirectEventDispatcher | request_id=- | Direct event dispatcher closed
+2026-11-14T18:38:00 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter closed
+2026-11-14T18:38:00 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-14T18:38:00 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-14T18:38:00 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter closed
+2026-11-14T18:38:00 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed
+2026-11-14T18:38:13 | INFO | stablebus.main | request_id=- | StableBus application initialized
+2026-11-14T18:38:13 | INFO | stablebus.main | request_id=- | Prometheus metrics endpoint initialized
+2026-11-14T18:38:13 | INFO | stablebus.main | request_id=- | Starting StableBus application
+2026-11-14T18:38:13 | INFO | botocore.credentials | request_id=- | Found credentials in environment variables.
+2026-11-14T18:38:13 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection initialized successfully: UserPassengers
+2026-11-14T18:38:13 | WARNING | stablebus.main | request_id=- | Using MOCK AO Pay booking provider
+2026-11-14T18:38:13 | WARNING | stablebus.main | request_id=- | Using MOCK payment provider
+2026-11-14T18:38:13 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter initialized successfully. sender=StableBus <notifications@stablebus.com>
+2026-11-14T18:38:13 | INFO | stablebus.main | request_id=- | Resend email notification service initialized
+2026-11-14T18:38:13 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter initialized successfully. sender=StableBus <notifications@stablebus.com>
+2026-11-14T18:38:13 | INFO | messageQueues.DirectEventDispatcher | request_id=- | Registered direct event handler: BOOKING_CONFIRMED
+2026-11-14T18:38:13 | INFO | Factories.EventTransportFactory | request_id=- | Event transport initialized: DIRECT
+2026-11-14T18:38:13 | INFO | stablebus.main | request_id=- | Outbox publisher background thread started
+2026-11-14T18:38:13 | INFO | stablebus.main | request_id=- | Outbox publisher started with transport=direct
+2026-11-14T18:38:13 | INFO | stablebus.main | request_id=- | StableBus dependencies initialized successfully
+2026-11-14T18:38:51 | INFO | stablebus.main | request_id=- | Stopping outbox publisher...
+2026-11-14T18:38:51 | INFO | stablebus.main | request_id=- | Outbox publisher background thread stopped
+2026-11-14T18:38:51 | INFO | messageQueues.DirectEventDispatcher | request_id=- | Direct event dispatcher closed
+2026-11-14T18:38:51 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter closed
+2026-11-14T18:38:51 | INFO | stablebus.main | request_id=- | Redis connection closed
+2026-11-14T18:38:51 | INFO | stablebus.dynamodb | request_id=- | DynamoDB connection closed
+2026-11-14T18:38:51 | INFO | Adaptors.Notifications.ResendEmailAdapter | request_id=- | ResendEmailAdapter closed
+2026-11-14T18:38:51 | INFO | stablebus.main | request_id=- | StableBus application shutdown completed

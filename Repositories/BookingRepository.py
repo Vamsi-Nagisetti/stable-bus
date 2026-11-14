@@ -21,10 +21,24 @@ class BookingRepository:
         )
         return self.database.scalar(stmt)
 
-    def get_by_user_id(self, user_id: str) -> list[Booking]:
-        stmt = select(Booking).where(
-            Booking.user_id == user_id
+    def get_by_user_id(
+        self,
+        user_id: str,
+        limit: int = 20,
+        offset: int = 0,
+    ) -> list[Booking]:
+
+        stmt = (
+            select(Booking)
+            .where(Booking.user_id == user_id)
+            .order_by(
+                Booking.created_at.desc(),
+                Booking.id.desc(),
+            )
+            .limit(limit)
+            .offset(offset)
         )
+
         return list(self.database.scalars(stmt).all())
 
     def update_status(

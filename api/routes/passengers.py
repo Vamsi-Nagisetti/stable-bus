@@ -16,7 +16,7 @@ logger = logging.getLogger("stablebus.passengers")
 
 router = APIRouter(
     prefix="/api/v1/users/passengers",
-    tags=["Saved Passengers"]
+    tags=["Saved Passengers"],
 )
 
 
@@ -33,15 +33,18 @@ def add_passenger(
     try:
         return repository.add_passenger(
             user_id=str(current_user.id),
-            name=passenger_request.name,
+            title=passenger_request.title,
+            name=passenger_request.name.strip(),
+            date_of_birth=passenger_request.date_of_birth,
             age=passenger_request.age,
             gender=passenger_request.gender,
         )
+
     except ClientError:
         logger.exception("Failed to save passenger")
         raise HTTPException(
             status_code=500,
-            detail="Unable to save passenger"
+            detail="Unable to save passenger",
         )
 
 
@@ -52,11 +55,12 @@ def get_passengers(
 ):
     try:
         return repository.get_passengers(str(current_user.id))
+
     except ClientError:
         logger.exception("Failed to fetch saved passengers")
         raise HTTPException(
             status_code=500,
-            detail="Unable to fetch saved passengers"
+            detail="Unable to fetch saved passengers",
         )
 
 
@@ -71,16 +75,25 @@ def update_passenger(
         return repository.update_passenger(
             user_id=str(current_user.id),
             passenger_id=passenger_id,
-            name=passenger_request.name,
+            title=passenger_request.title,
+            name=passenger_request.name.strip(),
+            date_of_birth=passenger_request.date_of_birth,
             age=passenger_request.age,
             gender=passenger_request.gender,
         )
+
     except ClientError as exc:
         if exc.response["Error"]["Code"] == "ConditionalCheckFailedException":
-            raise HTTPException(status_code=404, detail="Passenger not found")
+            raise HTTPException(
+                status_code=404,
+                detail="Passenger not found",
+            )
 
         logger.exception("Failed to update passenger")
-        raise HTTPException(status_code=500, detail="Unable to update passenger")
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to update passenger",
+        )
 
 
 @router.delete("/{passenger_id}")
@@ -96,13 +109,22 @@ def delete_passenger(
         )
 
         if not deleted:
-            raise HTTPException(status_code=404, detail="Passenger not found")
+            raise HTTPException(
+                status_code=404,
+                detail="Passenger not found",
+            )
 
         return {"message": "Passenger deleted successfully"}
 
     except ClientError as exc:
         if exc.response["Error"]["Code"] == "ConditionalCheckFailedException":
-            raise HTTPException(status_code=404, detail="Passenger not found")
+            raise HTTPException(
+                status_code=404,
+                detail="Passenger not found",
+            )
 
         logger.exception("Failed to delete passenger")
-        raise HTTPException(status_code=500, detail="Unable to delete passenger")
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to delete passenger",
+        )
