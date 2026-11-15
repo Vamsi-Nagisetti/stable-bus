@@ -251,6 +251,8 @@ class BookingOrchestrator:
             passenger_email=passenger_email,
             source_city_id=request.source_city_id,
             destination_city_id=request.destination_city_id,
+            boarding_point=request.boarding_point,
+            dropping_point=request.dropping_point,
             journey_date=request.journey_date,
             bus_id=request.bus_id,
             seat_numbers=[
@@ -925,6 +927,8 @@ class BookingOrchestrator:
             passenger_data = [
                 {
                     "name": passenger.name,
+                    "age": passenger.age,
+                    "gender": passenger.gender,
                     "seat_number": passenger.seat_number,
                     "ticket_number": passenger.ticket_number,
                 }
@@ -948,6 +952,8 @@ class BookingOrchestrator:
                     ),
                     "source_city_id": booking.source_city_id,
                     "destination_city_id": booking.destination_city_id,
+                    "boarding_point": booking.boarding_point,
+                    "dropping_point": booking.dropping_point,
                     "seat_numbers": booking.seat_numbers,
                     "total_amount": str(booking.total_amount),
                     "currency": booking.currency,

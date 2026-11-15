@@ -61,6 +61,8 @@ class CreateBookingRequest(BaseModel):
     search_key: str
     boarding_id: str
     dropping_id: str
+    boarding_point: dict | None = None
+    dropping_point: dict | None = None
 
     passengers: list[BookingPassengerRequest] = Field(
         ..., min_length=1

@@ -66,7 +66,15 @@ class Booking(Base):
 
     supplier_refno = Column(String(100), nullable=True)
     transport_pnr = Column(String(100), nullable=True)
+    boarding_point: Mapped[dict | None] = mapped_column(
+        JSON,
+        nullable=True,
+    )
 
+    dropping_point: Mapped[dict | None] = mapped_column(
+        JSON,
+        nullable=True,
+    )
     user_id: Mapped[str | None] = mapped_column(
         String(36),
         nullable=True,
