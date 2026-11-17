@@ -588,6 +588,12 @@ class BookingOrchestrator:
                 f"{booking.status}"
             )
 
+        logger.info(
+            "Payment initiation started booking_id=%s booking_status=%s",
+            booking.id,
+            booking.status,
+        )
+
         try:
             payment_result = payment_service.initiate_payment(
                 booking_id=booking.id,
@@ -597,7 +603,7 @@ class BookingOrchestrator:
 
         except Exception as exc:
             logger.exception(
-                "Payment initiation failed for booking %s",
+                "Payment initiation failed booking_id=%s",
                 booking.id,
             )
 
@@ -605,6 +611,13 @@ class BookingOrchestrator:
                 "Payment initiation outcome is uncertain. "
                 "Retry using the same idempotency key."
             ) from exc
+
+        logger.info(
+            "Payment initiation completed booking_id=%s payment_id=%s status=%s",
+            booking.id,
+            payment_result.get("payment_id"),
+            payment_result.get("status"),
+        )
 
         return {
             "booking_id": booking.id,
@@ -648,10 +661,33 @@ class BookingOrchestrator:
                 "Payment does not belong to this booking"
             )
 
-        payment_result = payment_service.verify_payment(
-            payment_id=payment_id,
-            gateway_payment_id=gateway_payment_id,
-            signature=signature,
+        logger.info(
+            "Payment verification started booking_id=%s payment_id=%s",
+            booking.id,
+            payment_id,
+        )
+
+        try:
+            payment_result = payment_service.verify_payment(
+                payment_id=payment_id,
+                gateway_payment_id=gateway_payment_id,
+                signature=signature,
+            )
+        except Exception:
+            logger.exception(
+                "Payment verification failed booking_id=%s payment_id=%s",
+                booking.id,
+                payment_id,
+            )
+            raise
+
+        logger.info(
+            "Payment verification completed booking_id=%s payment_id=%s "
+            "gateway_payment_id=%s status=%s",
+            booking.id,
+            payment_id,
+            gateway_payment_id,
+            payment_result.get("status"),
         )
 
         if payment_result.get("status") == "SUCCESS":
@@ -663,6 +699,12 @@ class BookingOrchestrator:
 
                 db.commit()
                 db.refresh(booking)
+
+                logger.info(
+                    "Booking payment status transitioned booking_id=%s status=%s",
+                    booking.id,
+                    booking.status,
+                )
 
         return {
             "booking_id": booking.id,
@@ -709,6 +751,11 @@ class BookingOrchestrator:
             "booking_RefNo": booking.temp_booking_ref,
         }
 
+        logger.info(
+            "Ticketing request started booking_id=%s",
+            booking.id,
+        )
+
         try:
             response = adapter.BusTicketing(payload)
 
@@ -724,6 +771,12 @@ class BookingOrchestrator:
             )
             db.commit()
             db.refresh(booking)
+
+            logger.warning(
+                "Ticketing outcome unknown booking_id=%s status=%s",
+                booking.id,
+                booking.status,
+            )
 
             return {
                 "booking_id": booking.id,
@@ -762,6 +815,12 @@ class BookingOrchestrator:
             db.commit()
             db.refresh(booking)
 
+            logger.error(
+                "Provider rejected ticketing booking_id=%s provider_error_code=%s",
+                booking.id,
+                error_code,
+            )
+
             return {
                 "booking_id": booking.id,
                 "booking_status": booking.status,
@@ -776,6 +835,13 @@ class BookingOrchestrator:
 
         db.commit()
         db.refresh(booking)
+
+        logger.info(
+            "Ticketing request accepted; provider requery required "
+            "booking_id=%s supplier_refno=%s",
+            booking.id,
+            booking.supplier_refno,
+        )
 
         return {
             "booking_id": booking.id,
@@ -828,6 +894,11 @@ class BookingOrchestrator:
                 "Temporary booking reference is missing"
             )
 
+        logger.info(
+            "Provider requery started booking_id=%s",
+            booking.id,
+        )
+
         try:
             response = adapter.BusRequery({
                 "booking_RefNo": booking.temp_booking_ref,
@@ -846,6 +917,12 @@ class BookingOrchestrator:
                 )
                 db.commit()
                 db.refresh(booking)
+
+            logger.warning(
+                "Provider requery failed; outcome remains unknown booking_id=%s status=%s",
+                booking.id,
+                booking.status,
+            )
 
             return {
                 "booking_id": booking.id,
@@ -964,6 +1041,15 @@ class BookingOrchestrator:
             db.commit()
             db.refresh(booking)
 
+            logger.info(
+                "Booking confirmed booking_id=%s supplier_refno=%s "
+                "transport_pnr=%s passenger_count=%s",
+                booking.id,
+                booking.supplier_refno,
+                booking.transport_pnr,
+                len(booking.passengers or []),
+            )
+
             return {
                 "booking_id": booking.id,
                 "booking_status": booking.status,
@@ -980,6 +1066,14 @@ class BookingOrchestrator:
 
         db.commit()
         db.refresh(booking)
+
+        logger.warning(
+            "Booking not fully confirmed after provider requery "
+            "booking_id=%s booking_status=%s ticket_status=%s",
+            booking.id,
+            booking.status,
+            response.get("ticket_Status_Desc"),
+        )
 
         return {
             "booking_id": booking.id,
