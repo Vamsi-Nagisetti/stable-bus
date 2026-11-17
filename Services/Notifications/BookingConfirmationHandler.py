@@ -1,5 +1,6 @@
 import html
 import logging
+from datetime import date, datetime
 
 from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
@@ -12,10 +13,28 @@ logger = logging.getLogger(__name__)
 EVENT_TYPE = "BOOKING_CONFIRMED"
 CHANNEL = "EMAIL"
 
+# ---- StableBus palette (same as the app) ----
+BG = "#F8F4ED"
+PAPER = "#FFFEFC"
+INK = "#382B28"
+MUTED = "#887A73"
+BORDER = "#EAE0D7"
+BURGUNDY = "#783D4A"
+BURGUNDY_DARK = "#65313E"
+BURGUNDY_LIGHT = "#F4EAEB"
+GREEN = "#356B4A"
+GREEN_LIGHT = "#EAF2EC"
+FONT = "Arial,Helvetica,sans-serif"
+
 
 def _safe(value, fallback="—") -> str:
     value = fallback if value is None or value == "" else value
     return html.escape(str(value), quote=True)
+
+
+def _clean(value, default: str = "") -> str:
+    text = "" if value is None else str(value).strip()
+    return text or default
 
 
 def _format_date(value) -> str:
@@ -23,17 +42,103 @@ def _format_date(value) -> str:
         return "—"
 
     try:
-        from datetime import datetime
-
         parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
-        return parsed.strftime("%A, %d %B %Y")
+        return parsed.strftime("%a, %d %b %Y")
     except (TypeError, ValueError):
         try:
-            from datetime import date
-
-            return date.fromisoformat(str(value)).strftime("%A, %d %B %Y")
+            return date.fromisoformat(str(value)).strftime("%a, %d %b %Y")
         except (TypeError, ValueError):
             return str(value)
+
+
+def _format_money(currency, amount) -> str:
+    raw = _clean(amount)
+    if not raw:
+        return "—"
+    code = _clean(currency, "INR")
+    try:
+        number = float(raw)
+        shown = f"{int(number):,}" if number == int(number) else f"{number:,.2f}"
+    except ValueError:
+        shown = raw
+    return f"₹{shown}" if code.upper() == "INR" else f"{code} {shown}"
+
+
+def _label(text: str) -> str:
+    return (
+        f'<div style="font-size:11px;color:{MUTED};text-transform:uppercase;'
+        f'letter-spacing:.8px;font-family:{FONT}">{_safe(text)}</div>'
+    )
+
+
+def _grid_cell(label: str, value_html: str, padding: str) -> str:
+    return (
+        f'<td width="50%" valign="top" style="padding:{padding};'
+        f'border-bottom:1px solid #EEE7E1">{_label(label)}'
+        f'<div style="margin-top:5px;font-family:{FONT}">{value_html}</div></td>'
+    )
+
+
+def _route_html(source, destination) -> str:
+    if not (source or destination):
+        return ""
+    return (
+        '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+        'style="border-collapse:collapse"><tr>'
+        f'<td align="left" valign="middle" style="font-family:{FONT};font-size:20px;'
+        f'font-weight:700;color:{INK}">{_safe(source, "Origin")}</td>'
+        f'<td align="center" valign="middle" width="56" style="font-family:{FONT};'
+        f'font-size:20px;color:{BURGUNDY}">&rarr;</td>'
+        f'<td align="right" valign="middle" style="font-family:{FONT};font-size:20px;'
+        f'font-weight:700;color:{INK}">{_safe(destination, "Destination")}</td>'
+        '</tr></table>'
+    )
+
+
+def _point_details(point: dict) -> dict:
+    name = _clean(point.get("name"))
+    address = _clean(point.get("address"))
+    landmark = _clean(point.get("landmark"))
+    when = _clean(point.get("reporting_time") or point.get("time"))
+
+    # Operators often repeat the name inside the address / landmark: show it once.
+    if address.lower() == name.lower():
+        address = ""
+    if landmark.lower() in (name.lower(), address.lower(), "n/a"):
+        landmark = ""
+
+    return {"name": name, "address": address, "landmark": landmark, "time": when}
+
+
+def _point_cell(label: str, point, padding: str) -> str:
+    details = _point_details(point if isinstance(point, dict) else {})
+    parts = [
+        _label(label),
+        f'<div style="font-size:14px;font-weight:700;color:{INK};margin-top:6px;'
+        f'font-family:{FONT}">{_safe(details["name"], label)}</div>',
+    ]
+    if details["address"]:
+        parts.append(
+            f'<div style="font-size:12px;line-height:18px;color:{MUTED};margin-top:3px;'
+            f'font-family:{FONT}">{_safe(details["address"])}</div>'
+        )
+    if details["landmark"]:
+        parts.append(
+            f'<div style="font-size:12px;line-height:18px;color:{MUTED};margin-top:2px;'
+            f'font-family:{FONT}">Near {_safe(details["landmark"])}</div>'
+        )
+    if details["time"]:
+        parts.append(
+            f'<div style="font-size:13px;font-weight:700;color:{BURGUNDY};margin-top:6px;'
+            f'font-family:{FONT}">{_safe(details["time"])}</div>'
+        )
+    return f'<td width="50%" valign="top" style="padding:{padding}">{"".join(parts)}</td>'
+
+
+def _has_point(point) -> bool:
+    return isinstance(point, dict) and any(
+        point.get(key) for key in ("name", "address", "landmark", "time", "reporting_time")
+    )
 
 
 def build_confirmation_email(payload: dict) -> tuple[str, str, str]:
@@ -41,8 +146,7 @@ def build_confirmation_email(payload: dict) -> tuple[str, str, str]:
     pnr = payload.get("transport_pnr") or "Pending"
     supplier_ref = payload.get("supplier_refno") or "—"
     journey_date = _format_date(payload.get("journey_date"))
-    amount = payload.get("total_amount") or "—"
-    currency = payload.get("currency") or "INR"
+    money = _format_money(payload.get("currency"), payload.get("total_amount"))
 
     source = payload.get("source_city_name") or payload.get("source_city")
     destination = (
@@ -65,125 +169,77 @@ def build_confirmation_email(payload: dict) -> tuple[str, str, str]:
         else str(seats)
     )
 
-    passengers = payload.get("passengers") or []
+    # ---------- passengers ----------
     passenger_rows = []
     passenger_text_rows = []
 
-    for passenger in passengers:
-        name = _safe(passenger.get("name"), "Passenger")
-        seat = _safe(passenger.get("seat_number"))
-        ticket = _safe(passenger.get("ticket_number"))
+    for index, passenger in enumerate(payload.get("passengers") or [], start=1):
+        full_name = " ".join(
+            part
+            for part in (_clean(passenger.get("title")), _clean(passenger.get("name")))
+            if part
+        ) or f"Passenger {index}"
+        seat = _clean(passenger.get("seat_number"))
+        ticket = _clean(passenger.get("ticket_number"))
 
-        age = passenger.get("age")
-        gender = passenger.get("gender")
-
+        age = _clean(passenger.get("age"))
+        gender = _clean(passenger.get("gender"))
         meta = " · ".join(
-            str(value)
-            for value in (age, gender)
-            if value not in (None, "")
+            part for part in (f"{age} yrs" if age else "", gender) if part
         )
 
         meta_html = (
-            f'<div style="font-size:12px;color:#887A73;margin-top:4px">'
-            f'{_safe(meta, "")}</div>'
+            f'<div style="font-size:12px;color:{MUTED};margin-top:3px">{_safe(meta, "")}</div>'
             if meta
             else ""
         )
 
         passenger_rows.append(
-            '<tr>'
-            '<td style="padding:13px 12px;border-bottom:1px solid #EEE7E1">'
-            f'<div style="font-weight:700;color:#382B28">{name}</div>'
-            f'{meta_html}'
-            '</td>'
-            '<td style="padding:13px 12px;border-bottom:1px solid #EEE7E1;'
-            f'color:#382B28">{seat}</td>'
-            '<td style="padding:13px 12px;border-bottom:1px solid #EEE7E1;'
-            f'color:#6F625D;font-size:12px">{ticket}</td>'
-            '</tr>'
+            "<tr>"
+            f'<td valign="middle" style="padding:13px 12px;border-top:1px solid {BORDER};font-family:{FONT}">'
+            f'<div style="font-size:14px;font-weight:700;color:{INK}">{_safe(full_name)}</div>'
+            f"{meta_html}</td>"
+            f'<td valign="middle" align="center" width="64" style="padding:13px 6px;border-top:1px solid {BORDER};font-family:{FONT}">'
+            f'<span style="display:inline-block;min-width:34px;padding:6px 10px;background:{BURGUNDY_LIGHT};'
+            f'color:{BURGUNDY};border-radius:8px;font-size:13px;font-weight:700;text-align:center">'
+            f"{_safe(seat)}</span></td>"
+            f'<td valign="middle" align="right" style="padding:13px 12px;border-top:1px solid {BORDER};'
+            f'font-family:{FONT};font-size:12px;color:{MUTED}">{_safe(ticket)}</td>'
+            "</tr>"
         )
 
-        passenger_text_rows.append(
-            f"{passenger.get('name') or 'Passenger'} | "
-            f"Seat {passenger.get('seat_number') or '—'} | "
-            f"Ticket {passenger.get('ticket_number') or '—'}"
-        )
+        text_bits = [full_name]
+        if meta:
+            text_bits.append(meta)
+        text_bits.append(f"Seat {seat or '—'}")
+        text_bits.append(f"Ticket {ticket or '—'}")
+        passenger_text_rows.append("  " + " | ".join(text_bits))
 
     if not passenger_rows:
         passenger_rows.append(
-            '<tr><td colspan="3" style="padding:14px;color:#887A73">'
-            'Passenger details unavailable</td></tr>'
+            f'<tr><td colspan="3" style="padding:14px 12px;font-size:13px;color:{MUTED};'
+            f'font-family:{FONT};border-top:1px solid {BORDER}">Passenger details unavailable</td></tr>'
         )
 
-    def point_card(label, point):
-        if not isinstance(point, dict) or not any(
-            point.get(key)
-            for key in ("name", "address", "landmark", "time", "reporting_time")
-        ):
-            return ""
-
-        title = _safe(point.get("name"), label)
-        address = _safe(point.get("address"))
-        landmark = _safe(point.get("landmark"))
-        time = _safe(point.get("reporting_time") or point.get("time"))
-
-        details = "<br>".join(
-            value
-            for value in (
-                address,
-                f"Near {landmark}" if landmark != "—" else "",
-                f"Time: {time}" if time != "—" else "",
-            )
-            if value
-        )
-
-        return (
-            f'<td width="50%" valign="top" style="padding:14px;'
-            f'background:#FFFEFC;border:1px solid #EAE0D7;border-radius:12px">'
-            f'<div style="font-size:11px;letter-spacing:1px;'
-            f'text-transform:uppercase;color:#887A73">{label}</div>'
-            f'<div style="font-size:15px;font-weight:700;color:#382B28;'
-            f'margin:6px 0">{title}</div>'
-            f'<div style="font-size:12px;line-height:19px;'
-            f'color:#6F625D">{details}</div>'
-            '</td>'
-        )
-
-    point_cells = [
-        value
-        for value in (
-            point_card("Boarding point", boarding),
-            point_card("Dropping point", dropping),
-        )
-        if value
-    ]
-
+    # ---------- pickup & drop-off ----------
     points_section = ""
 
-    if point_cells:
+    if _has_point(boarding) or _has_point(dropping):
         points_section = (
-            '<h3 style="font-size:16px;color:#382B28;margin:26px 0 10px">'
-            'Your pickup & drop-off</h3>'
-            '<table role="presentation" width="100%" cellspacing="0" '
-            'cellpadding="0"><tr>'
-            + "".join(point_cells)
-            + '</tr></table>'
+            f'<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+            f'style="margin-top:20px;border:1px solid {BORDER};border-radius:14px;'
+            f'border-collapse:separate;background:{PAPER}"><tr>'
+            + _point_cell("Boarding", boarding, "16px 10px 16px 16px")
+            + _point_cell("Dropping", dropping, "16px 16px 16px 10px")
+            + "</tr></table>"
         )
 
-    route = ""
-
-    if source or destination:
-        route = (
-            f'<div style="font-size:19px;font-weight:700;color:#382B28">'
-            f'{_safe(source, "Origin")} '
-            f'<span style="color:#B18A88">→</span> '
-            f'{_safe(destination, "Destination")}</div>'
-        )
+    route = _route_html(source, destination)
 
     schedule = " · ".join(
         value
         for value in (
-            str(departure_time) if departure_time else "",
+            f"Departs {departure_time}" if departure_time else "",
             f"Arrives {arrival_time}" if arrival_time else "",
         )
         if value
@@ -195,177 +251,112 @@ def build_confirmation_email(payload: dict) -> tuple[str, str, str]:
         if value
     )
 
-    subject = f"Your StableBus ticket is confirmed · {booking_id}"
+    if source and destination:
+        subject = f"Your StableBus ticket is confirmed · {source} → {destination}"
+    else:
+        subject = f"Your StableBus ticket is confirmed · {booking_id}"
 
-    email_html = f'''<!doctype html>
+    preheader = f"{journey_date} · Seats {seats_text or '—'} · PNR {pnr}"
+
+    schedule_html = (
+        f'<div style="font-size:12px;color:{MUTED};margin-top:4px">{_safe(schedule)}</div>'
+        if schedule
+        else ""
+    )
+
+    email_html = f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>Your StableBus ticket</title>
 </head>
+<body style="margin:0;padding:0;background:{BG};font-family:{FONT};color:{INK}">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:{BG}">{_safe(preheader)}</div>
 
-<body style="margin:0;padding:0;background:#F8F4ED;
-font-family:Arial,Helvetica,sans-serif;color:#382B28">
-
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0"
-style="background:#F8F4ED;padding:28px 12px">
-<tr>
-<td align="center">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:{BG};padding:28px 12px">
+<tr><td align="center">
 
 <table role="presentation" width="600" cellspacing="0" cellpadding="0"
-style="max-width:600px;width:100%;background:#FFFEFC;
-border:1px solid #EAE0D7;border-radius:18px;overflow:hidden">
+       style="max-width:600px;width:100%;background:{PAPER};border:1px solid {BORDER};border-radius:18px;overflow:hidden">
 
-<tr>
-<td style="background:#70404A;padding:26px 30px;color:#FFFEFC">
-<div style="font-size:22px;font-weight:800;letter-spacing:.2px">
-StableBus
-</div>
-<div style="font-size:12px;color:#F4EAEB;margin-top:5px;
-letter-spacing:1.5px">
-YOUR JOURNEY, CONFIRMED
-</div>
-</td>
-</tr>
+  <tr>
+    <td style="background:{BURGUNDY};padding:26px 30px;color:{PAPER};font-family:{FONT}">
+      <div style="font-size:22px;font-weight:800;letter-spacing:.2px">StableBus</div>
+      <div style="font-size:12px;color:{BURGUNDY_LIGHT};margin-top:5px;letter-spacing:1.5px">YOUR JOURNEY, CONFIRMED</div>
+    </td>
+  </tr>
 
-<tr>
-<td style="padding:30px 30px 12px">
+  <tr>
+    <td style="padding:30px 30px 8px;font-family:{FONT}">
 
-<div style="display:inline-block;background:#EAF2EC;color:#356B4A;
-padding:7px 11px;border-radius:20px;font-size:12px;font-weight:700">
-✓ &nbsp; TICKET CONFIRMED
-</div>
+      <span style="display:inline-block;background:{GREEN_LIGHT};color:{GREEN};padding:7px 12px;border-radius:20px;font-size:12px;font-weight:700">
+        &#10003;&nbsp; TICKET CONFIRMED
+      </span>
 
-<h1 style="font-size:25px;line-height:32px;margin:18px 0 8px;
-color:#382B28">
-You're all set to travel.
-</h1>
+      <h1 style="font-size:25px;line-height:32px;margin:18px 0 8px;color:{INK};font-family:{FONT}">You&rsquo;re all set to travel.</h1>
+      <p style="font-size:14px;line-height:22px;color:{MUTED};margin:0">
+        Your bus ticket has been confirmed. Keep this email handy for your journey.
+      </p>
 
-<p style="font-size:14px;line-height:22px;color:#887A73;margin:0">
-Your bus ticket has been confirmed. Keep this email handy for your journey.
-</p>
+      <div style="margin-top:24px;padding:20px;background:{BG};border:1px solid {BORDER};border-radius:14px">
+        {route}
+        <div style="font-size:13px;color:{MUTED};margin-top:10px">{_safe(journey_date)}</div>
+        <div style="font-size:13px;font-weight:700;color:#6F625D;margin-top:8px">{_safe(bus_line, "Bus details unavailable")}</div>
+        {schedule_html}
+      </div>
 
-<div style="margin-top:24px;padding:20px;background:#F8F4ED;
-border:1px solid #EAE0D7;border-radius:14px">
+      {points_section}
 
-{route}
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:18px;border-collapse:collapse">
+        <tr>
+          {_grid_cell("Booking ID", f'<span style="font-size:13px;font-weight:700;color:{INK};word-break:break-all">{_safe(booking_id)}</span>', "12px 10px 12px 0")}
+          {_grid_cell("Operator PNR", f'<span style="font-size:15px;font-weight:800;color:{BURGUNDY}">{_safe(pnr)}</span>', "12px 0 12px 10px")}
+        </tr>
+        <tr>
+          {_grid_cell("Seats", f'<span style="font-size:13px;font-weight:700;color:{INK}">{_safe(seats_text)}</span>', "12px 10px 12px 0")}
+          {_grid_cell("Total paid", f'<span style="font-size:18px;font-weight:800;color:{BURGUNDY}">{_safe(money)}</span>', "12px 0 12px 10px")}
+        </tr>
+      </table>
 
-<div style="font-size:13px;color:#887A73;margin-top:9px">
-{_safe(journey_date)}
-</div>
+      <h3 style="font-size:16px;color:{INK};margin:26px 0 10px;font-family:{FONT}">Passenger details</h3>
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
+             style="border:1px solid {BORDER};border-radius:12px;border-collapse:separate;border-spacing:0;overflow:hidden">
+        <tr style="background:{BG}">
+          <th align="left" style="padding:11px 12px;font-size:11px;color:{MUTED};text-transform:uppercase;letter-spacing:.6px;font-family:{FONT}">Passenger</th>
+          <th align="center" style="padding:11px 6px;font-size:11px;color:{MUTED};text-transform:uppercase;letter-spacing:.6px;font-family:{FONT}">Seat</th>
+          <th align="right" style="padding:11px 12px;font-size:11px;color:{MUTED};text-transform:uppercase;letter-spacing:.6px;font-family:{FONT}">Ticket no.</th>
+        </tr>
+        {"".join(passenger_rows)}
+      </table>
 
-<div style="font-size:13px;color:#6F625D;margin-top:7px">
-{_safe(bus_line, "Bus details unavailable")}
-</div>
+      <div style="margin-top:24px;padding:15px 16px;background:{BURGUNDY_LIGHT};border-radius:12px;font-size:13px;line-height:20px;color:{BURGUNDY_DARK}">
+        <strong>Before you travel</strong><br>
+        Please arrive at your boarding point ahead of the reporting time and carry a valid photo ID.
+      </div>
 
-<div style="font-size:12px;color:#887A73;margin-top:5px">
-{_safe(schedule, "")}
-</div>
+      <p style="font-size:13px;line-height:21px;color:{MUTED};margin:24px 0 6px">
+        Thank you for choosing StableBus. We hope you have a comfortable journey.
+      </p>
+      <p style="font-size:13px;font-weight:700;color:{BURGUNDY};margin:0 0 26px">Team StableBus</p>
+    </td>
+  </tr>
 
-</div>
-
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0"
-style="margin-top:18px">
-
-<tr>
-<td width="50%" style="padding:12px 10px 12px 0;
-border-bottom:1px solid #EEE7E1">
-<div style="font-size:11px;color:#887A73;text-transform:uppercase;
-letter-spacing:.8px">Booking ID</div>
-<div style="font-size:13px;font-weight:700;margin-top:5px;
-word-break:break-all">{_safe(booking_id)}</div>
-</td>
-
-<td width="50%" style="padding:12px 0 12px 10px;
-border-bottom:1px solid #EEE7E1">
-<div style="font-size:11px;color:#887A73;text-transform:uppercase;
-letter-spacing:.8px">Operator PNR</div>
-<div style="font-size:13px;font-weight:700;margin-top:5px">
-{_safe(pnr)}
-</div>
-</td>
-</tr>
-
-<tr>
-<td style="padding:12px 10px 12px 0;
-border-bottom:1px solid #EEE7E1">
-<div style="font-size:11px;color:#887A73;text-transform:uppercase;
-letter-spacing:.8px">Seats</div>
-<div style="font-size:13px;font-weight:700;margin-top:5px">
-{_safe(seats_text)}
-</div>
-</td>
-
-<td style="padding:12px 0 12px 10px;
-border-bottom:1px solid #EEE7E1">
-<div style="font-size:11px;color:#887A73;text-transform:uppercase;
-letter-spacing:.8px">Total paid</div>
-<div style="font-size:16px;font-weight:800;margin-top:4px;color:#783D4A">
-{_safe(currency)} {_safe(amount)}
-</div>
-</td>
-</tr>
+  <tr>
+    <td style="padding:18px 30px;background:#FAF8F5;border-top:1px solid {BORDER};font-size:11px;line-height:18px;color:{MUTED};font-family:{FONT}">
+      Operator reference: {_safe(supplier_ref)}<br>
+      This is an automated booking confirmation. Please do not reply to this email.
+    </td>
+  </tr>
 
 </table>
-
-{points_section}
-
-<h3 style="font-size:16px;color:#382B28;margin:26px 0 10px">
-Passenger details
-</h3>
-
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0"
-style="border:1px solid #EAE0D7;border-radius:12px;
-border-spacing:0;overflow:hidden">
-
-<tr style="background:#F8F4ED">
-<th align="left" style="padding:11px 12px;font-size:11px;
-color:#887A73;text-transform:uppercase">Passenger</th>
-<th align="left" style="padding:11px 12px;font-size:11px;
-color:#887A73;text-transform:uppercase">Seat</th>
-<th align="left" style="padding:11px 12px;font-size:11px;
-color:#887A73;text-transform:uppercase">Ticket no.</th>
-</tr>
-
-{''.join(passenger_rows)}
-
+</td></tr>
 </table>
-
-<div style="margin-top:24px;padding:15px;background:#F4EAEB;
-border-radius:12px;font-size:12px;line-height:19px;color:#65313E">
-<strong>Before you travel</strong><br>
-Please arrive at your boarding point ahead of the reporting time
-and carry a valid photo ID.
-</div>
-
-<p style="font-size:13px;line-height:21px;color:#887A73;margin:24px 0 6px">
-Thank you for choosing StableBus. We hope you have a comfortable journey.
-</p>
-
-<p style="font-size:13px;font-weight:700;color:#783D4A;margin:0 0 24px">
-Team StableBus
-</p>
-
-</td>
-</tr>
-
-<tr>
-<td style="padding:18px 30px;background:#FAF8F5;
-border-top:1px solid #EAE0D7;font-size:11px;
-line-height:18px;color:#887A73">
-Booking reference: {_safe(supplier_ref)}<br>
-This is an automated booking confirmation. Please do not reply to this email.
-</td>
-</tr>
-
-</table>
-</td>
-</tr>
-</table>
-
 </body>
-</html>'''
+</html>"""
 
+    # ---------- plain text ----------
     text_lines = [
         "STABLEBUS — TICKET CONFIRMED",
         "",
@@ -377,7 +368,7 @@ This is an automated booking confirmation. Please do not reply to this email.
         f"Operator PNR: {pnr}",
         f"Operator reference: {supplier_ref}",
         f"Seats: {seats_text or '—'}",
-        f"Total paid: {currency} {amount}",
+        f"Total paid: {money}",
         "",
         "PASSENGERS:",
         *(passenger_text_rows or ["Passenger details unavailable"]),
@@ -388,17 +379,19 @@ This is an automated booking confirmation. Please do not reply to this email.
         ("DROPPING", dropping),
     ):
         if isinstance(point, dict) and point:
-            text_lines.extend([
-                "",
-                f"{label}:",
-                str(point.get("name") or "—"),
-                str(point.get("address") or ""),
-                str(
-                    point.get("reporting_time")
-                    or point.get("time")
-                    or ""
-                ),
-            ])
+            details = _point_details(point)
+            text_lines.extend(
+                ["", f"{label}:", details["name"] or "—"]
+                + [
+                    value
+                    for value in (
+                        details["address"],
+                        f"Near {details['landmark']}" if details["landmark"] else "",
+                        details["time"],
+                    )
+                    if value
+                ]
+            )
 
     text_lines.extend([
         "",

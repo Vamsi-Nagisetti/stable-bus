@@ -4,5 +4,6 @@ __pycache__/
 .pytest_cache/
 *.pyc
 secrets/
+logs/
 gen_key.py
 \\

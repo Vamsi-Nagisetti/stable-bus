@@ -93118,3 +93118,225 @@ Traceback (most recent call last):
 sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 15432 failed: Connection refused
 	Is the server running on that host and accepting TCP/IP connections?
 (Background on this error at: https://sqlalche.me/e/21/e3q8)
+2026-11-15T16:19:51 | ERROR | stablebus.api.buses | request_id=01a1e002-0190-7620-bb97-00e7052b1114 | Failed to fetch bus seat map
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/buses.py", line 81, in get_bus_seat_map
+    return bus_service.get_seat_map(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        bus_key=seat_map_request.bus_key,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        dropping_id=seat_map_request.dropping_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Services/Bus/bus_service.py", line 468, in get_seat_map
+    raise RuntimeError(
+        header.get("error_Desc") or "Unable to fetch bus seat map"
+    )
+RuntimeError: Unable to fetch the seat map detail from host. Check inner exception. 
+2026-11-16T11:42:07 | ERROR | stablebus.middleware.request | request_id=01a1e429-a82d-7542-b4dc-27b92c98e376 | Request failed | method=POST | path=/api/v1/buses/search | status=500 | duration_ms=30183.17
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 540, in _make_request
+    response = conn.getresponse()
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connection.py", line 638, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.14/http/client.py", line 1478, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 343, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 304, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/socket.py", line 729, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.14/ssl.py", line 1315, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/ssl.py", line 1149, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/util/retry.py", line 510, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/util/util.py", line 39, in reraise
+    raise value
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 542, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/urllib3/connectionpool.py", line 373, in _raise_timeout
+    raise ReadTimeoutError(
+        self, url, f"Read timed out. (read timeout={timeout_value})"
+    ) from err
+urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='travel.bospay.in', port=443): Read timed out. (read timeout=30)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/middleware/request_logging.py", line 62, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1194, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/prometheus_fastapi_instrumentator/middleware.py", line 180, in __call__
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/prometheus_fastapi_instrumentator/middleware.py", line 178, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2811, in app
+    await route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1839, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2894, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1865, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1328, in handle
+    await effective_context.app(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 166, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 152, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 745, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 374, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "/home/ubuntu/prd/stable-bus/api/routes/buses.py", line 59, in search_buses
+    return bus_service.search_buses(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        from_city=search_request.from_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        to_city=search_request.to_city,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        travel_date=search_request.travel_date,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Services/Bus/bus_service.py", line 396, in search_buses
+    result = self.bus_provider.BusSearch(
+        from_city=from_city,
+        to_city=to_city,
+        travel_date=travel_date,
+    )
+  File "/home/ubuntu/prd/stable-bus/Adaptors/AOPayBusAPI/AOPayAdapter.py", line 42, in BusSearch
+    return self.adaptee.BusSearch(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/Adaptors/AOPayBusAPI/AOPayAdaptee.py", line 23, in BusSearch
+    return self._post(
+           ~~~~~~~~~~^
+        "/api/V1/Bus/Travel/BusSearch",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        payload,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Adaptors/AOPayBusAPI/AOPayAdaptee.py", line 12, in _post
+    response = requests.post(
+        f"{self.base_url}/{endpoint.lstrip('/')}",
+    ...<2 lines>...
+        timeout=self.timeout,
+    )
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/api.py", line 134, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/api.py", line 71, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/ubuntu/prd/stable-bus/.venv/lib/python3.14/site-packages/requests/adapters.py", line 742, in send
+    raise ReadTimeout(e, request=request)
+requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='travel.bospay.in', port=443): Read timed out. (read timeout=30)
+2026-11-16T12:08:03 | ERROR | stablebus.api.buses | request_id=01a1e441-d72c-72f9-a6e7-eb44aa44f8d6 | Failed to fetch bus seat map
+Traceback (most recent call last):
+  File "/home/ubuntu/prd/stable-bus/api/routes/buses.py", line 81, in get_bus_seat_map
+    return bus_service.get_seat_map(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        bus_key=seat_map_request.bus_key,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        dropping_id=seat_map_request.dropping_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/ubuntu/prd/stable-bus/Services/Bus/bus_service.py", line 468, in get_seat_map
+    raise RuntimeError(
+        header.get("error_Desc") or "Unable to fetch bus seat map"
+    )
+RuntimeError: Unable to fetch the seat map detail from host. Check inner exception. 
