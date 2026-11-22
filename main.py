@@ -287,6 +287,9 @@ app = FastAPI(
     description="Backend APIs for StableBus bus booking platform",
     version="1.0.0",
     lifespan=lifespan,
+     docs_url=None,
+    redoc_url=None,
+    openapi_url=None,
 )
 
 app.add_middleware(
@@ -294,6 +297,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:8081",
         "http://127.0.0.1:8081",
+         "https://stablebus.com",
+        "https://www.stablebus.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
