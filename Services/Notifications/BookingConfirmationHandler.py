@@ -148,16 +148,27 @@ def build_confirmation_email(payload: dict) -> tuple[str, str, str]:
     journey_date = _format_date(payload.get("journey_date"))
     money = _format_money(payload.get("currency"), payload.get("total_amount"))
 
-    source = payload.get("source_city_name") or payload.get("source_city")
+    # Bus details are also kept inside boarding_point["_bus"] by the app.
+    _raw_point = payload.get("boarding_point")
+    bus_info = (_raw_point.get("_bus") if isinstance(_raw_point, dict) else None) or {}
+
+    source = payload.get("source_city_name") or bus_info.get("source_city_name") or payload.get("source_city")
     destination = (
         payload.get("destination_city_name")
+        or bus_info.get("destination_city_name")
         or payload.get("destination_city")
     )
 
-    bus_name = payload.get("bus_name") or payload.get("operator_name")
-    bus_type = payload.get("bus_type")
-    departure_time = payload.get("departure_time")
-    arrival_time = payload.get("arrival_time")
+    bus_name = (
+        payload.get("operator_name")
+        or bus_info.get("operator_name")
+        or payload.get("bus_name")
+        or payload.get("travel_name")
+        or payload.get("operator")
+    )
+    bus_type = payload.get("bus_type") or bus_info.get("bus_type")
+    departure_time = payload.get("departure_time") or bus_info.get("departure_time")
+    arrival_time = payload.get("arrival_time") or bus_info.get("arrival_time")
 
     boarding = payload.get("boarding_point") or {}
     dropping = payload.get("dropping_point") or {}
@@ -303,7 +314,8 @@ def build_confirmation_email(payload: dict) -> tuple[str, str, str]:
       <div style="margin-top:24px;padding:20px;background:{BG};border:1px solid {BORDER};border-radius:14px">
         {route}
         <div style="font-size:13px;color:{MUTED};margin-top:10px">{_safe(journey_date)}</div>
-        <div style="font-size:13px;font-weight:700;color:#6F625D;margin-top:8px">{_safe(bus_line, "Bus details unavailable")}</div>
+        {f'<div style="font-size:17px;font-weight:700;color:#783D4A;margin-bottom:6px;font-family:{FONT}">{_safe(bus_name)}</div>' if bus_name else ''}
+        {f'<div style="font-size:13px;color:#6F625D;margin-top:8px">{_safe(bus_type)}</div>' if bus_type else ''}
         {schedule_html}
       </div>
 

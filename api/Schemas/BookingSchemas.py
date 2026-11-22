@@ -1,4 +1,3 @@
-
 from datetime import date, datetime
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -58,9 +57,11 @@ class CreateBookingRequest(BaseModel):
     destination_city_id: str
     journey_date: date
     bus_id: str
+    operator_name: str | None = Field(default=None, min_length=1, max_length=200)
     search_key: str
     boarding_id: str
     dropping_id: str
+    # Preserve the selected provider pickup/drop-off objects for booking/history.
     boarding_point: dict | None = None
     dropping_point: dict | None = None
 

@@ -1,6 +1,7 @@
 
 import logging
 import os
+from datetime import date
 
 from fastapi import (
     APIRouter,
@@ -421,6 +422,11 @@ def get_cancellation_charges(
     adapter=Depends(get_booking_adapter),
 ):
     booking = require_booking_access(booking_id, db, current_user, guest_access_token)
+    if booking.journey_date and booking.journey_date < date.today():
+        raise HTTPException(
+            status_code=409,
+            detail="Cancellation is not available for completed journeys",
+        )
     if booking.status != "CONFIRMED":
         raise HTTPException(status_code=409, detail="Only confirmed bookings can be cancelled")
     if not booking.temp_booking_ref or not booking.transport_pnr:
@@ -476,6 +482,11 @@ def cancel_booking_seats(
     adapter=Depends(get_booking_adapter),
 ):
     booking = require_booking_access(booking_id, db, current_user, guest_access_token, lock=True)
+    if booking.journey_date and booking.journey_date < date.today():
+        raise HTTPException(
+            status_code=409,
+            detail="Cancellation is not available for completed journeys",
+        )
     if booking.status != "CONFIRMED":
         raise HTTPException(status_code=409, detail="Only confirmed bookings can be cancelled")
     if not booking.temp_booking_ref or not booking.transport_pnr:
@@ -598,6 +609,8 @@ def get_booking_history(
             items.append({
                 "booking_id": booking.id,
                 "booking_status": booking.status,
+                "boarding_point": booking.boarding_point,
+                "dropping_point": booking.dropping_point,
                 "journey_date": (
                     booking.journey_date.isoformat()
                     if booking.journey_date else None
@@ -605,6 +618,7 @@ def get_booking_history(
                 "source_city_id": booking.source_city_id,
                 "destination_city_id": booking.destination_city_id,
                 "bus_id": booking.bus_id,
+                "operator_name": booking.operator_name,
                 "seat_numbers": booking.seat_numbers,
                 "cancelled_seat_numbers": booking.cancelled_seat_numbers or [],
                 "total_amount": str(booking.total_amount),

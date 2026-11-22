@@ -117,6 +117,11 @@ class Booking(Base):
 
     bus_id: Mapped[str] = mapped_column(Text, nullable=False)
 
+    operator_name: Mapped[str | None] = mapped_column(
+        String(200),
+        nullable=True,
+    )
+
     seat_numbers: Mapped[list[str]] = mapped_column(
         JSON,
         nullable=False,

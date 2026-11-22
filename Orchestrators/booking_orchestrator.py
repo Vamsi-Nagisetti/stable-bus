@@ -255,6 +255,7 @@ class BookingOrchestrator:
             dropping_point=request.dropping_point,
             journey_date=request.journey_date,
             bus_id=request.bus_id,
+            operator_name=getattr(request, "operator_name", None),
             seat_numbers=[
                 seat["seat_number"]
                 for seat in fare_result["selected_seats"]
