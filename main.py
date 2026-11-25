@@ -11,6 +11,7 @@ from prometheus_fastapi_instrumentator import Instrumentator
 
 load_dotenv()
 
+# API routers
 from api.routes.auth import router as auth_router
 from api.routes.users import router as users_router
 from api.routes.buses import router as buses_router
@@ -19,32 +20,43 @@ from api.routes.Booking import router as bookings_router
 from api.routes.reviews import router as reviews_router
 from api.routes.preregistrations import router as preregistrations_router
 
+# NEW: Push notification router
+from api.routes.notifications import router as notifications_router
+
+# Management and middleware
 from Management.SessionManagement import SessionManagement
 from core.logging_config import LoggingConfig
 from api.middleware.request_logging import RequestLoggingMiddleware
 
+# Cache
 from Adaptors.Cache.RedisCacheAdaptee import RedisCacheAdaptee
 from Adaptors.Cache.RedisCacheAdaptor import RedisCacheAdaptor
 
+# AO Pay
 from Adaptors.AOPayBusAPI.AOPayAdaptee import AOPayAdaptee
 from Adaptors.AOPayBusAPI.AOPayAdapter import AOPayAdapter
 from Adaptors.AOPayBusAPI.MockAOPayBookingAdaptee import (
     MockAOPayAdaptee,
 )
 
+# Payments
 from Adaptors.Payments.MockPaymentAdapter import MockPaymentAdapter
 from Adaptors.Payments.RazorpayAdapter import RazorpayAdapter
 
+# Email notifications
 from Adaptors.Notifications.ResendEmailAdapter import ResendEmailAdapter
 from Services.Notifications.NotificationService import NotificationService
 
+# OTP and bus services
 from Services.OTP.FAST2SMS_OTP_Service import Fast2SMSOTPService
 from Services.Bus.bus_service import BusService
 
+# Factories and database
 from Factories.AuthDependencyFactory import AuthDependencyFactory
 from Adaptors.Databases.DynamoDBAdaptee import DynamoDBAdaptee
-
 from core.database import SessionLocal
+
+# Outbox
 from messageQueues.OutboxPublisher import OutboxPublisher
 
 
@@ -287,23 +299,26 @@ app = FastAPI(
     description="Backend APIs for StableBus bus booking platform",
     version="1.0.0",
     lifespan=lifespan,
-     docs_url=None,
+    docs_url=None,
     redoc_url=None,
     openapi_url=None,
 )
 
+
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:8081",
         "http://127.0.0.1:8081",
-         "https://stablebus.com",
+        "https://stablebus.com",
         "https://www.stablebus.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Register API routers
 app.include_router(auth_router)
@@ -314,7 +329,11 @@ app.include_router(bookings_router)
 app.include_router(reviews_router)
 app.include_router(preregistrations_router)
 
+# NEW: Register push notification endpoints
+app.include_router(notifications_router)
+
 logger.info("StableBus application initialized")
+
 
 # Prometheus monitoring
 Instrumentator().instrument(app).expose(
@@ -343,4 +362,18 @@ def test_error():
     raise RuntimeError("StableBus test exception")
 
 
+# TEMPORARY: Verify registered routes after deployment.
+# Remove this endpoint once notification routes are confirmed.
+@app.get("/debug/routes", tags=["Debug"])
+def debug_routes():
+    return [
+        {
+            "path": route.path,
+            "methods": sorted(route.methods or []),
+        }
+        for route in app.routes
+    ]
+
+
+# Request logging middleware
 app = RequestLoggingMiddleware(app)
