@@ -1,0 +1,15 @@
+
+SQLAlchemy
+alembic
+psycopg[binary]
+redis
+requests
+python-dotenv
+PyJWT[crypto]
+kafka-python
+fastapi
+uvicorn[standard]
+pydantic-settings
+httpx2
+boto3
+prometheus-fastapi-instrumentator

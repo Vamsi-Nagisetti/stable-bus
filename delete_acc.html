@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F8F4ED">
+  <meta name="description" content="Request deletion of your StableBus account and associated personal data.">
+  <title>Request Account Deletion | StableBus</title>
+  <style>
+    :root{--bg:#F8F4ED;--paper:#FFFEFC;--ink:#382B28;--muted:#887A73;--line:#EAE0D7;--wine:#783D4A;--wine-dark:#65313E;--rose:#F4EAEB;--success:#286344;--error:#A33131}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.6}
+    a{color:var(--wine)}
+    .wrap{width:min(760px,calc(100% - 32px));margin:0 auto}
+    header{padding:25px 0}
+    .brand{display:inline-flex;align-items:center;gap:10px;color:var(--wine);text-decoration:none;font-weight:800;font-size:21px;letter-spacing:-.5px}
+    .mark{width:35px;height:35px;display:grid;place-items:center;border-radius:10px;background:var(--wine);color:#fff;font:20px Georgia,serif}
+    main{padding:12px 0 64px}
+    .hero{background:var(--wine);color:white;border-radius:22px;padding:clamp(26px,5vw,42px);margin-bottom:20px}
+    .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#EBD4D2;font-weight:800}
+    h1{font:500 clamp(32px,5vw,44px)/1.15 Georgia,serif;margin:10px 0}
+    .hero p{margin:0;color:#F5E9E7;font-size:14px}
+    .panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,4vw,36px);box-shadow:0 12px 34px rgba(56,43,40,.05)}
+    h2{font:500 23px Georgia,serif;color:var(--wine);margin:0 0 8px}
+    .intro{font-size:14px;color:var(--muted);margin:0 0 22px}
+    label{display:block;font-weight:650;font-size:13px;margin:16px 0 7px}
+    input{width:100%;border:1px solid #D8CBC2;border-radius:10px;padding:13px 14px;background:#fff;color:var(--ink);font:inherit;font-size:15px;outline:none}
+    input:focus{border-color:var(--wine);box-shadow:0 0 0 3px rgba(120,61,74,.12)}
+    .hint{font-size:12px;color:var(--muted);margin:6px 0 0}
+    .check{display:flex;align-items:flex-start;gap:10px;margin:18px 0;font-size:13px;color:#594D48}
+    .check input{width:17px;height:17px;margin-top:3px;accent-color:var(--wine);flex:0 0 auto}
+    button{width:100%;border:0;border-radius:11px;padding:14px 18px;background:var(--wine);color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+    button:hover{background:var(--wine-dark)}
+    .info{margin-top:22px;padding:15px 17px;border-radius:12px;background:var(--rose);color:#594148;font-size:13px}
+    .info p{margin:5px 0}
+    .email-note{margin-top:14px;font-size:12px;color:var(--muted);text-align:center}
+    footer{padding:0 0 28px;color:var(--muted);font-size:12px}
+    @media(max-width:560px){.hero{border-radius:17px}.panel{border-radius:15px}}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a class="brand" href="https://stablebus.com" aria-label="StableBus home"><span class="mark">S</span><span>StableBus</span></a>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Your journeys are worth gold</div>
+      <h1>Request account deletion</h1>
+      <p>You can request deletion of your StableBus account and associated personal data without signing in to the app.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Submit a deletion request</h2>
+      <p class="intro">Enter the mobile number registered with StableBus. Your email application will open with a pre-filled request addressed to our support team.</p>
+
+      <form id="deleteForm">
+        <label for="mobile">Registered mobile number *</label>
+        <input id="mobile" name="mobile" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" maxlength="20" required>
+        <p class="hint">Include your country code, for example +91.</p>
+
+        <label for="email">Your email address (optional)</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="254">
+
+        <label for="details">Additional information (optional)</label>
+        <input id="details" name="details" type="text" maxlength="500" placeholder="Anything you would like us to know">
+
+        <div class="check">
+          <input id="confirm" type="checkbox" required>
+          <label for="confirm" style="margin:0;font-weight:400">I understand that StableBus may contact me to verify account ownership and that certain booking or transaction records may be retained where required by law.</label>
+        </div>
+
+        <button type="submit">Continue to email</button>
+        <p class="email-note">Your email app will open. You must send the email to submit your request.</p>
+      </form>
+
+      <div class="info">
+        <strong>What happens next?</strong>
+        <p>1. Your email app opens with your deletion request pre-filled.</p>
+        <p>2. Send the email to StableBus.</p>
+        <p>3. We may contact you to verify ownership before processing the request.</p>
+        <p>4. After verification, we process deletion using our account-deletion process. Some records may be retained where legally required.</p>
+        <p><strong>Important:</strong> Opening your email app does not submit the request. You must send the email.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">© <span id="year">2026</span> StableBus. All rights reserved.</footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    document.getElementById("deleteForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!this.reportValidity()) return;
+
+      const mobile = document.getElementById("mobile").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const details = document.getElementById("details").value.trim();
+
+      const subject = "StableBus Account Deletion Request";
+      const body = [
+        "Hello StableBus Support,",
+        "",
+        "I would like to request deletion of my StableBus account and associated personal data.",
+        "",
+        "Registered mobile number: " + mobile,
+        "Contact email: " + (email || "Not provided"),
+        "Additional information: " + (details || "None"),
+        "",
+        "Please let me know if any further verification is required.",
+        "",
+        "Thank you."
+      ].join("\n");
+
+      const mailto = "mailto:vamsinagisetti22n@gmail.com"
+        + "?subject=" + encodeURIComponent(subject)
+        + "&body=" + encodeURIComponent(body);
+
+      window.location.href = mailto;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,692 @@
+
+import logging
+import os
+from datetime import date
+
+from fastapi import (
+    APIRouter,
+    Depends,
+    Header,
+    HTTPException,
+    Request,
+    status,
+)
+from pydantic import BaseModel, Field
+from sqlalchemy.orm import Session
+
+from core.database import get_db
+from api.dependencies.auth import (
+    get_current_user,
+    get_optional_current_user,
+)
+from api.Schemas.BookingSchemas import (
+    CreateBookingRequest,
+    CancellationChargesRequest,
+    CancellationRequest,
+    ProviderBookingHistoryRequest,
+)
+
+from Repositories.UserPassengerRepository import UserPassengerRepository
+from Repositories.BookingRepository import BookingRepository
+from Repositories.PaymentRepository import PaymentRepository
+from Repositories.PaymentCacheRepository import PaymentCacheRepository
+from Repositories.RefundRepository import RefundRepository
+
+from Orchestrators.booking_orchestrator import (
+    BookingOrchestrator,
+    BookingOrchestrationError,
+)
+
+from Services.Payments.PaymentService import PaymentService
+
+
+logger = logging.getLogger("stablebus.api.bookings")
+
+router = APIRouter(
+    prefix="/api/v1/bookings",
+    tags=["Bookings"],
+)
+
+
+def get_booking_adapter(request: Request):
+    adapter = getattr(request.app.state, "booking_adapter", None)
+
+    if adapter is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Booking provider is unavailable",
+        )
+
+    return adapter
+
+
+
+def get_passenger_repository(request: Request):
+    return UserPassengerRepository(request.app.state.dynamodb)
+
+
+def get_payment_service(
+    request: Request,
+    db: Session = Depends(get_db),
+):
+    provider = getattr(request.app.state, "payment_provider", None)
+
+    if provider is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Payment provider is unavailable",
+        )
+
+    return PaymentService(
+        payment_provider=provider,
+        payment_repository=PaymentRepository(db),
+        booking_repository=BookingRepository(db),
+        payment_cache_repository=PaymentCacheRepository(
+            request.app.state.cache
+        ),
+        refund_repository=RefundRepository(db),
+        gateway_name=request.app.state.payment_gateway_name,
+    )
+
+
+def require_booking_access(
+    booking_id: str,
+    db: Session,
+    current_user,
+    guest_access_token: str | None,
+    lock: bool = False,
+):
+    repository = BookingRepository(db)
+    booking = (
+        repository.get_by_id_for_update(booking_id)
+        if lock else repository.get_by_id(booking_id)
+    )
+
+    if not BookingOrchestrator.authorize_booking(
+        booking=booking,
+        user_id=str(current_user.id) if current_user else None,
+        guest_access_token=guest_access_token,
+    ):
+        raise HTTPException(
+            status_code=404,
+            detail="Booking not found",
+        )
+
+    return booking
+
+
+class SimulateMockPaymentRequest(BaseModel):
+    payment_id: str
+
+class InitiatePaymentRequest(BaseModel):
+    idempotency_key: str = Field(
+        ...,
+        min_length=16,
+        max_length=150,
+    )
+    # Wallet coins to apply (1 coin = Rs 0.25). Cash = total - coins*0.25.
+    coins_to_use: int = Field(default=0, ge=0, le=10_000_000)
+
+
+class VerifyPaymentRequest(BaseModel):
+    payment_id: str
+    gateway_payment_id: str
+    signature: str
+
+
+@router.post("", status_code=status.HTTP_201_CREATED)
+def create_booking(
+    booking_request: CreateBookingRequest,
+    request: Request,
+    current_user=Depends(get_optional_current_user),
+    db: Session = Depends(get_db),
+    passenger_repository=Depends(get_passenger_repository),
+    adapter=Depends(get_booking_adapter),
+):
+    try:
+        if not current_user and not booking_request.customer_mobile:
+            raise HTTPException(
+                status_code=400,
+                detail="Mobile number is required for guest booking",
+            )
+
+        bus_provider = request.app.state.bus_service.bus_provider
+
+        seat_map_response = bus_provider.BusSeatMap(
+            bus_key=booking_request.bus_id,
+            search_key=booking_request.search_key,
+            boarding_id=booking_request.boarding_id,
+            dropping_id=booking_request.dropping_id,
+        )
+
+        booking, guest_token = BookingOrchestrator.start_booking(
+            db=db,
+            user_id=str(current_user.id) if current_user else None,
+            request=booking_request,
+            passenger_repository=passenger_repository,
+            adapter=adapter,
+            seat_map_response=seat_map_response,
+            customer_mobile=(
+                current_user.mobile_number
+                if current_user
+                else booking_request.customer_mobile
+            ),
+            passenger_email=booking_request.passenger_email,
+        )
+
+        response = {
+            "booking_id": booking.id,
+            "booking_status": booking.status,
+            "temporary_booking_reference": booking.temp_booking_ref,
+            "seat_numbers": booking.seat_numbers,
+            "total_amount": str(booking.total_amount),
+            "currency": booking.currency,
+        }
+
+        if guest_token:
+            response["guest_access_token"] = guest_token
+
+        return response
+
+    except HTTPException:
+        db.rollback()
+        raise
+
+    except BookingOrchestrationError as exc:
+        db.rollback()
+        raise HTTPException(
+            status_code=409,
+            detail=str(exc),
+        )
+
+    except Exception:
+        db.rollback()
+        logger.exception("Failed to create booking")
+
+        raise HTTPException(
+            status_code=502,
+            detail="Unable to create temporary booking",
+        )
+
+
+@router.post("/{booking_id}/payments")
+def initiate_payment(
+    booking_id: str,
+    payment_request: InitiatePaymentRequest,
+    current_user=Depends(get_optional_current_user),
+    guest_access_token: str | None = Header(
+        default=None,
+        alias="X-Guest-Access-Token",
+    ),
+    db: Session = Depends(get_db),
+    payment_service=Depends(get_payment_service),
+):
+    try:
+        booking = require_booking_access(
+            booking_id,
+            db,
+            current_user,
+            guest_access_token,
+        )
+
+        customer = {
+            "name": "StableBus Customer",
+            "email": (
+                booking.passenger_email
+                or os.getenv("PAYMENT_CUSTOMER_EMAIL", "")
+            ),
+            "contact": (
+                current_user.mobile_number
+                if current_user
+                else booking.customer_mobile
+            ),
+        }
+
+        return BookingOrchestrator.initiate_booking_payment(
+            db=db,
+            booking_id=booking_id,
+            user_id=str(current_user.id) if current_user else None,
+            payment_service=payment_service,
+            customer=customer,
+            idempotency_key=payment_request.idempotency_key,
+            guest_access_token=guest_access_token,
+            coins_to_use=payment_request.coins_to_use,
+        )
+
+    except BookingOrchestrationError as exc:
+        raise HTTPException(status_code=409, detail=str(exc))
+
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+@router.post("/{booking_id}/payments/mock-success")
+def simulate_mock_payment(
+    booking_id: str,
+    payment_request: SimulateMockPaymentRequest,
+    request: Request,
+    current_user=Depends(get_optional_current_user),
+    guest_access_token: str | None = Header(
+        default=None,
+        alias="X-Guest-Access-Token",
+    ),
+    db: Session = Depends(get_db),
+):
+    # Never allow mock payment simulation in production.
+    if (
+        os.getenv("APP_ENV", "development").lower() == "production"
+        or getattr(request.app.state, "payment_gateway_name", "") != "MOCK"
+    ):
+        raise HTTPException(
+            status_code=404,
+            detail="Mock payment simulation is unavailable",
+        )
+
+    # Validate booking ownership / guest access.
+    booking = require_booking_access(
+        booking_id,
+        db,
+        current_user,
+        guest_access_token,
+    )
+
+    # Validate that the payment belongs to this booking.
+    payment = PaymentRepository(db).get_by_id(payment_request.payment_id)
+
+    if payment is None or str(payment.booking_id) != str(booking.id):
+        raise HTTPException(
+            status_code=404,
+            detail="Payment not found",
+        )
+
+    if payment.status != "PENDING":
+        raise HTTPException(
+            status_code=409,
+            detail=f"Payment cannot be simulated in status: {payment.status}",
+        )
+
+    if not payment.gateway_order_id:
+        raise HTTPException(
+            status_code=400,
+            detail="Gateway order ID is missing",
+        )
+
+    # Use the SAME adapter instance used by PaymentService.
+    payment_provider = request.app.state.payment_provider
+
+    try:
+        gateway_payment_id = (
+            payment_provider.simulate_successful_payment(
+                payment.gateway_order_id
+            )
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc),
+        )
+
+    return {
+        "payment_id": payment.id,
+        "gateway_payment_id": gateway_payment_id,
+        "status": "CAPTURED",
+        "message": "Mock payment simulated successfully",
+    }
+    
+@router.post("/{booking_id}/payments/verify")
+def verify_payment(
+    booking_id: str,
+    payment_request: VerifyPaymentRequest,
+    current_user=Depends(get_optional_current_user),
+    guest_access_token: str | None = Header(
+        default=None,
+        alias="X-Guest-Access-Token",
+    ),
+    db: Session = Depends(get_db),
+    payment_service=Depends(get_payment_service),
+):
+    try:
+        return BookingOrchestrator.verify_booking_payment(
+            db=db,
+            booking_id=booking_id,
+            user_id=str(current_user.id) if current_user else None,
+            payment_service=payment_service,
+            payment_id=payment_request.payment_id,
+            gateway_payment_id=payment_request.gateway_payment_id,
+            signature=payment_request.signature,
+            guest_access_token=guest_access_token,
+        )
+
+    except BookingOrchestrationError as exc:
+        raise HTTPException(status_code=409, detail=str(exc))
+
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@router.post("/{booking_id}/ticketing")
+def complete_ticketing(
+    booking_id: str,
+    current_user=Depends(get_optional_current_user),
+    guest_access_token: str | None = Header(
+        default=None,
+        alias="X-Guest-Access-Token",
+    ),
+    db: Session = Depends(get_db),
+    adapter=Depends(get_booking_adapter),
+):
+    try:
+        return BookingOrchestrator.complete_ticketing(
+            db=db,
+            booking_id=booking_id,
+            user_id=str(current_user.id) if current_user else None,
+            adapter=adapter,
+            guest_access_token=guest_access_token,
+        )
+
+    except BookingOrchestrationError as exc:
+        raise HTTPException(status_code=409, detail=str(exc))
+
+
+@router.post("/{booking_id}/requery")
+def requery_booking(
+    booking_id: str,
+    current_user=Depends(get_optional_current_user),
+    guest_access_token: str | None = Header(
+        default=None,
+        alias="X-Guest-Access-Token",
+    ),
+    db: Session = Depends(get_db),
+    adapter=Depends(get_booking_adapter),
+):
+    try:
+        return BookingOrchestrator.requery_ticketing(
+            db=db,
+            booking_id=booking_id,
+            user_id=str(current_user.id) if current_user else None,
+            adapter=adapter,
+            guest_access_token=guest_access_token,
+        )
+
+    except BookingOrchestrationError as exc:
+        raise HTTPException(status_code=409, detail=str(exc))
+
+
+
+from fastapi import Query
+
+
+@router.post("/{booking_id}/cancellation/charges")
+def get_cancellation_charges(
+    booking_id: str,
+    cancellation_request: CancellationChargesRequest,
+    current_user=Depends(get_optional_current_user),
+    guest_access_token: str | None = Header(default=None, alias="X-Guest-Access-Token"),
+    db: Session = Depends(get_db),
+    adapter=Depends(get_booking_adapter),
+):
+    booking = require_booking_access(booking_id, db, current_user, guest_access_token)
+    if booking.journey_date and booking.journey_date < date.today():
+        raise HTTPException(
+            status_code=409,
+            detail="Cancellation is not available for completed journeys",
+        )
+    if booking.status != "CONFIRMED":
+        raise HTTPException(status_code=409, detail="Only confirmed bookings can be cancelled")
+    if not booking.temp_booking_ref or not booking.transport_pnr:
+        raise HTTPException(status_code=409, detail="Provider booking reference is missing")
+
+    requested = set(cancellation_request.seat_numbers)
+    already_cancelled = set(booking.cancelled_seat_numbers or [])
+    if requested & already_cancelled:
+        raise HTTPException(status_code=409, detail="One or more seats are already cancelled")
+
+    passengers = {str(p.seat_number): p for p in booking.passengers}
+    if not requested.issubset(passengers):
+        raise HTTPException(status_code=400, detail="One or more seats do not belong to this booking")
+
+    tickets = []
+    for seat in cancellation_request.seat_numbers:
+        passenger = passengers[seat]
+        if not passenger.ticket_number:
+            raise HTTPException(status_code=409, detail=f"Ticket number missing for seat {seat}")
+        tickets.append({
+            "seat_Number": seat,
+            "ticket_Number": passenger.ticket_number,
+            "transport_PNR": booking.transport_pnr,
+        })
+
+    try:
+        result = adapter.BusCancellationCharges({
+            "booking_RefNo": booking.temp_booking_ref,
+            "cancelTicket_Details": tickets,
+        })
+        header = result.get("response_Header", {}) if isinstance(result, dict) else {}
+        if str(header.get("error_Code")) != "0000":
+            logger.warning("AO Pay cancellation quote rejected booking_id=%s provider_code=%s", booking_id, header.get("error_Code"))
+            raise HTTPException(status_code=409, detail=header.get("error_Desc") or "Cancellation quote rejected")
+        if str(result.get("cancellable", "false")).lower() != "true" or not result.get("cancellationCharge_Key"):
+            raise HTTPException(status_code=409, detail=result.get("message") or "Booking is not cancellable")
+        logger.info("Cancellation charges calculated booking_id=%s seats=%s", booking_id, len(tickets))
+        return result
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("Cancellation charge lookup failed booking_id=%s", booking_id)
+        raise HTTPException(status_code=502, detail="Unable to retrieve cancellation charges")
+
+
+@router.post("/{booking_id}/cancellation")
+def cancel_booking_seats(
+    booking_id: str,
+    cancellation_request: CancellationRequest,
+    current_user=Depends(get_optional_current_user),
+    guest_access_token: str | None = Header(default=None, alias="X-Guest-Access-Token"),
+    db: Session = Depends(get_db),
+    adapter=Depends(get_booking_adapter),
+    payment_service=Depends(get_payment_service),
+):
+    booking = require_booking_access(booking_id, db, current_user, guest_access_token, lock=True)
+    if booking.journey_date and booking.journey_date < date.today():
+        raise HTTPException(
+            status_code=409,
+            detail="Cancellation is not available for completed journeys",
+        )
+    if booking.status != "CONFIRMED":
+        raise HTTPException(status_code=409, detail="Only confirmed bookings can be cancelled")
+    if not booking.temp_booking_ref or not booking.transport_pnr:
+        raise HTTPException(status_code=409, detail="Provider booking reference is missing")
+
+    requested = set(cancellation_request.seat_numbers)
+    already_cancelled = set(booking.cancelled_seat_numbers or [])
+    if requested & already_cancelled:
+        raise HTTPException(status_code=409, detail="One or more seats are already cancelled")
+    passengers = {str(p.seat_number): p for p in booking.passengers}
+    if not requested.issubset(passengers):
+        raise HTTPException(status_code=400, detail="One or more seats do not belong to this booking")
+    tickets = []
+    for seat in cancellation_request.seat_numbers:
+        passenger = passengers[seat]
+        if not passenger.ticket_number:
+            raise HTTPException(status_code=409, detail=f"Ticket number missing for seat {seat}")
+        tickets.append({
+            "seat_Number": seat,
+            "ticket_Number": passenger.ticket_number,
+            "transport_PNR": booking.transport_pnr,
+        })
+
+    # Persist an in-flight state before the external side effect. If the HTTP
+    # request times out, the provider may still have cancelled the ticket; do
+    # not silently return the booking to CONFIRMED or invite a blind retry.
+    booking.status = "CANCELLATION_PENDING"
+    db.commit()
+
+    try:
+        result = adapter.BusCancellation({
+            "booking_RefNo": booking.temp_booking_ref,
+            "busTicketstoCancel": tickets,
+            "cancellationCharge_Key": cancellation_request.cancellation_charge_key,
+        })
+        header = result.get("response_Header", {}) if isinstance(result, dict) else {}
+        if str(header.get("error_Code")) != "0000" or str(result.get("statuss", "false")).lower() != "true":
+            booking.status = "CONFIRMED"
+            db.commit()
+            logger.error("AO Pay cancellation rejected booking_id=%s provider_code=%s status=%s", booking_id, header.get("error_Code"), result.get("statuss"))
+            raise HTTPException(status_code=502, detail=header.get("error_Desc") or result.get("message") or "Cancellation was not confirmed by provider")
+
+        booking.cancelled_seat_numbers = sorted(already_cancelled | requested)
+        if set(map(str, booking.seat_numbers)).issubset(set(booking.cancelled_seat_numbers)):
+            booking.status = "CANCELLED"
+        else:
+            booking.status = "CONFIRMED"
+        db.commit()
+        logger.info("Provider cancellation confirmed booking_id=%s cancelled_seats=%s status=%s", booking_id, len(requested), booking.status)
+
+        # Refund cash to the gateway and coins to the wallet. Never fails
+        # the cancellation itself (errors are logged / flagged in `refund`).
+        from Services.Booking.CancellationRefundService import (
+            process_cancellation_refund,
+        )
+        refund = process_cancellation_refund(
+            db, payment_service, booking, requested, result
+        )
+
+        return {
+            "booking_id": booking.id,
+            "booking_status": booking.status,
+            "cancelled_seat_numbers": booking.cancelled_seat_numbers,
+            "refund": refund,
+            "provider_response": result,
+        }
+    except HTTPException:
+        raise
+    except Exception:
+        db.rollback()
+        # CANCELLATION_PENDING intentionally remains persisted. Provider status
+        # must be reconciled before another cancellation attempt is allowed.
+        logger.exception("Cancellation outcome unknown booking_id=%s; manual/provider reconciliation required", booking_id)
+        raise HTTPException(status_code=502, detail="Cancellation outcome is unknown. Do not retry yet; verify the provider booking status first.")
+
+
+@router.post("/provider-history")
+def get_provider_booking_history(
+    history_request: ProviderBookingHistoryRequest,
+    adapter=Depends(get_booking_adapter),
+    current_user=Depends(get_current_user),
+):
+    try:
+        result = adapter.BusHistory(history_request.model_dump())
+        header = result.get("response_Header", {}) if isinstance(result, dict) else {}
+        if str(header.get("error_Code")) != "0000":
+            logger.warning("AO Pay history rejected provider_code=%s", header.get("error_Code"))
+            raise HTTPException(status_code=502, detail=header.get("error_Desc") or "Unable to fetch provider booking history")
+        # AO Pay history is registration-wide. Never return other StableBus
+        # customers' bookings to the signed-in user.
+        provider_items = result.get("busAvailableBookings")
+        if not isinstance(provider_items, list):
+            raise HTTPException(status_code=502, detail="Invalid provider history response")
+        own_mobile = str(current_user.mobile_number)
+        result["busAvailableBookings"] = [
+            item for item in provider_items
+            if isinstance(item, dict)
+            and "".join(ch for ch in str(item.get("customerMobile", "")) if ch.isdigit())
+                == "".join(ch for ch in own_mobile if ch.isdigit())
+        ]
+        return result
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("AO Pay provider booking history failed user_id=%s", current_user.id)
+        raise HTTPException(status_code=502, detail="Unable to fetch provider booking history")
+
+
+@router.get("/history")
+def get_booking_history(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+    limit: int = Query(default=20, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
+):
+    try:
+        repository = BookingRepository(db)
+
+        bookings = repository.get_by_user_id(
+            user_id=str(current_user.id),
+            limit=limit + 1,
+            offset=offset,
+        )
+
+        has_more = len(bookings) > limit
+        bookings = bookings[:limit]
+
+        # Quiet per-ticket wallet info (coins used / returned / earned).
+        try:
+            from Services.Wallet.WalletService import WalletService
+            coin_info = WalletService(db).booking_coin_summary(bookings)
+        except Exception:
+            logger.exception("Wallet summary failed for booking history")
+            coin_info = {}
+
+        items = []
+
+        for booking in bookings:
+            items.append({
+                "booking_id": booking.id,
+                "booking_status": booking.status,
+                "boarding_point": booking.boarding_point,
+                "dropping_point": booking.dropping_point,
+                "journey_date": (
+                    booking.journey_date.isoformat()
+                    if booking.journey_date else None
+                ),
+                "source_city_id": booking.source_city_id,
+                "destination_city_id": booking.destination_city_id,
+                "bus_id": booking.bus_id,
+                "operator_name": booking.operator_name,
+                "seat_numbers": booking.seat_numbers,
+                "cancelled_seat_numbers": booking.cancelled_seat_numbers or [],
+                "total_amount": str(booking.total_amount),
+                "currency": booking.currency,
+                "supplier_refno": booking.supplier_refno,
+                "transport_pnr": booking.transport_pnr,
+                "customer_mobile": booking.customer_mobile,
+                "passenger_email": booking.passenger_email,
+                "created_at": (
+                    booking.created_at.isoformat()
+                    if booking.created_at else None
+                ),
+                "wallet": coin_info.get(booking.id),
+                "passengers": [
+                    {
+                        "name": passenger.name,
+                        "age": passenger.age,
+                        "gender": passenger.gender,
+                        "title": passenger.title,
+                        "dob": (
+                            passenger.dob.isoformat()
+                            if passenger.dob else None
+                        ),
+                        "seat_number": passenger.seat_number,
+                        "ticket_number": passenger.ticket_number,
+                    }
+                    for passenger in booking.passengers
+                ],
+            })
+
+        return {
+            "items": items,
+            "pagination": {
+                "limit": limit,
+                "offset": offset,
+                "has_more": has_more,
+            },
+        }
+
+    except Exception:
+        logger.exception(
+            "Failed to fetch booking history for user %s",
+            current_user.id,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to fetch booking history",
+        )
