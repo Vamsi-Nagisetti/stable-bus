@@ -1,7 +1,8 @@
-
 import logging
 import os
-from datetime import date
+import re
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 
 from fastapi import (
     APIRouter,
@@ -41,6 +42,32 @@ from Services.Payments.PaymentService import PaymentService
 
 
 logger = logging.getLogger("stablebus.api.bookings")
+
+def _trip_has_departed(booking) -> bool:
+    """True once the bus has left (journey date + departure time, India time).
+    Without a readable departure time, only trips from an earlier day count as departed."""
+    if not booking.journey_date:
+        return False
+    now = datetime.now(ZoneInfo("Asia/Kolkata"))
+    point = booking.boarding_point if isinstance(booking.boarding_point, dict) else {}
+    bus = point.get("_bus") if isinstance(point.get("_bus"), dict) else {}
+    raw = bus.get("departure_time") or point.get("boarding_Time") or point.get("boarding_time") or ""
+    match = re.search(r"(\d{1,2}):(\d{2})\s*(am|pm)?", str(raw), re.IGNORECASE)
+    if match:
+        hour, minute = int(match.group(1)), int(match.group(2))
+        meridiem = (match.group(3) or "").lower()
+        if meridiem == "pm" and hour < 12:
+            hour += 12
+        if meridiem == "am" and hour == 12:
+            hour = 0
+        if hour < 24 and minute < 60:
+            departure = datetime(
+                booking.journey_date.year, booking.journey_date.month, booking.journey_date.day,
+                hour, minute, tzinfo=ZoneInfo("Asia/Kolkata"),
+            )
+            return now >= departure
+    return booking.journey_date < now.date()
+
 
 router = APIRouter(
     prefix="/api/v1/bookings",
@@ -425,10 +452,10 @@ def get_cancellation_charges(
     adapter=Depends(get_booking_adapter),
 ):
     booking = require_booking_access(booking_id, db, current_user, guest_access_token)
-    if booking.journey_date and booking.journey_date < date.today():
+    if _trip_has_departed(booking):
         raise HTTPException(
             status_code=409,
-            detail="Cancellation is not available for completed journeys",
+            detail="Cancellation is not available once the journey has started",
         )
     if booking.status != "CONFIRMED":
         raise HTTPException(status_code=409, detail="Only confirmed bookings can be cancelled")
@@ -486,10 +513,10 @@ def cancel_booking_seats(
     payment_service=Depends(get_payment_service),
 ):
     booking = require_booking_access(booking_id, db, current_user, guest_access_token, lock=True)
-    if booking.journey_date and booking.journey_date < date.today():
+    if _trip_has_departed(booking):
         raise HTTPException(
             status_code=409,
-            detail="Cancellation is not available for completed journeys",
+            detail="Cancellation is not available once the journey has started",
         )
     if booking.status != "CONFIRMED":
         raise HTTPException(status_code=409, detail="Only confirmed bookings can be cancelled")

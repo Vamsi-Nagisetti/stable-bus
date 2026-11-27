@@ -375,6 +375,25 @@ class WalletService:
         )
         return coins if created else 0
 
+    def credit_review_reward(self, user_id: str, booking_id: str, coins: int) -> int:
+        """Coins for rating a completed trip. Idempotent per booking.
+
+        Stored with booking_id=None on purpose: the ticket's "coins earned"
+        figure is the trip reward only, this one shows in the wallet history.
+        Returns the coins credited (0 if already credited or coins <= 0).
+        """
+        if coins <= 0 or not user_id:
+            return 0
+        created = self._add_lot(
+            user_id=str(user_id),
+            coins=int(coins),
+            lot_key=f"review:{booking_id}",
+            source="REVIEW",
+            tx_type="EARN",
+            description="Thanks for rating your trip",
+        )
+        return int(coins) if created else 0
+
     def credit_completed_trips(
         self, user_id: str | None = None, batch_size: int = 200
     ) -> list[dict]:

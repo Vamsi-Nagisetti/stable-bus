@@ -1,4 +1,3 @@
-
 import logging
 import os
 import threading
@@ -7,6 +6,7 @@ from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
 
 load_dotenv()
@@ -23,6 +23,7 @@ from api.routes.preregistrations import router as preregistrations_router
 # NEW: Push notification router
 from api.routes.notifications import router as notifications_router
 from api.routes.wallet import router as wallet_router
+from api.routes.campaign import router as campaign_router
 from api.routes.admin import router as admin_router
 
 # Management and middleware
@@ -343,6 +344,11 @@ app = FastAPI(
 )
 
 
+# Compress large JSON (bus search responses can be several MB). Small
+# responses are left alone.
+app.add_middleware(GZipMiddleware, minimum_size=1024)
+
+
 # CORS
 app.add_middleware(
     CORSMiddleware,
@@ -372,6 +378,7 @@ app.include_router(notifications_router)
 
 # Wallet / trip stats / admin (custom notifications, wallet jobs)
 app.include_router(wallet_router)
+app.include_router(campaign_router)
 app.include_router(admin_router)
 
 logger.info("StableBus application initialized")
