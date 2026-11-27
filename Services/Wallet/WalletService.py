@@ -2,8 +2,9 @@
 
 Rules implemented
 -----------------
-* Earn: flat 2.5% of the ticket total, credited as coins AFTER the trip is
-  completed. 1 coin = Rs 0.25 (4 coins = Re 1), so coins = floor(total * 0.1).
+* Earn: coins equal to 2.5% of the ticket total (Rs 10,000 -> 250 coins),
+  credited AFTER the trip is completed. 1 coin = Rs 0.25 (4 coins = Re 1),
+  so coins = floor(total * 0.025).
 * No coins for cancelled tickets. Partially cancelled bookings earn only on
   the seats that were actually travelled (prorated by seat count).
 * Coins expire on 1 January (IST) after they were earned (lots).
@@ -111,6 +112,38 @@ class WalletService:
             "rupee_value": str(coins_to_rupees(total)),
             "coin_value_rupees": str(COIN_VALUE_RUPEES),
             "next_expiry": expiring,
+        }
+
+    def lifetime_summary(self, user_id: str) -> dict:
+        """Lifetime coins earned and rupees saved by paying with coins."""
+        txs = self.db.scalars(
+            select(WalletTransaction).where(
+                WalletTransaction.user_id == user_id,
+                WalletTransaction.type.in_(
+                    ("EARN", "ADJUST", "REDEEM", "REVERSE", "RESTORE")
+                ),
+            )
+        ).all()
+        earned = sum(t.coins for t in txs if t.type in ("EARN", "ADJUST") and t.coins > 0)
+
+        pay_ids = {t.payment_id for t in txs if t.payment_id}
+        ok = set()
+        if pay_ids:
+            ok = set(
+                self.db.scalars(
+                    select(Payment.id).where(
+                        Payment.id.in_(pay_ids), Payment.status == "SUCCESS"
+                    )
+                ).all()
+            )
+        used = sum(-t.coins for t in txs if t.type == "REDEEM" and t.payment_id in ok)
+        back = sum(
+            t.coins for t in txs
+            if t.type in ("REVERSE", "RESTORE") and t.payment_id in ok
+        )
+        return {
+            "lifetime_coins": int(earned),
+            "savings_rupees": str(coins_to_rupees(max(0, used - back))),
         }
 
     def get_transactions(
@@ -253,9 +286,10 @@ class WalletService:
             return 0  # fully cancelled -> Rule 1
 
         earn_base = total * Decimal(len(active)) / Decimal(len(seats))
-        rupees = earn_base * EARN_RATE
+        # Coins earned = 2.5% of the ticket amount, counted in COINS
+        # (Rs 10,000 -> 250 coins, which are then worth 250 x Rs 0.25).
         return int(
-            (rupees / COIN_VALUE_RUPEES).to_integral_value(rounding=ROUND_DOWN)
+            (earn_base * EARN_RATE).to_integral_value(rounding=ROUND_DOWN)
         )
 
     def _add_lot(

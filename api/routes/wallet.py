@@ -20,11 +20,17 @@ def get_wallet(
     coins immediately even if the background worker has not run yet.
     """
     service = WalletService(db)
-    service.credit_completed_trips(user_id=str(current_user.id), batch_size=50)
+    if not brief:
+        # The heavier credit sweep only runs for the wallet page, never for
+        # the small balance chip / payment screen.
+        service.credit_completed_trips(
+            user_id=str(current_user.id), batch_size=50
+        )
     result = service.get_balance(str(current_user.id))
     result["max_redeem_percent"] = int(max_redeem_percent())
     if not brief:
         stats = service.trip_stats(str(current_user.id), days=30)
+        result.update(service.lifetime_summary(str(current_user.id)))
         result["trips"] = {
             "total_completed": stats["total_completed_trips"],
             "last_30_days": stats["completed_trips_in_period"],
